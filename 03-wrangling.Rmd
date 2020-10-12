@@ -2,6 +2,7 @@
 
 ```{r setup_wrangling, include=FALSE, purl=FALSE}
 # Used to define Learning Check numbers:
+library(knitr)
 chap <- 3
 lc <- 0
 

@@ -121,11 +121,11 @@ Let's now switch gears and learn about the concept of "tidy" data format with a 
 Let's focus our attention on the `drinks` data frame and look at its first 5 rows:
 
 ```{r, echo=FALSE, purl=FALSE}
-drinks %>%
+fivethirtyeight::drinks %>%
   head(5)
 ```
 
-After reading the help file by running `?drinks`, you'll see that `drinks` is a data frame containing results from a survey of the average number of servings of beer, spirits, and wine consumed in `r drinks %>% nrow()` countries. This data was originally reported on FiveThirtyEight.com in Mona Chalabi's article: ["Dear Mona Followup: Where Do People Drink The Most Beer, Wine And Spirits?"](https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/).
+After reading the help file by running `?drinks`, you'll see that `drinks` is a data frame containing results from a survey of the average number of servings of beer, spirits, and wine consumed in `r fivethirtyeight::drinks %>% nrow()` countries. This data was originally reported on FiveThirtyEight.com in Mona Chalabi's article: ["Dear Mona Followup: Where Do People Drink The Most Beer, Wine And Spirits?"](https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/).
 
 Let's apply some of the data wrangling verbs we learned in Chapter \@ref(wrangling) on the `drinks` data frame:
 
@@ -136,7 +136,7 @@ Let's apply some of the data wrangling verbs we learned in Chapter \@ref(wrangli
 and save the resulting data frame in `drinks_smaller`:
 
 ```{r}
-drinks_smaller <- drinks %>% 
+drinks_smaller <- fivethirtyeight::drinks %>% 
   filter(country %in% c("USA", "China", "Italy", "Saudi Arabia")) %>% 
   select(-total_litres_of_pure_alcohol) %>% 
   rename(beer = beer_servings, spirit = spirit_servings, wine = wine_servings)
@@ -448,8 +448,7 @@ We need to take the values of the columns corresponding to years in `guat_dem` a
 guat_dem_tidy <- guat_dem %>% 
   pivot_longer(names_to = "year", 
                values_to = "democracy_score", 
-               cols = -country,
-               names_transform = list(year = as.integer)) 
+               cols = -country) 
 guat_dem_tidy
 ```
 
