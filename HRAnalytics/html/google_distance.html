@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Get distance data between two points based on all the travel...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for google_distance {HRAnalytics}"><tr><td>google_distance {HRAnalytics}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Get distance data between two points based on all the travel mode options. Works for many origin points.</h2>
+
+<h3>Description</h3>
+
+<p>Get distance data between two points based on all the travel mode options. Works for many origin points.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+google_distance(x, dest, arrival_time, key, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>A vector of origins in address or postcode format</p>
+</td></tr>
+<tr valign="top"><td><code>dest</code></td>
+<td>
+<p>A single destinationin address or postocde format</p>
+</td></tr>
+<tr valign="top"><td><code>arrival_time</code></td>
+<td>
+<p>A POSIXct datetime that folks need to arrive by</p>
+</td></tr>
+<tr valign="top"><td><code>key</code></td>
+<td>
+<p>A google distance API key</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional options to pass to 'google_distance()'</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Data.frame containing (typically) 4 rows per input element
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>HRAnalytics</em> version 0.0.0.9000 <a href="00Index.html">Index</a>]</div>
+</body></html>

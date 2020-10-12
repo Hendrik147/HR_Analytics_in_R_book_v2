@@ -7,13 +7,23 @@ Depends: R (>= 3.5.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: dplyr,
-    ggplot2,
-    magrittr,
-    purrr,
-    googleway,
-    memoise,
-    rlang
-Suggests: tidyverse,
-    tidymodels
+Imports: dplyr, ggplot2, magrittr, purrr, googleway, memoise, rlang
+Suggests: tidyverse, tidymodels
 RoxygenNote: 6.1.0
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: HR_Analytics_in_R_book
+RemoteUsername: Hendrik147
+RemoteRef: master
+RemoteSha: c11944f17af77a22b0082b11935c924b6135fc25
+RemoteSubdir: HRAnalytics
+GithubRepo: HR_Analytics_in_R_book
+GithubUsername: Hendrik147
+GithubRef: master
+GithubSHA1: c11944f17af77a22b0082b11935c924b6135fc25
+GithubSubdir: HRAnalytics
+NeedsCompilation: no
+Packaged: 2020-02-01 21:04:51 UTC; hfedd
+Author: Steph Locke [aut, cre]
+Maintainer: Steph Locke <steph@itsalocke.com>
+Built: R 3.6.0; ; 2020-02-01 21:04:52 UTC; windows

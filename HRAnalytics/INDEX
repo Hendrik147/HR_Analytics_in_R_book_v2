@@ -1,0 +1,7 @@
+HRAnalytics             HRAnalytics.
+gap_summary             Get mean, median, and count where a column has
+                        values, split by a grouping factor
+google_distance         Get distance data between two points based on
+                        all the travel mode options. Works for many
+                        origin points.
+pred_vs_actuals         Predicted vs actuals charts
