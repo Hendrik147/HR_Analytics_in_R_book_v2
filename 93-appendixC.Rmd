@@ -26,7 +26,7 @@ library(nycflights13)
 ## Data wrangling
 
 ```{r setup, include=FALSE}
-opts_chunk$set(
+knitr::opts_chunk$set(
   echo = TRUE, message = FALSE, warning = FALSE, eval = TRUE,
   cache = TRUE,
   fig.width = 16 / 2, fig.height = 9 / 2
@@ -218,7 +218,7 @@ movies_ex %>%
 
 ```{r}
 movies_ex %>%
-  mutate(type_new = recode(type,
+  mutate(type_new = dplyr::recode(type,
     "action" = "Action",
     "animated" = "Animated",
     "comedy" = "Comedy",

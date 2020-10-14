@@ -44,10 +44,10 @@ The datasets can be accessed using:
 
 Here are sample rows from this dataset:
 
-<!-- The following 5 lines are not working, so I commented them. Hendrik -->
-<!-- require(gdata) -->
-<!-- servicedesk <- read.xls("https://community.watsonanalytics.com/wp-content/uploads/2015/03/WA_Fn-UseC_-IT-Help-Desk.xlsx", sheet = 1, header = TRUE, method="csv") -->
-<!-- knitr::kable(head(servicedesk), "html") -->
+The following 5 lines are not working, so I commented them until I have time to look into it. Hendrik
+#require(gdata)
+#servicedesk <- read.xls("https://community.watsonanalytics.com/wp-content/uploads/2015/03/WA_Fn-UseC_-IT-Help-Desk.xlsx", sheet = 1, header = TRUE, method="csv")
+#knitr::kable(head(servicedesk), "html")
 
 
 ## HR recruitment, selection and performance data {#HRrecruitment}

@@ -414,6 +414,7 @@ Observe that there is a variable called `temp` of hourly temperature recordings 
 Recall in Section \@ref(scatterplots), we used the `filter()` function to only choose the subset of rows of `flights` corresponding to Alaska Airlines flights. We similarly use `filter()` \index{dplyr!filter()} here, but by using the `&` operator we only choose the subset of rows of `weather` where the `origin` is `"EWR"`, the `month` is January, **and** the `day` is between `1` and `15`. Recall we performed a similar task in Section \@ref(scatterplots) when creating the `alaska_flights` data frame of only Alaska Airlines flights, a topic we'll explore more in Chapter \@ref(wrangling) on data wrangling.
 
 ```{r}
+weather <- nycflights13::weather
 early_january_weather <- weather %>% 
   filter(origin == "EWR" & month == 1 & day <= 15)
 ```
@@ -501,7 +502,7 @@ ggplot(data = weather, mapping = aes(x = temp, y = factor("A"))) +
 hist_title <- "Histogram of Hourly Temperature Recordings from NYC in 2013"
 ```
 
-This gives us a general idea of how the values of `temp` distribute: observe that temperatures vary from around `r round(min(weather$temp, na.rm = TRUE), 0)`&deg;F (-11&deg;C) up to `r round(max(weather$temp, na.rm = TRUE), 0)`&deg;F (38&deg;C).  Furthermore, there appear to be more recorded temperatures between 40&deg;F and 60&deg;F than outside this range. However, because of the high degree of overplotting in the points, it's hard to get a sense of exactly how many values are between say 50&deg;F and 55&deg;F.
+This gives us a general idea of how the values of `temp` distribute: observe that temperatures vary from around `r round(min(nycflights13::weather$temp, na.rm = TRUE), 0)`&deg;F (-11&deg;C) up to `r round(max(nycflights13::weather$temp, na.rm = TRUE), 0)`&deg;F (38&deg;C).  Furthermore, there appear to be more recorded temperatures between 40&deg;F and 60&deg;F than outside this range. However, because of the high degree of overplotting in the points, it's hard to get a sense of exactly how many values are between say 50&deg;F and 55&deg;F.
 
 What is commonly produced instead of Figure \@ref(fig:temp-on-line) is known as a \index{histograms} *histogram*.  A histogram is a plot that visualizes the *distribution* of a numerical value as follows:
 
@@ -1249,7 +1250,7 @@ ggplot(data = alaska_flights, mapping = aes(x = dep_delay, y = arr_delay)) +
 Furthermore recall in Figure \@ref(fig:hourlytemp) in Section \@ref(linegraphs) we visualized hourly temperature recordings at Newark airport only for the first 15 days of January 2013.  This necessitated paring down the `weather` data frame to a new data frame `early_january_weather` consisting of hourly temperature recordings only for `origin == "EWR"`, `month == 1`, and day less than or equal to `15` first:
 
 ```{r, eval=FALSE}
-early_january_weather <- weather %>% 
+early_january_weather <- nycflights13::weather %>% 
   filter(origin == "EWR" & month == 1 & day <= 15)
 
 ggplot(data = early_january_weather, mapping = aes(x = time_hour, y = temp)) +

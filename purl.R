@@ -2,7 +2,7 @@
 # scripts of all code the readers see and saves them in the docs/scripts folder
 
 # Update this if the number of chapters in the book increases
-num_chapters <- 11
+num_chapters <- 27
 
 # For %>%
 library(dplyr)
