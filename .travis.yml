@@ -11,7 +11,9 @@ script:
   - ./_build.sh
 
 deploy:
-  - provider: pages
+    provider: netlify
+    site:
+
     local_dir: docs
     skip_cleanup: true
     keep-history: true
@@ -20,12 +22,3 @@ deploy:
     target_branch: gh-pages
     on:
       branch: master
-  - provider: pages
-    local_dir: docs
-    skip_cleanup: true
-    keep-history: true
-    github_token: $TRAVISCI
-    repo: Hendrik147/HR_Analytics_in_R_book_v2
-    target_branch: gh-pages-v2
-    on:
-      branch: v2
