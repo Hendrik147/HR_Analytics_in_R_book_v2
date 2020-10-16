@@ -3,9 +3,13 @@ title: "HR Analytics in R"
 author: "Chester Ismay, Albert Y. Kim and Hendrik Feddersen"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
-  html_document:
-    df_print: paged
+  pdf_document: default
+  html_document: default
+citeproc: true
+csl: ieee
 bibliography: [bib/books.bib, bib/packages.bib, bib/articles.bib]
+biblio-style: "apalike"
+link-citations: true
 colorlinks: yes
 cover-image: images/hranalytics.jpg
 apple-touch-icon: images/logos/favicons/apple-touch-icon.png
@@ -16,12 +20,10 @@ favicon: images/logos/favicons/favicon.ico
 fontsize: 12pt, krantz2
 github-repo: Hendrik147/HR_Analytics_in_R_book
 graphics: yes
-link-citations: yes
 lof: yes
 lot: yes
 monofont: Inconsolata
 monofontoptions: Scale=0.85
-biblio-style: apalike
 site: bookdown::bookdown_site
 subtitle: Common tasks achieved with the power of R
 always_allow_html: yes
