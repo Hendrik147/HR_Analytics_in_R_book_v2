@@ -166,7 +166,7 @@ if (is_html_output()) {
 
 
 <!-- purl() all the chapter Rmd's in a new session -->
-# Bash does not work for me on Windows PC, I am purling manually.
+#Bash does not work for me on Windows PC, I am purling manually.
 #```{bash, include=FALSE, purl=FALSE}
 #Rscript -e "source('purl.R', local = TRUE)"
 #```
