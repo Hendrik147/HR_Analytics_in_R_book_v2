@@ -16,7 +16,7 @@ deploy:
     skip_cleanup: true
     keep-history: true
     github_token: $TRAVISCI
-    repo: endrik147/HR_Analytics_in_R_book
+    repo: endrik147/HR_Analytics_in_R_book_v2
     target_branch: gh-pages
     on:
       branch: master
@@ -25,7 +25,7 @@ deploy:
     skip_cleanup: true
     keep-history: true
     github_token: $TRAVISCI
-    repo: Hendrik147/HR_Analytics_in_R_book
+    repo: Hendrik147/HR_Analytics_in_R_book_v2
     target_branch: gh-pages-v2
     on:
       branch: v2
