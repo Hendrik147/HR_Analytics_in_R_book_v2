@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 1 Introduction | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 1 Introduction | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 1 Introduction | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="2-getting-started.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,265 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
+<div id="intro" class="section level1" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
+<hr />
 <div class="learncheck">
 <p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
+<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress subject to change about twice a year.</strong>
 </p>
 </div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<p>The intention of this book is to encourage more ‘data driven’ decisions in HR. HR Analytics is not anymore a nice-to-have addon but rather the way HR practitioners should conduct HR decision making in the future. Where applicable, human judgement is ‘added’ onto a rigorous analysis of the data done in the first place.</p>
+<p>To achieve this ideal world, I need to equip you with some fundamental knowledge of R and RStudio, which are open-source tools for data scientists. I am well aware that on one side you want to do something for your career in HR, however you are most likely completely new to coding.</p>
+<center>
+<p><img src="images/logos/Rlogo.png" height="100" />       <img src="images/logos/RStudio-Logo-Blue-Gradient.png" height="100" /></p>
+</center>
+<p><strong>Help! I’m new to R and RStudio and I need to learn about them! However, I’m completely new to coding! What do I do?</strong></p>
+<!--
+<img src="images/logos/Rlogo.svg" style="height: 150px;"/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="images/logos/RStudio-Logo-Blue-Gradient.png" style="height: 150px;"/>
+-->
+<p>If you’re asking yourself this question, then you have come to the right place! There is no better moment to ride the wave of disruptions taking place now in HR.</p>
+<ul>
+<li><em>Are you looking to learn about HR Analytics utilising the power of R"? Then start with our <a href="1-intro.html#sec:intro-for-students">Introduction for Students</a>.</em></li>
+<li><em>Are you looking to contribute to “HR Analytics in R?” Then click <a href="1-intro.html#sec:connect-contribute">here</a> for information on how.</em></li>
+<li><em>Are you curious about the publishing of this book? Then click <a href="1-intro.html#sec:about-book">here</a> for more information on the open-source technology, in particular R Markdown and the bookdown package.</em></li>
+</ul>
+<p>This is version 1.1.0 of “HR Analytics in R” published on October 10, 2020. While a PDF version of this book can be found <a href="hendrikfeddersen.pdf" target="_blank">here</a>, this is very much a work in progress with many things that still need to be fixed. I appreciate your patience.</p>
+<hr />
+<div id="sec:intro-for-students" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Introduction for students</h2>
+<p>This book assumes no prerequisites: no algebra, no calculus, and no prior programming/coding experience. This is intended to be a gentle introduction to the practice of analyzing data and answering questions using data the way data scientists, statisticians and other researchers would.</p>
+<div id="workingwithmaterials" class="section level3 unnumbered">
+<h3>Working with the material</h3>
+<p>You can work your way through the materials by clicking on the arrows to the left and right at the bottom of each page. Alternatively, there is a collapsible contents bar on the left hand side.</p>
+<p>If you need to find something specific, you can use the search icon. Typing in a word or phrase will filter the contents bar to relevant sections.</p>
+<p>The book by default renders black sans serif on a white background. You can use the A to amend the appearance of the book to make it easier to process, whether that’s a larger font, a serif font, or a different colour scheme.</p>
+<p>The edit button takes you straight to github, where you can propose editorial changes.</p>
+</div>
+<div id="conventions" class="section level3 unnumbered">
+<h3>Conventions</h3>
+<p>Throughout this book various conventions will be used.</p>
+<p>In terms of basic formatting:</p>
+<ul>
+<li>This is standard text.</li>
+<li><code>This is code or a symbol</code></li>
+<li><em>This is a Keyboard Key!</em></li>
+<li><strong>This is the first time I mention something important</strong></li>
+</ul>
+<p>This is a book about coding, so expect code blocks. Code blocks will typically look like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="1-intro.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;this is a code block&quot;</span></span></code></pre></div>
+<pre><code>[1] &quot;this is a code block&quot;</code></pre>
+<p>Directly underneath it, normally starting with two hash symbols (##) is the result of the code executing.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="1-intro.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &#39;this is a code block&#39;`</span></span></code></pre></div>
+<p>There will also be callouts throughout the book. Some are for information, some expect you to do things.</p>
+<p>Anything written here should be read carefully before proceeding.</p>
+<p>This is a tip relating to what I’ve just said.</p>
+<p>This is kind of like a tip but is for when you’re getting into trouble and need help.</p>
+<p>This is something I recommend you do as you’re reading.</p>
+<p>In Figure <a href="1-intro.html#fig:moderndive-figure">1.1</a> I present a flowchart of what you’ll cover in this book. You’ll first get started with data in Chapter <a href="2-getting-started.html#getting-started">2</a>, where you’ll learn about the difference between R and RStudio, start coding in R, understand what R packages are, and explore your first dataset: all domestic departure flights from a New York City airport in 2013. Then</p>
+<ol style="list-style-type: decimal">
+<li><strong>Data science</strong>: You’ll assemble your data science toolbox using <code>tidyverse</code> packages. In particular:
+<ul>
+<li>Ch.<a href="3-viz.html#viz">3</a>: Visualizing data via the <code>ggplot2</code> package.</li>
+<li>Ch.<a href="5-tidy.html#tidy">5</a>: Understanding the concept of “tidy” data as a standardized data input format for all packages in the <code>tidyverse</code></li>
+<li>Ch.<a href="4-wrangling.html#wrangling">4</a>: Wrangling data via the <code>dplyr</code> package.</li>
+</ul></li>
+<li><strong>Data modeling</strong>: Using these data science tools and helper functions from the <code>moderndive</code> package, you’ll start performing data modeling. In particular:
+<ul>
+<li>Ch.<a href="6-regression.html#regression">6</a>: Constructing basic regression models.</li>
+<li>Ch.<a href="7-multiple-regression.html#multiple-regression">7</a>: Constructing multiple regression models.</li>
+</ul></li>
+<li><strong>Statistical inference</strong>: Once again using your newly acquired data science tools, I’ll unpack statistical inference using the <code>infer</code> package. In particular:
+<ul>
+<li>Ch.<a href="8-sampling.html#sampling">8</a>: Understanding the role that sampling variability plays in statistical inference using both tactile and virtual simulations of sampling from a “bowl” with an unknown proportion of red balls.</li>
+<li>Ch.<a href="9-confidence-intervals.html#confidence-intervals">9</a>: Building confidence intervals.</li>
+<li>Ch.<a href="10-hypothesis-testing.html#hypothesis-testing">10</a>: Conducting hypothesis tests.</li>
+</ul></li>
+<li><strong>Data modeling revisited</strong>: Armed with your new understanding of statistical inference, you’ll revisit and review the models you constructed in Ch.<a href="6-regression.html#regression">6</a> &amp; Ch.<a href="7-multiple-regression.html#multiple-regression">7</a>. In particular:
+<ul>
+<li>Ch.<a href="11-inference-for-regression.html#inference-for-regression">11</a>: Interpreting both the statistical and practice significance of the results of the models.</li>
+<li>Ch.<a href="12-thinking-with-data.html#thinking-with-data">12</a>: I’ll end the introductory chapters with a discussion on what it means to “think with data” and present an example case study data analysis of house prices in Seattle.</li>
+</ul></li>
+<li><strong>HR Analytics - data driven decision making</strong>: The intention is to provide real tangible examples of the application of data science to HR, to illustrate the data science process in the HR context, and to show that the scope mentioned previously in this article, isn’t just theoretical - it’s real. The last and most important module shall illustrate current best practices of a structured process of thinking and analysis.</li>
+</ol>
+<div class="figure" style="text-align: center"><span id="fig:moderndive-figure"></span>
+<img src="images/flowcharts/flowchart/flowchart.002.png" alt="ModernDive Flowchart" width="\textwidth" />
+<p class="caption">
+FIGURE 1.1: ModernDive Flowchart
+</p>
+</div>
+</div>
+<div id="subsec:learning-goals" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> What you will learn from this book</h3>
+<p>I hope that by the end of this book, you’ll have learned</p>
+<ol style="list-style-type: decimal">
+<li>How to use R to explore data.<br />
+</li>
+<li>How to answer statistical questions using tools like confidence intervals and hypothesis tests.</li>
+<li>How to effectively create “data stories” using these tools.</li>
+</ol>
+<p>What do I mean by data stories? I mean any analysis involving data that engages the reader in answering questions with careful visuals and thoughtful discussion, such as <a href="http://rpubs.com/ry_lisa_elana/chicago">How strong is the relationship between per capita income and crime in Chicago neighborhoods?</a> and <a href="https://ismayc.github.io/soc301_s2017/group_projects/group4.html">How many f**ks does Quentin Tarantino give (as measured by the amount of swearing in his films)?</a>. Further discussions on data stories can be found in this <a href="https://www.thinkwithgoogle.com/marketing-resources/data-measurement/tell-meaningful-stories-with-data/">Think With Google article</a>.</p>
+<p>For other examples of data stories constructed by students like yourselves, look at the final projects for two courses that have previously used ModernDive:</p>
+<ul>
+<li>Middlebury College <a href="https://rudeboybert.github.io/MATH116/PS/final_project/final_project_outline.html#past_examples">MATH 116 Introduction to Statistical and Data Sciences</a> using student collected data.</li>
+<li>Pacific University <a href="https://ismayc.github.io/soc301_s2017/group-projects/index.html">SOC 301 Social Statistics</a> using data from the <a href="https://cran.r-project.org/web/packages/fivethirtyeight/vignettes/fivethirtyeight.html">fivethirtyeight R package</a>.</li>
+</ul>
+<p>This book will help you develop your “data science toolbox,” including tools such as data visualization, data formatting, data wrangling, and data modeling using regression. With these tools, you’ll be able to perform the entirety of the “data/science pipeline” while building data communication skills (see Subsection <a href="1-intro.html#subsec:pipeline">1.1.2</a> for more details).</p>
+<p>In particular, this book will lean heavily on data visualization. In today’s world, we are bombarded with graphics that attempt to convey ideas. I will explore what makes a good graphic and what the standard ways are to convey relationships with data. You’ll also see the use of visualization to introduce concepts like mean, median, standard deviation, distributions, etc. In general, I’ll use visualization as a way of building almost all of the ideas in this book.</p>
+<p>To impart the statistical lessons in this book, I have intentionally minimized the number of mathematical formulas used and instead have focused on developing a conceptual understanding via data visualization, statistical computing, and simulations. I hope this is a more intuitive experience than the way statistics has traditionally been taught in the past and how it is commonly perceived.</p>
+<p>Finally, you’ll learn the importance of literate programming. By this I mean you’ll learn how to write code that is useful not just for a computer to execute but also for readers to understand exactly what your analysis is doing and how you did it. This is part of a greater effort to encourage reproducible research (see Subsection <a href="1-intro.html#subsec:reproducible">1.1.3</a> for more details). Hal Abelson coined the phrase that I will follow throughout this book:</p>
+<blockquote>
+<p>“Programs must be written for people to read, and only incidentally for machines to execute.”
+I understand that there may be challenging moments as you learn to program. Both of us continue to struggle and find ourselves often using web searches to find answers and reach out to colleagues for help. In the long run though, we all can solve problems faster and more elegantly via programming. I wrote this book as our way to help you get started and you should know that there is a huge community of R users that are always happy to help everyone along as well. This community exists in particular on the internet on various forums and websites such as <a href="https://stackoverflow.com/">stackoverflow.com</a>.</p>
+</blockquote>
+</div>
+<div id="subsec:pipeline" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Data/science pipeline</h3>
+<p>You may think of statistics as just being a bunch of numbers. I commonly hear the phrase “statistician” when listening to broadcasts of sporting events. Statistics (in particular, data analysis), in addition to describing numbers like with baseball batting averages, plays a vital role in all of the sciences. You’ll commonly hear the phrase “statistically significant” thrown around in the media. You’ll see articles that say “Science now shows that chocolate is good for you.” Underpinning these claims is data analysis. By the end of this book, you’ll be able to better understand whether these claims should be trusted or whether we should be wary. Inside data analysis are many sub-fields that I will discuss throughout this book (though not necessarily in this order):</p>
+<ul>
+<li>data collection</li>
+<li>data wrangling</li>
+<li>data visualization</li>
+<li>data modeling</li>
+<li>inference</li>
+<li>correlation and regression</li>
+<li>interpretation of results</li>
+<li>data communication/storytelling</li>
+</ul>
+<p>These sub-fields are summarized in what Grolemund and Wickham term the <a href="http://r4ds.had.co.nz/explore-intro.html">“Data/Science Pipeline”</a> in Figure <a href="1-intro.html#fig:pipeline-figure">1.2</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:pipeline-figure"></span>
+<img src="images/tidy1.png" alt="Data/Science Pipeline" width="\textwidth" />
+<p class="caption">
+FIGURE 1.2: Data/Science Pipeline
+</p>
+</div>
+<p>I will begin by digging into the gray <strong>Understand</strong> portion of the cycle with data visualization, then with a discussion on what is meant by tidy data and data wrangling, and then conclude by talking about interpreting and discussing the results of our models via <strong>Communication</strong>. These steps are vital to any statistical analysis. But why should you care about statistics? “Why did they make me take this class?”</p>
+<p>There’s a reason so many fields require a statistics course. Scientific knowledge grows through an understanding of statistical significance and data analysis. You needn’t be intimidated by statistics. It’s not the beast that it used to be and, paired with computation, you’ll see how reproducible research in the sciences particularly increases scientific knowledge.</p>
+</div>
+<div id="subsec:reproducible" class="section level3" number="1.1.3">
+<h3><span class="header-section-number">1.1.3</span> Reproducible research</h3>
+<blockquote>
+<p>“The most important tool is the <em>mindset</em>, when starting, that the end product will be reproducible.” – Keith Baggerly
+Another goal of this book is to help readers understand the importance of reproducible analyses. The hope is to get readers into the habit of making their analyses reproducible from the very beginning. This means I’ll be trying to help you build new habits. This will take practice and be difficult at times. You’ll see just why it is so important for you to keep track of your code and well-document it to help yourself later and any potential collaborators as well.</p>
+</blockquote>
+<p>Copying and pasting results from one program into a word processor is not the way that efficient and effective scientific research is conducted. It’s much more important for time to be spent on data collection and data analysis and not on copying and pasting plots back and forth across a variety of programs.</p>
+<p>In a traditional analyses if an error was made with the original data, we’d need to step through the entire process again: recreate the plots and copy and paste all of the new plots and our statistical analysis into your document. This is error prone and a frustrating use of time. I’ll see how to use R Markdown to get away from this tedious activity so that we can spend more time doing science.</p>
+<blockquote>
+<p>“We are talking about <em>computational</em> reproducibility.” - Yihui Xie
+Reproducibility means a lot of things in terms of different scientific fields. Are experiments conducted in a way that another researcher could follow the steps and get similar results? In this book, I will focus on what is known as <strong>computational reproducibility</strong>. This refers to being able to pass all of one’s data analysis, data-sets, and conclusions to someone else and have them get exactly the same results on their machine. This allows for time to be spent interpreting results and considering assumptions instead of the more error prone way of starting from scratch or following a list of steps that may be different from machine to machine.</p>
+</blockquote>
+<!--
+Additionally, this book will focus on computational thinking, data thinking, and inferential thinking. I'll see throughout the book how these three modes of thinking can build effective ways to work with, to describe, and to convey statistical knowledge.  
+-->
+</div>
+<div id="final-note-for-students" class="section level3" number="1.1.4">
+<h3><span class="header-section-number">1.1.4</span> Final note for students</h3>
+<p>At this point, if you are interested in instructor perspectives on this book, ways to contribute and collaborate, or the technical details of this book’s construction and publishing, then continue with the rest of the chapter below. Otherwise, let’s get started with R and RStudio in Chapter <a href="2-getting-started.html#getting-started">2</a>!</p>
+<hr />
+</div>
+</div>
+<div id="sec:intro-instructors" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Introduction for instructors</h2>
+<p>This book is inspired by the following books:</p>
+<ul>
+<li>“Mathematical Statistics with Resampling and R” <span class="citation"><a href="references.html#ref-hester2011" role="doc-biblioref">[2]</a></span>,</li>
+<li>“OpenIntro: Intro Stat with Randomization and Simulation” <span class="citation"><a href="references.html#ref-isrs2014" role="doc-biblioref">[4]</a></span>, and</li>
+<li>“R for Data Science” <span class="citation"><a href="references.html#ref-rds2016" role="doc-biblioref">[6]</a></span>.</li>
+</ul>
+<p>The first book, while designed for upper-level undergraduates and graduate students, provides an excellent resource on how to use resampling to impart statistical concepts like sampling distributions using computation instead of large-sample approximations and other mathematical formulas. The last two books are free options to learning introductory statistics and data science, providing an alternative to the many traditionally expensive introductory statistics textbooks.</p>
+<p>When looking over the large number of introductory statistics textbooks that currently exist, I found that there wasn’t one that incorporated many newly developed R packages directly into the text, in particular the many packages included in the <a href="http://tidyverse.org/"><code>tidyverse</code></a> collection of packages, such as <code>ggplot2</code>, <code>dplyr</code>, <code>tidyr</code>, and <code>broom</code>. Additionally, there wasn’t an open-source and easily reproducible textbook available that exposed new learners all of three of the learning goals listed at the outset of Subsection <a href="1-intro.html#subsec:learning-goals">1.1.1</a>.</p>
+<div id="who-is-this-book-for" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Who is this book for?</h3>
+<p>This book is intended for instructors of traditional introductory statistics classes using RStudio, either the desktop or server version, who would like to inject more data science topics into their syllabus. I assume that students taking the class will have no prior algebra, calculus, nor programming/coding experience.</p>
+<p>Here are some principles and beliefs I kept in mind while writing this text. If you agree with them, this might be the book for you.</p>
+<ol style="list-style-type: decimal">
+<li><strong>Blur the lines between lecture and lab</strong>
+<ul>
+<li>With increased availability and accessibility of laptops and open-source non-proprietary statistical software, the strict dichotomy between lab and lecture can be loosened.</li>
+<li>It’s much harder for students to understand the importance of using software if they only use it once a week or less. They forget the syntax in much the same way someone learning a foreign language forgets the rules. Frequent reinforcement is key.</li>
+</ul></li>
+<li><strong>Focus on the entire data/science research pipeline</strong>
+<ul>
+<li>I believe that the entirety of Grolemund and Wickham’s <a href="http://r4ds.had.co.nz/introduction.html">data/science pipeline</a> should be taught.</li>
+<li>I believe in <a href="https://arxiv.org/abs/1507.05346">“minimizing prerequisites to research”</a>: students should be answering questions with data as soon as possible.</li>
+</ul></li>
+<li><strong>It’s all about the data</strong>
+<ul>
+<li>I leverage R packages for rich, real, and realistic data-sets that at the same time are easy-to-load into R, such as the <code>nycflights13</code> and <code>fivethirtyeight</code> packages.</li>
+<li>I believe that <a href="http://escholarship.org/uc/item/84v3774z">data visualization is a gateway drug for statistics</a> and that the Grammar of Graphics as implemented in the <code>ggplot2</code> package is the best way to impart such lessons. However, I often hear: “You can’t teach <code>ggplot2</code> for data visualization in intro stats!” I, like <a href="http://varianceexplained.org/r/teach_ggplot2_to_beginners/">David Robinson</a>, are much more optimistic.</li>
+<li><code>dplyr</code> has made data wrangling much more <a href="http://chance.amstat.org/2015/04/setting-the-stage/">accessible</a> to novices, and hence much more interesting data-sets can be explored.</li>
+</ul></li>
+<li><strong>Use simulation/resampling to introduce statistical inference, not probability/mathematical formulas</strong>
+<ul>
+<li>Instead of using formulas, large-sample approximations, and probability tables, statistical concepts using resampling-based inference.</li>
+<li>This allows for a de-emphasis of traditional probability topics, freeing up room in the syllabus for other topics.</li>
+</ul></li>
+<li><strong>Early exposure to analytics and computing</strong>
+<ul>
+<li>Computing skills are essential to working with data in the 21st century even for HR managers. Given this fact, I feel that an early exposure to computing can only be of benefit to the whole HR community.</li>
+<li>I am not teaching a course on coding/programming per se, but rather just enough of the computational and algorithmic thinking necessary for performing a data analysis in HR.</li>
+</ul></li>
+<li><strong>Complete reproducibility and customisability</strong>
+<ul>
+<li>I am frustrated when people talk about HR Analytics, without giving the source code and the data itself. I give you the source code for all examples as well as the whole book!</li>
+<li>If you want you can even use my book as a starting point and customise for your own non-profit training. For more about how to make this book your own, see <a href="1-intro.html#sec:about-book">About this Book</a>.</li>
+</ul></li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="sec:connect-contribute" class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Connect and contribute</h2>
+<p>If you would like to connect with “HR Analytics in R,” check out the following links:</p>
+<ul>
+<li>If you would like to receive periodic updates about HR Analytics, then please sign up for my <a href="https://hranalytics.live/signup/">mailing list</a>. You will receive receive bi-weekly notififications about my new blog posts.</li>
+<li>Please feel free to contact me at <a href="mailto:info@hranalytics.live">info@hranalytics.live</a> .</li>
+<li>I am on Twitter at <a href="https://twitter.com/h_feddersen">h_feddersen</a>.</li>
+</ul>
+<p>If you would like to contribute to “HR Analytics in R,” there are many ways! Let’s all work together to make this book as great as possible for as many students as possible!</p>
+<ul>
+<li>Please let me know if you find any errors, typos, or areas from improvement on my <a href="https://github.com/Hendrik147/HR_Analytics_in_R_book/issues">GitHub issue page</a> page. I will fix it as soon as possible.</li>
+<li>If you are familiar with GitHub and would like to contribute even more, please see Section <a href="1-intro.html#sec:about-book">1.4</a> below.</li>
+</ul>
+<p>I would like to thank <a href="https://github.com/moderndive/moderndive_book">Moderndive</a> for their inspirational presentation at a recent R user conference and for their generous example on how to set up a bookdown book and for their introductory pages on how to start using R.</p>
+<hr />
+</div>
+<div id="sec:about-book" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> About this book</h2>
+<p>This book was written using RStudio’s <a href="https://bookdown.org/">bookdown</a> package by Yihui Xie <span class="citation"><a href="references.html#ref-R-bookdown" role="doc-biblioref">[9]</a></span>. This package simplifies the publishing of books by having all content written in <a href="http://rmarkdown.rstudio.com/html_document_format.html">R Markdown</a>.</p>
+<ul>
+<li><p><strong>Latest published version, still in development</strong> The most up-to-date version, which is still in development is available at <a href="https://hranalyticslive.netlify.com/">https://hranalyticslive.netlify.com/</a></p></li>
+<li><p><strong>Source code</strong> The bookdown/R Markdown source code for the latest version of “HR Analytics in R” is available on Hendrik Feddersen’s <a href="https://github.com/Hendrik147/HR_Analytics_in_R_book">GitHub repository page</a></p></li>
+<li><p><strong>Usage</strong> You can share this material with colleagues or for non-commercial purposes but you can’t resell or incorporate them into stuff you make money from.</p>
+<ul>
+<li>As a symbol of gratitude, I would expect at least that you to sign up for my <a href="https://hranalytics.live/signup/">mailing list</a>.</li>
+<li>If you think my material is awesome and want to use it for commercial purposes, please contact me at <a href="mailto:info@hranalytics.live">info@hranalytics.live</a></li>
+</ul></li>
+<li><p><strong>Licence</strong> This work is licensed under a Creative Commons
+Attribution-NonCommercial 4.0 International License.</p>
+<div class="figure">
+<img src="images/by-nc-sa.png" alt="" />
+<p class="caption">Creative Commons License</p>
+</div></li>
+</ul>
+<hr />
+</div>
+<div id="sec:about-authors" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> About the author</h2>
+<p>Who am I? I am Hendrik Feddersen, a long-standing HR practitioner passionate about HR Analytics and living in Amsterdam, the Netherlands.</p>
+<p><img src="images/Photo%20HF%20Snappy.jpg" height="200" /></p>
+<!-- <img src="images/Photo%20HF%20Snappy.jpg" alt="Drawing" style="height: 200px;"/>-->
+<ul>
+<li>Email: <a href="mailto:info@hranalytics.live">info@hranalytics.live</a></li>
+<li>Webpage: <a href="https://hranalytics.live/" class="uri">https://hranalytics.live/</a></li>
+<li>Twitter: <a href="https://twitter.com/h_feddersen">h_feddersen</a></li>
+<li>GitHub: <a href="https://github.com/Hendrik147" class="uri">https://github.com/Hendrik147</a></li>
+</ul>
+<!-- For use only in PDF, is skipped in HTML -->
+
+</div>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1020,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="2-getting-started.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

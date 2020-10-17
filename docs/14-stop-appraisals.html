@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 14 Stop appraisals | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 14 Stop appraisals | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 14 Stop appraisals | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="13-pay-gap.html"/>
+<link rel="next" href="15-service-desk.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,141 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="stop-appraisals" class="section level1" number="14">
+<h1><span class="header-section-number">Chapter 14</span> Stop appraisals</h1>
+<p>How can HR give time back to the organisation? In a <a href="https://hrtrendinstitute.com/2018/04/13/how-can-hr-give-time-back-to-the-organisation/">recent post</a> Tom Haak from the HR Trend Institute suggested that a huge time saver was to stop the formal performance management process. Such ideas are constantly mentioned in management meetings. In fact, several companies are taking that route.</p>
+<p>Tom Haak is mentioning an organisation in which they calculated that all the work around the performance management process for one employee costs manager and employee around 10 hours (preparation, two formal meetings per year, completing the online forms, meeting with HR to review the results etc.). By simplifying the process (no mandatory meetings, no forms, no review meetings, just one annual rating to be submitted per employee by the manager), HR was able to give back many hours to the organisation (to the relief of managers and employees).</p>
+<p>So how would one go about, to introduce such change in an organisation. Here the Overhead value analysis (OVA) can come to the rescue. It is a technique used to find opportunities to reduce overhead costs <span class="citation"><a href="references.html#ref-keymanagementmodels2015" role="doc-biblioref">[1]</a></span>.</p>
+<p>The technique previews the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>The first step is to create a foundation including a definition of the required output, the required activities and an assessment of the end product.</li>
+<li>The second step is to make an orderly listing of activities and costs. This step includes estimating the costs of input/resources, the costs of activities and the allocation of the cost to products, generally with the help of activity-based costing (ABC).</li>
+<li>In step three, a customer evaluation of the service and output is required. Relevant aspects are necessity (i.e. critical, desired or nice-to-have), quality, quantity and cost. Customers are asked for both an assessment of the current output and an indication of the improvements that need to be made. Both interviews and questionnaires are used in the customer evaluation.</li>
+<li>In step 4, the OVA team must identify cost-saving opportunities based on the possible improvements identified. This forces the organisation to make a statement with regard to priorities for output and required activities.</li>
+<li>Step 5 is to prioritise opportunities with the aid of the four elements used earlier in the customer evaluation:</li>
+</ol>
+<ul>
+<li>Is the activity adding value?</li>
+<li>Is quality of output sufficient?</li>
+<li>Is quantity of output sufficient?</li>
+<li>Can it be done at reasonable cost?</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Finally, as a project in itself, the last step is to implement the set of changes discussed and decided upon in the previous five steps.</li>
+</ol>
+<p>In the following we will analyse the cost in appraising employees (step 2 of the OVA technique). Let us have a look at an organisation which utilises an activity based costing framework. An organisation in which staff working time is allocated to the different projects and activities, among others time spent on staff apparaisals.</p>
+<p>We will use only the tidyverse library.</p>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="14-stop-appraisals.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>First, let’s import some data on self declared time spent on appraisals,</p>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="14-stop-appraisals.html#cb516-1" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="14-stop-appraisals.html#cb517-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Hours <span class="sc">~</span> Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></span>
+<span id="cb517-2"><a href="14-stop-appraisals.html#cb517-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></span>
+<span id="cb517-3"><a href="14-stop-appraisals.html#cb517-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></span>
+<span id="cb517-4"><a href="14-stop-appraisals.html#cb517-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></span>
+<span id="cb517-5"><a href="14-stop-appraisals.html#cb517-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb517-6"><a href="14-stop-appraisals.html#cb517-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hours <span class="sc">~</span> Count.of.Appraisee, <span class="at">data=</span>Time.spent.on.appraisals)</span>
+<span id="cb517-7"><a href="14-stop-appraisals.html#cb517-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-516-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="14-stop-appraisals.html#cb518-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The following produces the formula of the linear regression</span></span>
+<span id="cb518-2"><a href="14-stop-appraisals.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model)[[<span class="dv">2</span>]], <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model)[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>)) </span></code></pre></div>
+<pre><code>[1] &quot;y = 3.362 * x + 49.134&quot;</code></pre>
+<p>Is is now an interpolation or a linear regression?</p>
+<p>Interpolation is a method of constructing new data points within the range of a discrete set of known data points. Regression analysis is a statistical process for estimating the relationships among variables.</p>
+<p>y = 3.362 * x + 49.134" What does it mean?</p>
+<p>From these numbers it would appear, that every manager spends on average 49 hours independently from the number of staff to appraise (for their own self-assessment and for the appraisal process in general, i.e. reading material, management meetings, refreshing how to appraise staff and re-training with the IT tools). In addition every manager spends on average 3 hours and 20 minutes to appraise each indivual subordinate, initial meeting with staff member and then writing up the appraisal itself.</p>
+<p>From looking at the chart, it would appear that there are a couple of outliers. In statistics, an outlier is defined as an observation which stands far away from the most of other observations. Often an outlier is present due to the measurements error. Therefore, one of the most important tasks in data analysis is to identify and only if it is necessary to remove the outlier. Recording time to the closest 15 minutes requires a lot of attention from the manager.</p>
+<p>Let us identify the outliers and remove them. A script from Klodian Dhana, Creator of DataScience+, comes in handy: <a href="https://datascienceplus.com/identify-describe-plot-and-removing-the-outliers-from-the-dataset/" class="uri">https://datascienceplus.com/identify-describe-plot-and-removing-the-outliers-from-the-dataset/</a></p>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="14-stop-appraisals.html#cb520-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First let us identify the outliers and plot the initial plot with the names of the appraiser</span></span>
+<span id="cb520-2"><a href="14-stop-appraisals.html#cb520-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb520-3"><a href="14-stop-appraisals.html#cb520-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Mahalanobis Distance with height and weight distributions</span></span>
+<span id="cb520-4"><a href="14-stop-appraisals.html#cb520-4" aria-hidden="true" tabindex="-1"></a>m_dist <span class="ot">&lt;-</span> <span class="fu">mahalanobis</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="fu">colMeans</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="fu">cov</span>(Time.spent.on.appraisals[,<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>))</span>
+<span id="cb520-5"><a href="14-stop-appraisals.html#cb520-5" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals<span class="sc">$</span>m_dist <span class="ot">&lt;-</span> <span class="fu">round</span>(m_dist, <span class="dv">2</span>)</span>
+<span id="cb520-6"><a href="14-stop-appraisals.html#cb520-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb520-7"><a href="14-stop-appraisals.html#cb520-7" aria-hidden="true" tabindex="-1"></a><span class="co"># A quick check by sorting the value will indicate the threshold you may want to use:</span></span>
+<span id="cb520-8"><a href="14-stop-appraisals.html#cb520-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(Time.spent.on.appraisals<span class="sc">$</span>m_dist)</span></code></pre></div>
+<pre><code> [1]  0.10  0.15  0.15  0.16  0.16  0.18  0.18  0.18  0.22  0.23  0.23  0.27
+[13]  0.29  0.31  0.34  0.36  0.41  0.43  0.43  0.43  0.44  0.50  0.50  0.54
+[25]  0.54  0.55  0.57  0.62  0.64  0.65  0.68  0.70  0.74  0.76  0.82  0.84
+[37]  0.85  0.90  0.93  1.01  1.03  1.09  1.11  1.15  1.16  1.17  1.35  1.53
+[49]  1.54  1.73  1.87  1.92  2.35  2.36  2.70  3.52  3.77  3.87  5.74  7.40
+[61]  7.49 23.79 26.16</code></pre>
+<p>The <a href="https://www.statisticshowto.datasciencecentral.com/mahalanobis-distance/">Mahalanobis distance (MD)</a> is the distance between two points in multivariate space. In a regular Euclidean space, variables (e.g. x, y, z) are represented by axes drawn at right angles to each other; The distance between any two points can be measured with a ruler. For uncorrelated variables, the Euclidean distance equals the MD. However, if two or more variables are correlated, the axes are no longer at right angles, and the measurements become impossible with a ruler. In addition, if you have more than three variables, you can’t plot them in regular 3D space at all. The MD solves this measurement problem, as it measures distances between points, even correlated points for multiple variables.</p>
+<p>The Mahalanobis function returns the squared Mahalanobis distance of all rows in x and the vector mu = center with respect to Sigma = cov. This is (for vector x) defined as</p>
+<p>D^2 = (x - μ)’ Σ^-1 (x - μ)</p>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="14-stop-appraisals.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We chose to set the threshold at 4, as this would result in five outliers. There is no &quot;rule of thumb&quot; on where to set the threshold and the decision is up to the analyst.</span></span>
+<span id="cb522-2"><a href="14-stop-appraisals.html#cb522-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb522-3"><a href="14-stop-appraisals.html#cb522-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Mahalanobis Outliers - Threshold set to 4</span></span>
+<span id="cb522-4"><a href="14-stop-appraisals.html#cb522-4" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals<span class="sc">$</span>outlier_maha <span class="ot">&lt;-</span> <span class="st">&quot;No&quot;</span></span>
+<span id="cb522-5"><a href="14-stop-appraisals.html#cb522-5" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals<span class="sc">$</span>outlier_maha[Time.spent.on.appraisals<span class="sc">$</span>m_dist <span class="sc">&gt;</span> <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Yes&quot;</span></span>
+<span id="cb522-6"><a href="14-stop-appraisals.html#cb522-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb522-7"><a href="14-stop-appraisals.html#cb522-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot with Mahalanobis&#39; Outliers</span></span>
+<span id="cb522-8"><a href="14-stop-appraisals.html#cb522-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Time.spent.on.appraisals, <span class="fu">aes</span>(<span class="at">x =</span> Count.of.Appraisee, <span class="at">y =</span> Hours, <span class="at">color =</span> outlier_maha)) <span class="sc">+</span></span>
+<span id="cb522-9"><a href="14-stop-appraisals.html#cb522-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span>    <span class="co"># na.rm=TRUE removes missing values error message silently</span></span>
+<span id="cb522-10"><a href="14-stop-appraisals.html#cb522-10" aria-hidden="true" tabindex="-1"></a>      <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="sc">+</span></span>
+<span id="cb522-11"><a href="14-stop-appraisals.html#cb522-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Number of appraisees vs Hours&quot;</span>,</span>
+<span id="cb522-12"><a href="14-stop-appraisals.html#cb522-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">subtitle =</span> <span class="st">&quot;Outlier Detection in time spent on appraisals data - Using Mahalanobis Distances&quot;</span>) <span class="sc">+</span></span>
+<span id="cb522-13"><a href="14-stop-appraisals.html#cb522-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ylab</span>(<span class="st">&quot;Hours&quot;</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">&quot;Number of appraisees&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-518-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="14-stop-appraisals.html#cb523-1" aria-hidden="true" tabindex="-1"></a>model_without_mahaoutliers <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hours <span class="sc">~</span> Count.of.Appraisee, <span class="at">data=</span>Time.spent.on.appraisals[<span class="fu">which</span>(Time.spent.on.appraisals<span class="sc">$</span>outlier_maha<span class="sc">==</span> <span class="st">&quot;No&quot;</span>),])</span>
+<span id="cb523-2"><a href="14-stop-appraisals.html#cb523-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb523-3"><a href="14-stop-appraisals.html#cb523-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb523-4"><a href="14-stop-appraisals.html#cb523-4" aria-hidden="true" tabindex="-1"></a><span class="co">#The following produces the formula of the new linear regression without the Mahalanobis outliers</span></span>
+<span id="cb523-5"><a href="14-stop-appraisals.html#cb523-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb523-6"><a href="14-stop-appraisals.html#cb523-6" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model_without_mahaoutliers)[[<span class="dv">2</span>]], <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model_without_mahaoutliers)[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>)) </span></code></pre></div>
+<pre><code>[1] &quot;y = 3.741 * x + 30.099&quot;</code></pre>
+<p>y = 3.741 * x + 30.099</p>
+<p>Now it would appear, that every manager spends on average 26 hours independently from the number of staff to appraise and an additional 3 hours and 47 minutes to appraise each indivual subordinate.</p>
+<p>Let us start all over again with another method for excluding outliers, using the Cook distance.</p>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="14-stop-appraisals.html#cb525-1" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/Time.spent.on.appraisals.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="14-stop-appraisals.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Hours <span class="sc">~</span> Count.of.Appraisee,        <span class="co"># plot the variables y ~ x</span></span>
+<span id="cb526-2"><a href="14-stop-appraisals.html#cb526-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Number of appraisee&quot;</span>,        <span class="co"># x−axis label </span></span>
+<span id="cb526-3"><a href="14-stop-appraisals.html#cb526-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Hours&quot;</span>,                      <span class="co"># y−axis label</span></span>
+<span id="cb526-4"><a href="14-stop-appraisals.html#cb526-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">data=</span>Time.spent.on.appraisals)     <span class="co"># data set</span></span>
+<span id="cb526-5"><a href="14-stop-appraisals.html#cb526-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb526-6"><a href="14-stop-appraisals.html#cb526-6" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hours <span class="sc">~</span> Count.of.Appraisee, <span class="at">data=</span>Time.spent.on.appraisals)</span>
+<span id="cb526-7"><a href="14-stop-appraisals.html#cb526-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-520-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="14-stop-appraisals.html#cb527-1" aria-hidden="true" tabindex="-1"></a>cooksd <span class="ot">&lt;-</span> <span class="fu">cooks.distance</span>(model)</span>
+<span id="cb527-2"><a href="14-stop-appraisals.html#cb527-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb527-3"><a href="14-stop-appraisals.html#cb527-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the Cook&#39;s Distance using the traditional 4/n criterion</span></span>
+<span id="cb527-4"><a href="14-stop-appraisals.html#cb527-4" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="fu">nrow</span>(Time.spent.on.appraisals)</span>
+<span id="cb527-5"><a href="14-stop-appraisals.html#cb527-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cooksd, <span class="at">pch=</span><span class="st">&quot;*&quot;</span>, <span class="at">cex=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">&quot;Influential Obs by Cooks distance&quot;</span>)         <span class="co"># plot cook&#39;s distance</span></span>
+<span id="cb527-6"><a href="14-stop-appraisals.html#cb527-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">4</span><span class="sc">/</span>sample_size, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)         <span class="co"># add cutoff line</span></span>
+<span id="cb527-7"><a href="14-stop-appraisals.html#cb527-7" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(cooksd)<span class="sc">+</span><span class="dv">1</span>, <span class="at">y=</span>cooksd, <span class="at">labels=</span><span class="fu">ifelse</span>(cooksd<span class="sc">&gt;</span><span class="dv">4</span><span class="sc">/</span>sample_size, <span class="fu">names</span>(cooksd),<span class="st">&quot;&quot;</span>), <span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="co"># add labels</span></span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-520-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="14-stop-appraisals.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing Outliers</span></span>
+<span id="cb528-2"><a href="14-stop-appraisals.html#cb528-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-3"><a href="14-stop-appraisals.html#cb528-3" aria-hidden="true" tabindex="-1"></a><span class="co"># influential row numbers</span></span>
+<span id="cb528-4"><a href="14-stop-appraisals.html#cb528-4" aria-hidden="true" tabindex="-1"></a>influential <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">names</span>(cooksd)[(cooksd <span class="sc">&gt;</span> (<span class="dv">4</span><span class="sc">/</span>sample_size))])</span>
+<span id="cb528-5"><a href="14-stop-appraisals.html#cb528-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-6"><a href="14-stop-appraisals.html#cb528-6" aria-hidden="true" tabindex="-1"></a>Time.spent.on.appraisals_screen <span class="ot">&lt;-</span> Time.spent.on.appraisals[<span class="sc">-</span>influential, ]</span>
+<span id="cb528-7"><a href="14-stop-appraisals.html#cb528-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-8"><a href="14-stop-appraisals.html#cb528-8" aria-hidden="true" tabindex="-1"></a>plot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Time.spent.on.appraisals, <span class="fu">aes</span>(<span class="at">x =</span> Count.of.Appraisee, <span class="at">y =</span> Hours)) <span class="sc">+</span></span>
+<span id="cb528-9"><a href="14-stop-appraisals.html#cb528-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb528-10"><a href="14-stop-appraisals.html#cb528-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="sc">+</span></span>
+<span id="cb528-11"><a href="14-stop-appraisals.html#cb528-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span>             <span class="co"># geom_smooth </span></span>
+<span id="cb528-12"><a href="14-stop-appraisals.html#cb528-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggtitle</span>(<span class="st">&quot;Before&quot;</span>)</span>
+<span id="cb528-13"><a href="14-stop-appraisals.html#cb528-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-14"><a href="14-stop-appraisals.html#cb528-14" aria-hidden="true" tabindex="-1"></a>plot4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> Time.spent.on.appraisals_screen, <span class="fu">aes</span>(<span class="at">x =</span> Count.of.Appraisee, <span class="at">y =</span> Hours)) <span class="sc">+</span></span>
+<span id="cb528-15"><a href="14-stop-appraisals.html#cb528-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span> </span>
+<span id="cb528-16"><a href="14-stop-appraisals.html#cb528-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">40</span>) <span class="sc">+</span> <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">600</span>) <span class="sc">+</span></span>
+<span id="cb528-17"><a href="14-stop-appraisals.html#cb528-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">na.rm=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb528-18"><a href="14-stop-appraisals.html#cb528-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggtitle</span>(<span class="st">&quot;After&quot;</span>)</span>
+<span id="cb528-19"><a href="14-stop-appraisals.html#cb528-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb528-20"><a href="14-stop-appraisals.html#cb528-20" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(plot3, plot4, <span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;
+`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-520-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="14-stop-appraisals.html#cb530-1" aria-hidden="true" tabindex="-1"></a>model_screen <span class="ot">&lt;-</span> <span class="fu">lm</span>(Hours <span class="sc">~</span> Count.of.Appraisee, <span class="at">data=</span>Time.spent.on.appraisals_screen)</span>
+<span id="cb530-2"><a href="14-stop-appraisals.html#cb530-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb530-3"><a href="14-stop-appraisals.html#cb530-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The following produces the formula of the new linear regression without the outliers</span></span>
+<span id="cb530-4"><a href="14-stop-appraisals.html#cb530-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb530-5"><a href="14-stop-appraisals.html#cb530-5" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&#39;y =&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model_screen)[[<span class="dv">2</span>]], <span class="at">digits =</span> <span class="dv">3</span>), <span class="st">&#39;* x&#39;</span>, <span class="st">&#39;+&#39;</span>, <span class="fu">round</span>(<span class="fu">coef</span>(model_screen)[[<span class="dv">1</span>]], <span class="at">digits =</span> <span class="dv">3</span>)) </span></code></pre></div>
+<pre><code>[1] &quot;y = 3.741 * x + 30.099&quot;</code></pre>
+<p>y = 3.741 * x + 30.099</p>
+<p>Now it would appear, that every manager spends on average 30 hours independently from the number of staff to appraise and an additional 3 hours and 45 minutes to appraise each indivual subordinate.</p>
+<p>You can imagine that we could push the analysis even further, but we will stop here for the time being. Ready to resume when management is again interested in the matter.</p>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +896,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="13-pay-gap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="15-service-desk.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +928,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/13-stop-appraisals.Rmd",
 "text": "Edit"
 },
 "history": {

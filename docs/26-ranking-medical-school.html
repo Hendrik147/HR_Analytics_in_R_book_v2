@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 26 Ranking Medical Schools | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 26 Ranking Medical Schools | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 26 Ranking Medical Schools | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="25-interview-attendance.html"/>
+<link rel="next" href="27-webscraping-linkedin.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,527 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="ranking-medical-school" class="section level1" number="26">
+<h1><span class="header-section-number">Chapter 26</span> Ranking Medical Schools</h1>
+<p>In this module, we will do another type of web scraping, this time we scrape from a pdf document. We will analyse the results of the “épreuves classantes nationales (ECN),” which is a nationwide competitive examination at the end of the 6th year of medical schools in France. The candidates ranking first can choose first where they want to continue their medical training. It is a very clean dataset in pdf format containing the results of 8370 medical school examns for a total of 124 pages.</p>
+<p>Source code: <a href="https://privefl.github.io/blog/scraping-some-french-medical-school-rankings/" class="uri">https://privefl.github.io/blog/scraping-some-french-medical-school-rankings/</a></p>
+<p>Source pdf document: <a href="http://www.remede.org/documents/IMG/pdf/liste_classement_ecn_20170628.pdf" class="uri">http://www.remede.org/documents/IMG/pdf/liste_classement_ecn_20170628.pdf</a></p>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb895-1"><a href="26-ranking-medical-school.html#cb895-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb895-2"><a href="26-ranking-medical-school.html#cb895-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pdftools)</span></code></pre></div>
+<pre><code>Using poppler version 0.73.0</code></pre>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="26-ranking-medical-school.html#cb897-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code></pre></div>
+<pre><code>data.table 1.13.0 using 4 threads (see ?getDTthreads).  Latest news: r-datatable.com</code></pre>
+<pre><code>
+Attaching package: &#39;data.table&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:lubridate&#39;:
+
+    hour, isoweek, mday, minute, month, quarter, second, wday, week,
+    yday, year</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    transpose</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    between, first, last</code></pre>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb903-1"><a href="26-ranking-medical-school.html#cb903-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bigstatsr)</span>
+<span id="cb903-2"><a href="26-ranking-medical-school.html#cb903-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span></code></pre></div>
+<pre><code>
+Attaching package: &#39;plotly&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:MASS&#39;:
+
+    select</code></pre>
+<pre><code>The following object is masked from &#39;package:igraph&#39;:
+
+    groups</code></pre>
+<pre><code>The following objects are masked from &#39;package:googleway&#39;:
+
+    add_heatmap, add_markers, add_polygons</code></pre>
+<pre><code>The following object is masked from &#39;package:httr&#39;:
+
+    config</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    last_plot</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    filter</code></pre>
+<pre><code>The following object is masked from &#39;package:graphics&#39;:
+
+    layout</code></pre>
+<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="26-ranking-medical-school.html#cb912-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb912-2"><a href="26-ranking-medical-school.html#cb912-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(gsubfn)</span></span></code></pre></div>
+<p>First, let’s get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.</p>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="26-ranking-medical-school.html#cb913-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">TZ =</span> <span class="st">&quot;Europe/London&quot;</span>)</span>
+<span id="cb913-2"><a href="26-ranking-medical-school.html#cb913-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="at">locale=</span><span class="st">&quot;fr_FR.UTF-8&quot;</span>)</span></code></pre></div>
+<pre><code>[1] &quot;&quot;</code></pre>
+<p>We will use package pdftools to get the text from the pdf document. to be on the safe side, I have dowloaded the document already, but it is also possible to dowload it afresh from the internet.</p>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="26-ranking-medical-school.html#cb915-1" aria-hidden="true" tabindex="-1"></a><span class="co">#pdfdocument &lt;- &quot;https://goo.gl/wUXvjk&quot; #Internet download</span></span>
+<span id="cb915-2"><a href="26-ranking-medical-school.html#cb915-2" aria-hidden="true" tabindex="-1"></a><span class="co">#pdfdocument &lt;- &quot;https://hranalyticslive.netlify.com/data/liste_classement_ecn_20170628.pdf&quot;</span></span></code></pre></div>
+<p>gsub</p>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="26-ranking-medical-school.html#cb916-1" aria-hidden="true" tabindex="-1"></a>txt <span class="ot">&lt;-</span> pdftools<span class="sc">::</span><span class="fu">pdf_text</span>(pdfdocument)</span>
+<span id="cb916-2"><a href="26-ranking-medical-school.html#cb916-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(txt, <span class="at">n =</span> <span class="dv">1</span>) <span class="co">#Inspection of first page</span></span></code></pre></div>
+<pre><code>[1] &quot;                                                                              Paris, le 28 juin 2017\r\n     Liste des étudiants et des internes de médecine, classés par ordre de\r\n     mérite, ayant satisfait aux épreuves classantes nationales anonymes\r\n    donnant accès au troisième cycle des études médicales, organisées au\r\n                            titre de l’année universitaire 2017-2018.\r\n        Nota : Il est demandé aux étudiants de vérifier les informations d’état civil les\r\n  concernant et d’envoyer à la gestionnaire des ECN la copie d’une pièce d’identité pour\r\n  prise en compte des modifications. Ces corrections sont importantes avant parution de\r\n                      cette liste au Journal officiel de la République française.\r\n0001 Mme Beaumont (Anne-Lise), née le 1 septembre 1993.\r\n0002 M. Petitdemange (Arthur, Paul, Joseph), né le 15 septembre 1993.\r\n0003 M. Bacon (Seraphin, Charly, Philippe), né le 29 janvier 1993.\r\n0004 M. Ditac (Geoffroy, Arnaud, André), né le 23 juin 1994.\r\n0005 M. Faure (Guillaume, Thomas), né le 7 août 1992.\r\n0006 Mme Weil (Amandine), née le 4 mars 1992.\r\n0007 M. Ezzouhairi (Nacim), né le 1 juin 1993.\r\n0008 M. Coulon (Antoine), né le 11 juin 1992.\r\n0009 Mme Le Gaudu (Violette, Luce, Catherine), née le 3 juin 1994.\r\n0010 M. Boyer (Jeremy), né le 14 mai 1993.\r\n0011 M. Villemaire (Axel, Michaël, Pierre), né le 24 juillet 1991.\r\n0012 M. Azoulay (Levi-Dan), né le 13 décembre 1993.\r\n0013 M. Assouline (Allan), né le 14 janvier 1994.\r\n0014 M. Rouchaud (Aymeric), né le 16 mai 1993.\r\n0015 M. Padden (Michael, James), né le 6 février 1993.\r\n0016 M. Gavoille (Antoine, Paul, Jean), né le 12 juillet 1994.\r\n0017 M. Marie (Benjamin, Pierre, Alexandre), né le 14 mars 1994.\r\n0018 Mlle Boulle (Charlotte, Marie, Cécile), née le 3 septembre 1988.\r\n0019 Mme Chatelain (Juliette), née le 23 juillet 1993.\r\n0020 Mme Laporte (Amandine, Capucine), née le 9 octobre 1993.\r\n0021 M. D&#39;izarny Gargas (Thibaut, François, Arnaud), né le 2 mai 1993.\r\n0022 Mme Boccon Gibod (Clémentine, Raphaëlle), née le 24 avril 1993.\r\n0023 Mme Chan (Camille, Marie), née le 11 juillet 1990.\r\n0024 M. Lemasle (Aymeric), né le 7 avril 1994.\r\n0025 M. Sulman (David), né le 9 novembre 1992.\r\n0026 Mlle Fresnel (Clémentine), née le 5 mars 1992.\r\n0027 M. Dumortier (Pierre, Antoine, Frédéric), né le 19 juillet 1993.\r\n0028 Mme Torres-Villaros (Héloïse, Laure, Barbara), née le 18 septembre 1992.\r\n0029 M. Memmi (Benjamin), né le 3 décembre 1993.\r\n0030 Mme Kherabi (Yousra), née le 23 décembre 1993.\r\n                                                              1\r\n&quot;</code></pre>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="26-ranking-medical-school.html#cb918-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(txt, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb918-2"><a href="26-ranking-medical-school.html#cb918-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb918-3"><a href="26-ranking-medical-school.html#cb918-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
+<pre><code>[[1]]
+ [1] &quot;                                                                              Paris, le 28 juin 2017\r&quot;
+ [2] &quot;     Liste des étudiants et des internes de médecine, classés par ordre de\r&quot;                          
+ [3] &quot;     mérite, ayant satisfait aux épreuves classantes nationales anonymes\r&quot;                            
+ [4] &quot;    donnant accès au troisième cycle des études médicales, organisées au\r&quot;                            
+ [5] &quot;                            titre de l’année universitaire 2017-2018.\r&quot;                               
+ [6] &quot;        Nota : Il est demandé aux étudiants de vérifier les informations d’état civil les\r&quot;           
+ [7] &quot;  concernant et d’envoyer à la gestionnaire des ECN la copie d’une pièce d’identité pour\r&quot;            
+ [8] &quot;  prise en compte des modifications. Ces corrections sont importantes avant parution de\r&quot;             
+ [9] &quot;                      cette liste au Journal officiel de la République française.\r&quot;                   
+[10] &quot;0001 Mme Beaumont (Anne-Lise), née le 1 septembre 1993.\r&quot;                                             
+[11] &quot;0002 M. Petitdemange (Arthur, Paul, Joseph), né le 15 septembre 1993.\r&quot;                               
+[12] &quot;0003 M. Bacon (Seraphin, Charly, Philippe), né le 29 janvier 1993.\r&quot;                                  
+[13] &quot;0004 M. Ditac (Geoffroy, Arnaud, André), né le 23 juin 1994.\r&quot;                                        
+[14] &quot;0005 M. Faure (Guillaume, Thomas), né le 7 août 1992.\r&quot;                                               
+[15] &quot;0006 Mme Weil (Amandine), née le 4 mars 1992.\r&quot;                                                       
+[16] &quot;0007 M. Ezzouhairi (Nacim), né le 1 juin 1993.\r&quot;                                                      
+[17] &quot;0008 M. Coulon (Antoine), né le 11 juin 1992.\r&quot;                                                       
+[18] &quot;0009 Mme Le Gaudu (Violette, Luce, Catherine), née le 3 juin 1994.\r&quot;                                  
+[19] &quot;0010 M. Boyer (Jeremy), né le 14 mai 1993.\r&quot;                                                          
+[20] &quot;0011 M. Villemaire (Axel, Michaël, Pierre), né le 24 juillet 1991.\r&quot;                                  
+[21] &quot;0012 M. Azoulay (Levi-Dan), né le 13 décembre 1993.\r&quot;                                                 
+[22] &quot;0013 M. Assouline (Allan), né le 14 janvier 1994.\r&quot;                                                   
+[23] &quot;0014 M. Rouchaud (Aymeric), né le 16 mai 1993.\r&quot;                                                      
+[24] &quot;0015 M. Padden (Michael, James), né le 6 février 1993.\r&quot;                                              
+[25] &quot;0016 M. Gavoille (Antoine, Paul, Jean), né le 12 juillet 1994.\r&quot;                                      
+[26] &quot;0017 M. Marie (Benjamin, Pierre, Alexandre), né le 14 mars 1994.\r&quot;                                    
+[27] &quot;0018 Mlle Boulle (Charlotte, Marie, Cécile), née le 3 septembre 1988.\r&quot;                               
+[28] &quot;0019 Mme Chatelain (Juliette), née le 23 juillet 1993.\r&quot;                                              
+[29] &quot;0020 Mme Laporte (Amandine, Capucine), née le 9 octobre 1993.\r&quot;                                       
+[30] &quot;0021 M. D&#39;izarny Gargas (Thibaut, François, Arnaud), né le 2 mai 1993.\r&quot;                              
+[31] &quot;0022 Mme Boccon Gibod (Clémentine, Raphaëlle), née le 24 avril 1993.\r&quot;                                
+[32] &quot;0023 Mme Chan (Camille, Marie), née le 11 juillet 1990.\r&quot;                                             
+[33] &quot;0024 M. Lemasle (Aymeric), né le 7 avril 1994.\r&quot;                                                      
+[34] &quot;0025 M. Sulman (David), né le 9 novembre 1992.\r&quot;                                                      
+[35] &quot;0026 Mlle Fresnel (Clémentine), née le 5 mars 1992.\r&quot;                                                 
+[36] &quot;0027 M. Dumortier (Pierre, Antoine, Frédéric), né le 19 juillet 1993.\r&quot;                               
+[37] &quot;0028 Mme Torres-Villaros (Héloïse, Laure, Barbara), née le 18 septembre 1992.\r&quot;                       
+[38] &quot;0029 M. Memmi (Benjamin), né le 3 décembre 1993.\r&quot;                                                    
+[39] &quot;0030 Mme Kherabi (Yousra), née le 23 décembre 1993.\r&quot;                                                 
+[40] &quot;                                                              1\r&quot;                                     
+
+[[2]]
+ [1] &quot;0031 Mme Bourhis (Amélie, Marie-Sophie), née le 20 décembre 1993.\r&quot;                    
+ [2] &quot;0032 M. Montardi (Camille, Raphaël), né le 22 février 1994.\r&quot;                          
+ [3] &quot;0033 Mme Tian (Yuan), née le 28 juillet 1993.\r&quot;                                        
+ [4] &quot;0034 M. Dighiero Brecht (Thomas, Pablo), né le 7 septembre 1993.\r&quot;                     
+ [5] &quot;0035 M. Perraud (Ludovic), né le 23 mars 1993.\r&quot;                                       
+ [6] &quot;0036 M. Roussotte (Mickaël, Jean, Alain), né le 9 mars 1993.\r&quot;                         
+ [7] &quot;0037 M. Hoellinger (Baptiste, André, Joseph), né le 9 juillet 1993.\r&quot;                  
+ [8] &quot;0038 M. Alloune (Rayan), né le 25 mars 1993.\r&quot;                                         
+ [9] &quot;0039 M. Mesny (Emmanuel, André), né le 7 mai 1993.\r&quot;                                   
+[10] &quot;0040 M. Lognon (Pierre, Antoine), né le 8 juin 1993.\r&quot;                                 
+[11] &quot;0041 Mme Tuaz (Estelle), née le 27 juin 1992.\r&quot;                                        
+[12] &quot;0042 M. Roulleaux Dugage (Matthieu, Marie), né le 8 mars 1993.\r&quot;                       
+[13] &quot;0043 M. Hanotin (Clément), né le 14 janvier 1992.\r&quot;                                    
+[14] &quot;0044 M. Hage (Alexandre), né le 22 juillet 1993.\r&quot;                                     
+[15] &quot;0045 M. Robbe (Guillaume), né le 17 février 1994.\r&quot;                                    
+[16] &quot;0046 M. Derot (Simon, Robin, François), né le 3 juin 1993.\r&quot;                           
+[17] &quot;0047 M. Finsterbach (Sonny, Philippe, Arsène), né le 28 janvier 1993.\r&quot;                
+[18] &quot;0048 M. Niddam (Samuel, Abraham, Henri), né le 17 août 1993.\r&quot;                         
+[19] &quot;0049 Mme Hertzog (Tatiana, Marine), née le 28 février 1993.\r&quot;                          
+[20] &quot;0050 Mlle Liu (Alice), née le 12 janvier 1994.\r&quot;                                       
+[21] &quot;0051 Mme Landré (Sophie, Anaïs), née le 17 février 1993.\r&quot;                             
+[22] &quot;0052 M. Perol (Louis), né le 19 janvier 1990.\r&quot;                                        
+[23] &quot;0053 M. Cavaillez (Thibaud, Antoine), né le 2 janvier 1993.\r&quot;                          
+[24] &quot;0054 M. Loeb (Jules), né le 25 juillet 1993.\r&quot;                                         
+[25] &quot;0055 Mme Bonello (Kim), née le 12 février 1992.\r&quot;                                      
+[26] &quot;0056 Mme Agouzoul (Sara), née le 5 avril 1993.\r&quot;                                       
+[27] &quot;0057 M. Blanquart (Erwan, Jean, Jules), né le 28 avril 1993.\r&quot;                         
+[28] &quot;0058 Mme Forte (Valentine), née le 9 mai 1993.\r&quot;                                       
+[29] &quot;0059 Mlle Wilkin (Marie), née le 24 juillet 1993.\r&quot;                                    
+[30] &quot;0060 Mme Vignals (Carole), née le 8 octobre 1993.\r&quot;                                    
+[31] &quot;0061 M. Lampros (Alexandre), né le 18 novembre 1993.\r&quot;                                 
+[32] &quot;0062 M. Boulanger (Etienne, Marcel, Francis), né le 27 janvier 1994.\r&quot;                 
+[33] &quot;0063 Mme Kouki (Inès), née le 30 juin 1994.\r&quot;                                          
+[34] &quot;0064 M. Bourreau (Alexis, François), né le 10 mai 1993.\r&quot;                              
+[35] &quot;0065 M. Riller (Quentin, Marcel), né le 28 mars 1992.\r&quot;                                
+[36] &quot;0066 M. Lefebvre (Erwan, Paul, Jacques), né le 16 octobre 1993.\r&quot;                      
+[37] &quot;0067 Mlle Barré (Mathilde, Marie-Hélène), née le 12 mai 1992.\r&quot;                        
+[38] &quot;0068 M. Orcel (Thibaud, Charles, Minh), né le 12 décembre 1994.\r&quot;                      
+[39] &quot;0069 M. Wajchert (Thibaut, Pierre, Jean), né le 3 mars 1993.\r&quot;                         
+[40] &quot;0070 M. Duteau (Vincent, Simon), né le 7 mars 1994.\r&quot;                                  
+[41] &quot;0071 Mme Jenvrin (Anaïs, Louisa, Léonie), née le 28 juillet 1993.\r&quot;                    
+[42] &quot;0072 M. Gdalia (Raphaël, Félix, David), né le 8 juillet 1993.\r&quot;                        
+[43] &quot;0073 M. Bouvarel (Hugo, Maurice, Marcel), né le 19 avril 1994.\r&quot;                       
+[44] &quot;0074 M. Borouchaki (Antoine), né le 11 mai 1994.\r&quot;                                     
+[45] &quot;0075 M. Fawaz (Sami), né le 10 décembre 1993.\r&quot;                                        
+[46] &quot;0076 M. Zarka (Jonathan, Sacha, Menahem), né le 3 juillet 1991.\r&quot;                      
+[47] &quot;0077 M. Creon (Antoine, Louis, Aurèle), né le 30 novembre 1992.\r&quot;                      
+[48] &quot;0078 M. Chirpaz (Nicolas, Loïc), né le 31 décembre 1993.\r&quot;                             
+[49] &quot;0079 M. Sakhi (Hichem), né le 10 octobre 1993.\r&quot;                                       
+[50] &quot;0080 Mlle Carayol (Ariane, Louise), née le 30 avril 1993.\r&quot;                            
+[51] &quot;0081 Mme Thirouin (Jeanne, Marthe), née le 24 janvier 1995.\r&quot;                          
+[52] &quot;0082 Mme Chastagner (Marine, Nathalie), née le 10 juin 1993.\r&quot;                         
+[53] &quot;0083 Mme Roux (Camille, Madeleine, Hélène), née le 20 février 1993.\r&quot;                  
+[54] &quot;0084 Mme Auger (Raphaëlle, Aurore), née le 1 octobre 1993.\r&quot;                           
+[55] &quot;0085 M. Mauny (Philippe), né le 14 juillet 1983.\r&quot;                                     
+[56] &quot;0086 Mlle Even (Cecilia, Sophie, Ginette), née le 28 juin 1990.\r&quot;                      
+[57] &quot;0087 Mme Lafargue (Marie-Camille), née le 15 octobre 1993.\r&quot;                           
+[58] &quot;0088 M. De Guilhem De Lataillade (Adrien, Vincent, Jean-Marie), né le 7 février 1992.\r&quot;
+[59] &quot;0089 M. Beneyto (Maxime), né le 1 juin 1994.\r&quot;                                         
+[60] &quot;0090 M. Ruiz (Thibault), né le 21 décembre 1992.\r&quot;                                     
+[61] &quot;0091 Mme Pietquin (Sophie), née le 6 novembre 1992.\r&quot;                                  
+[62] &quot;0092 M. Barde (François), né le 16 janvier 1993.\r&quot;                                     
+[63] &quot;0093 M. Pham (Félix, Khoa), né le 2 septembre 1993.\r&quot;                                  
+[64] &quot;0094 M. Fajardie (Antoine), né le 11 décembre 1994.\r&quot;                                  
+[65] &quot;0095 Mme Bouchard (Pauline, Marie, Charlotte), née le 25 juin 1993.\r&quot;                  
+[66] &quot;0096 Mme Desjonqueres (Elvire), née le 22 février 1993.\r&quot;                              
+[67] &quot;0097 Mme Mounacq (Audrey), née le 5 septembre 1993.\r&quot;                                  
+[68] &quot;0098 Mme Cachera (Laurène, Elise, Renée), née le 27 septembre 1993.\r&quot;                  
+[69] &quot;                                                              2\r&quot;                      
+
+[[3]]
+ [1] &quot;0099 Mme Meynard (Lucie, Magdeleine, Marcelle), née le 9 août 1994.\r&quot;                       
+ [2] &quot;0100 M. Grimault (Dimitri, Olivier), né le 10 août 1992.\r&quot;                                  
+ [3] &quot;0101 M. Garric (Antoine, Henri), né le 27 septembre 1993.\r&quot;                                 
+ [4] &quot;0102 M. Colas (Quentin, Joël), né le 18 mars 1993.\r&quot;                                        
+ [5] &quot;0103 M. Martin De Fremont (Grégoire, Marie), né le 1 septembre 1993.\r&quot;                      
+ [6] &quot;0104 M. Belkouche (Alban, Larbi), né le 28 décembre 1993.\r&quot;                                 
+ [7] &quot;0105 M. Khitri (Mohammed Yacine), né le 15 novembre 1992.\r&quot;                                 
+ [8] &quot;0106 M. Michelin (Bastien), né le 1 novembre 1992.\r&quot;                                        
+ [9] &quot;0107 M. David-Muller (Marc), né le 6 juillet 1993.\r&quot;                                        
+[10] &quot;0108 Mme Lombes (Amélie), née le 15 décembre 1992.\r&quot;                                        
+[11] &quot;0109 Mme Costes (Domitille), née le 5 juillet 1993.\r&quot;                                       
+[12] &quot;0110 M. Boulet (Nicolas, Hugo), né le 10 novembre 1993.\r&quot;                                   
+[13] &quot;0111 Mme Rambaud (Elise), née le 11 décembre 1993.\r&quot;                                        
+[14] &quot;0112 M. Prud&#39;homme (Léo), né le 10 octobre 1992.\r&quot;                                          
+[15] &quot;0113 M. Brizard (Antoine), né le 12 décembre 1993.\r&quot;                                        
+[16] &quot;0114 Mme Hoppenot (Bérénice, Marie-Brigitte, Christianne), née le 15 juillet 1993.\r&quot;        
+[17] &quot;0115 M. Sauer (François, Louis), né le 5 octobre 1993.\r&quot;                                    
+[18] &quot;0116 M. Mazhar (Driss, Olivier), né le 21 mai 1993.\r&quot;                                       
+[19] &quot;0117 M. Roumeau (Sébastien, Paul, André), né le 11 juin 1993.\r&quot;                             
+[20] &quot;0118 M. Azoyan (Loris), né le 25 janvier 1993.\r&quot;                                            
+[21] &quot;0119 Mme Drillet (Gaëlle), née le 26 juin 1993.\r&quot;                                           
+[22] &quot;0120 M. Galland (Loïck, Philippe), né le 8 août 1993.\r&quot;                                     
+[23] &quot;0121 M. Frey (Samuel, Léon, Richard), né le 27 juin 1992.\r&quot;                                 
+[24] &quot;0122 Mlle Mausoléo (Aude, Emilie, Marie), née le 2 avril 1993.\r&quot;                            
+[25] &quot;0123 M. Trimaille (Antonin), né le 9 janvier 1995.\r&quot;                                        
+[26] &quot;0124 Mme Gonsard (Apolline), née le 16 octobre 1993.\r&quot;                                      
+[27] &quot;0125 M. Gressens (Simon), né le 26 août 1992.\r&quot;                                             
+[28] &quot;0126 Mme Manse (Léa, Muriel), née le 9 juillet 1993.\r&quot;                                      
+[29] &quot;0127 Mme Guilloit (Azalais, Bernadette, Solange), née le 2 novembre 1993.\r&quot;                 
+[30] &quot;0128 M. Renault (Valentin), né le 24 avril 1994.\r&quot;                                          
+[31] &quot;0129 Mme Berardi (Giulia), née le 17 septembre 1993.\r&quot;                                      
+[32] &quot;0130 M. Berdugo (Kevin), né le 30 juin 1992.\r&quot;                                              
+[33] &quot;0131 M. Fourdinier (Victor, Philippe, Thierry), né le 15 décembre 1993.\r&quot;                   
+[34] &quot;0132 Mme Pina (Héloïse, Marceline), née le 28 mai 1994.\r&quot;                                   
+[35] &quot;0133 M. Marchiset (Antoine), né le 13 mai 1992.\r&quot;                                           
+[36] &quot;0134 M. Monnin (Charles, Germain, Claude), né le 1 avril 1993.\r&quot;                            
+[37] &quot;0135 M. Briens (Aurélien), né le 15 juillet 1989.\r&quot;                                         
+[38] &quot;0136 M. Ruiz (François, Jean-Claude), né le 19 décembre 1993.\r&quot;                             
+[39] &quot;0137 M. Hamon (Antoine), né le 30 novembre 1993.\r&quot;                                          
+[40] &quot;0138 M. Delange (Boris, Romain), né le 16 novembre 1992.\r&quot;                                  
+[41] &quot;0139 M. Carval (Thibaut, Benoît, François), né le 1 décembre 1993.\r&quot;                        
+[42] &quot;0140 Mlle Bach (Emma, Marie, Catherine), née le 29 novembre 1993.\r&quot;                         
+[43] &quot;0141 M. Babin (Matthias), né le 3 octobre 1992.\r&quot;                                           
+[44] &quot;0142 Mme Doira (Bilitis, Adelaïde), née le 14 août 1993.\r&quot;                                  
+[45] &quot;0143 M. Hilezian (Frédéric, Clément, Marc), né le 13 décembre 1994.\r&quot;                       
+[46] &quot;0144 Mme Lajaunie (Rebecca, Sarah), née le 14 juillet 1990.\r&quot;                               
+[47] &quot;0145 M. Le Carpentier (Aymeric, Jean-Claude, Jules), né le 24 août 1994.\r&quot;                  
+[48] &quot;0146 M. Le Boite (Hugo, Charles, Louis), né le 30 mars 1992.\r&quot;                              
+[49] &quot;0147 M. Lombardi (Yannis, Jérémie), né le 3 septembre 1993.\r&quot;                               
+[50] &quot;0148 Mme Lasvergnas (Julie, Marie, Jeanne), née le 30 juillet 1994.\r&quot;                       
+[51] &quot;0149 Mlle O&#39;keane (Aurélie, Deirdre, Nolwenn), née le 27 décembre 1993.\r&quot;                   
+[52] &quot;0150 M. Letellier (Thibault, Jean-Claude, René), né le 29 août 1993.\r&quot;                      
+[53] &quot;0151 Mme Dudok De Wit (Sarah), née le 8 août 1992.\r&quot;                                        
+[54] &quot;0152 M. Olory (Léo, Bruno, Claude), né le 30 juillet 1992.\r&quot;                                
+[55] &quot;0153 Mme Vergneault (Hélène, Sarah, Micheline), née le 11 novembre 1993.\r&quot;                  
+[56] &quot;0154 M. Le Breton (Guillaume), né le 11 octobre 1993.\r&quot;                                     
+[57] &quot;0155 Mme Ortoli (Manon), née le 30 octobre 1993.\r&quot;                                          
+[58] &quot;0156 Mme Schoch (Armelle, Christine, Dominique), née le 17 juillet 1992.\r&quot;                  
+[59] &quot;0157 Mme Traineau (Hélène, Anne, Odile), née le 17 décembre 1992.\r&quot;                         
+[60] &quot;0158 Mme Tessier (Dolores, Céline, Patrick), épouse Jean-Baptiste, née le 29 janvier 1993.\r&quot;
+[61] &quot;0159 M. Touboul (Arnaud), né le 23 septembre 1993.\r&quot;                                        
+[62] &quot;0160 M. Mairot (Kevin), né le 16 mai 1993.\r&quot;                                                
+[63] &quot;0161 M. El Bèze (Nathan, Gabriel), né le 26 avril 1993.\r&quot;                                   
+[64] &quot;0162 M. Khansa (Rémi), né le 13 octobre 1992.\r&quot;                                             
+[65] &quot;0163 M. Temmar (Yassine), né le 28 septembre 1992.\r&quot;                                        
+[66] &quot;0164 M. Legghe (Benoît, Charles, Pierre), né le 9 juillet 1993.\r&quot;                           
+[67] &quot;0165 M. Fournier (Nicolas, Julien, Henri), né le 9 septembre 1977.\r&quot;                        
+[68] &quot;0166 Mme Lasbleiz (Adèle), née le 7 janvier 1993.\r&quot;                                         
+[69] &quot;                                                             3\r&quot;                            
+
+[[4]]
+ [1] &quot;0167 M. Orion (Maxime), né le 20 novembre 1993.\r&quot;                                                        
+ [2] &quot;0168 Mlle Petit (Clémence, Annie, Alice), née le 27 avril 1993.\r&quot;                                        
+ [3] &quot;0169 Mme Brunac (Anne Cecile), née le 20 mars 1993.\r&quot;                                                    
+ [4] &quot;0170 M. Laydevant (William), né le 21 septembre 1992.\r&quot;                                                  
+ [5] &quot;0171 M. Belkaaloul (Yassine), né le 13 juin 1992.\r&quot;                                                      
+ [6] &quot;0172 Mme Le Bras (Pierrine), née le 10 mars 1993.\r&quot;                                                      
+ [7] &quot;0173 M. Nicolas (Louis), né le 28 novembre 1992.\r&quot;                                                       
+ [8] &quot;0174 M. Chebib (Emilien), né le 20 décembre 1992.\r&quot;                                                      
+ [9] &quot;0175 M. Galliot (Gaël, Michel, Paul), né le 1 octobre 1993.\r&quot;                                            
+[10] &quot;0176 Mme Raia (Lisa), née le 29 octobre 1993.\r&quot;                                                          
+[11] &quot;0177 Mme Noroy (Louise), née le 20 juillet 1993.\r&quot;                                                       
+[12] &quot;0178 Mlle Fabbri (Camille, Marie), née le 4 septembre 1993.\r&quot;                                            
+[13] &quot;0179 M. Thizy (Guillaume, Jean), né le 4 octobre 1993.\r&quot;                                                 
+[14] &quot;0180 Mme Bougault (Mathilde), née le 29 janvier 1993.\r&quot;                                                  
+[15] &quot;0181 Mlle Fedi (Mathilde), née le 23 juillet 1994.\r&quot;                                                     
+[16] &quot;0182 Mme Allou (Violaine), née le 12 janvier 1994.\r&quot;                                                     
+[17] &quot;0183 M. Richaud (Rémi, Jean-Claude), né le 18 juillet 1988.\r&quot;                                            
+[18] &quot;0184 Mme Messmer (Elodie, Sandrine, Yvette), née le 15 novembre 1993.\r&quot;                                  
+[19] &quot;0185 Mlle Patchinsky (Alexandra, Nathalie, Frédérique), née le 14 avril 1993.\r&quot;                          
+[20] &quot;0186 Mme Archer (Gabrielle), née le 20 août 1994.\r&quot;                                                      
+[21] &quot;0187 M. Martin-Champetier (Antoine, Jean, Arnaud), né le 20 septembre 1993.\r&quot;                            
+[22] &quot;0188 M. Lasserre (Matthieu, Claude, Pierre), né le 9 septembre 1993.\r&quot;                                   
+[23] &quot;0189 Mlle Prie (Héloïse, Virginie, Marie-Anne), née le 19 mars 1994.\r&quot;                                   
+[24] &quot;0190 M. Baumgarten (Clément), né le 18 janvier 1993.\r&quot;                                                   
+[25] &quot;0191 M. Guizouarn (Luca, Michel, Charles), né le 1 septembre 1993.\r&quot;                                     
+[26] &quot;0192 M. Debourdeau (Eloi, Grégoire, Marius), né le 22 juillet 1992.\r&quot;                                    
+[27] &quot;0193 M. Dumoulin (Nicolas, Henri, Vincent), né le 11 juin 1993.\r&quot;                                        
+[28] &quot;0194 M. Mernier (Thibaud, Georges, Martin), né le 9 mai 1994.\r&quot;                                          
+[29] &quot;0195 M. Lambert (Simon, Pablo), né le 5 mai 1993.\r&quot;                                                      
+[30] &quot;0196 Mme Mazeau (Lucile, Marie, Stanislava), née le 18 avril 1993.\r&quot;                                     
+[31] &quot;0197 Mme Buzzi (Marie, Marguerite), née le 11 mai 1994.\r&quot;                                                
+[32] &quot;0198 M. Manchart (Tom, Victor), né le 10 juillet 1993.\r&quot;                                                 
+[33] &quot;0199 Mme Gillon (Elisa), née le 10 décembre 1993.\r&quot;                                                      
+[34] &quot;0200 M. Roubertou (Yoann), né le 28 octobre 1992.\r&quot;                                                      
+[35] &quot;0201 M. Chean (Dara, Paul), né le 7 septembre 1993.\r&quot;                                                    
+[36] &quot;0202 M. Moutou (Alan, Nicolas), né le 21 mars 1994.\r&quot;                                                    
+[37] &quot;0203 Mlle Zeriouh (Sarah), née le 1 juillet 1993.\r&quot;                                                      
+[38] &quot;0204 M. Tuil (Anthony), né le 25 juillet 1992.\r&quot;                                                         
+[39] &quot;0205 Mme Guyot D Asnieres De Salins (Victoire, Fleur, Marie), usage De Salins, née le 18 novembre 1993.\r&quot;
+[40] &quot;0206 M. Massad (Pierre-Alexandre, Yves, Michel), né le 4 octobre 1993.\r&quot;                                 
+[41] &quot;0207 M. Mifsud (François), né le 26 mars 1992.\r&quot;                                                         
+[42] &quot;0208 Mme Faure (Pascale), née le 17 juillet 1992.\r&quot;                                                      
+[43] &quot;0209 Mme Parrot (Laurène), née le 12 février 1994.\r&quot;                                                     
+[44] &quot;0210 M. Rousseau (Theophile), né le 21 octobre 1992.\r&quot;                                                   
+[45] &quot;0211 M. Nicolas (Eliot, Maurice, Jean Marie), né le 11 septembre 1990.\r&quot;                                 
+[46] &quot;0212 Mlle Malézieux (Emilie, Anne, Marie), née le 14 juillet 1993.\r&quot;                                     
+[47] &quot;0213 M. Bellier (Julien), né le 8 décembre 1992.\r&quot;                                                       
+[48] &quot;0214 M. Machet (Thomas, René), né le 17 février 1993.\r&quot;                                                  
+[49] &quot;0215 Mme Evain (Manon, Louise), née le 20 mars 1992.\r&quot;                                                   
+[50] &quot;0216 Mme Lepee (Aurélie, Gabrielle, Joséphine), née le 17 octobre 1992.\r&quot;                                
+[51] &quot;0217 Mme Bontemps (Emmanuelle, Chantal), née le 30 juillet 1994.\r&quot;                                       
+[52] &quot;0218 Mlle Bel-Viel (Marion, Catherine), née le 19 septembre 1993.\r&quot;                                      
+[53] &quot;0219 M. Duriez (Benjamin, Laurent), né le 18 décembre 1993.\r&quot;                                            
+[54] &quot;0220 Mlle Patras (Marion), née le 3 décembre 1994.\r&quot;                                                     
+[55] &quot;0221 M. Soulier (Theodore), né le 29 décembre 1990.\r&quot;                                                    
+[56] &quot;0222 Mme Charret (Léa), née le 26 septembre 1993.\r&quot;                                                      
+[57] &quot;0223 M. Courtin (Edouard), né le 24 janvier 1991.\r&quot;                                                      
+[58] &quot;0224 M. Klein (Clément, Pierre), né le 3 juin 1992.\r&quot;                                                    
+[59] &quot;0225 M. Helary (Alois), né le 23 juillet 1993.\r&quot;                                                         
+[60] &quot;0226 M. Zito (Alexandre, Hugo), né le 21 septembre 1993.\r&quot;                                               
+[61] &quot;0227 M. Blanckaert (Edouard, Philippe, Gilbert), né le 29 juillet 1993.\r&quot;                                
+[62] &quot;0228 M. Pommerolle (Pierre, Adrien, Géry), né le 27 octobre 1993.\r&quot;                                      
+[63] &quot;0229 M. Blachier (Mathieu, Philippe, Michel), né le 29 décembre 1993.\r&quot;                                  
+[64] &quot;0230 Mme Louar (Margaux, Caroline), née le 4 décembre 1993.\r&quot;                                            
+[65] &quot;0231 M. Baret (Florian), né le 18 septembre 1993.\r&quot;                                                      
+[66] &quot;0232 Mme Serrar (Yasmine), née le 11 décembre 1994.\r&quot;                                                    
+[67] &quot;0233 Mme Lozano (Aude, Virginie), née le 26 juillet 1993.\r&quot;                                              
+[68] &quot;0234 M. Gomes De Pinho (Quentin), né le 10 mars 1993.\r&quot;                                                  
+[69] &quot;                                                            4\r&quot;                                          
+
+[[5]]
+ [1] &quot;0235 Mme Lemonnier (Lisa), née le 17 septembre 1993.\r&quot;                                    
+ [2] &quot;0236 Mme Faermark (Nicole, Esther), née le 15 mai 1992.\r&quot;                                 
+ [3] &quot;0237 Mme Liu (Cécile, Feifei), née le 8 décembre 1993.\r&quot;                                  
+ [4] &quot;0238 M. Majoulet (Alexandre, Elie, Boris), né le 15 décembre 1992.\r&quot;                      
+ [5] &quot;0239 Mme Proux (Eve-Anne, Danièle, Colombe), née le 13 septembre 1993.\r&quot;                  
+ [6] &quot;0240 Mme Macaire (Camille, Inès), née le 23 mai 1993.\r&quot;                                   
+ [7] &quot;0241 Mme Foucard (Cendrine), née le 2 avril 1993.\r&quot;                                       
+ [8] &quot;0242 Mme Grimal (Alice), née le 11 janvier 1992.\r&quot;                                        
+ [9] &quot;0243 Mme Bourdin (Juliette, Isabelle), née le 19 décembre 1993.\r&quot;                         
+[10] &quot;0244 Mme Labarre (Marion), née le 13 mai 1992.\r&quot;                                          
+[11] &quot;0245 M. Belin (Cesar, Eric), né le 9 novembre 1993.\r&quot;                                     
+[12] &quot;0246 M. Eyike (Julien, Michael), né le 2 février 1994.\r&quot;                                  
+[13] &quot;0247 M. De Baynast De Septfontaines (Quentin, Jacques, Philippe), né le 16 février 1994.\r&quot;
+[14] &quot;0248 M. Guerra (Xavier, Jacques, Antoine), né le 24 juillet 1992.\r&quot;                       
+[15] &quot;0249 Mme Brunet (Dorothée), épouse Mariani, née le 25 juin 1991.\r&quot;                        
+[16] &quot;0250 Mme Evin (Cécile), née le 17 mai 1993.\r&quot;                                             
+[17] &quot;0251 Mlle Blum (Laurène, Yasmina, Claudia), née le 26 avril 1993.\r&quot;                       
+[18] &quot;0252 M. Quehan (Romain), né le 18 novembre 1992.\r&quot;                                        
+[19] &quot;0253 Mme Etchamendy (Aizane), née le 17 juin 1993.\r&quot;                                      
+[20] &quot;0254 M. Figoni (Hugo), né le 1 juin 1992.\r&quot;                                               
+[21] &quot;0255 Mme Crozet (Audrey), née le 6 décembre 1993.\r&quot;                                       
+[22] &quot;0256 Mme Chung (Cécile, Koung Houy), née le 19 avril 1994.\r&quot;                              
+[23] &quot;0257 Mlle Canu (Dorine, Lucie), née le 2 avril 1993.\r&quot;                                    
+[24] &quot;0258 Mme Picard (Léa, Mélusine), née le 3 décembre 1992.\r&quot;                                
+[25] &quot;0259 Mme Poulain (Cécile, Catherine, Madeleine), née le 25 mai 1993.\r&quot;                    
+[26] &quot;0260 Mlle Dabbak (Imene), née le 2 novembre 1994.\r&quot;                                       
+[27] &quot;0261 Mme Pourtau (Laetitia, Laure), née le 15 juillet 1993.\r&quot;                             
+[28] &quot;0262 M. Desal (Raphaël, Jack, Henri), né le 31 janvier 1993.\r&quot;                            
+[29] &quot;0263 Mme De Ganay (Marie), née le 12 novembre 1993.\r&quot;                                     
+[30] &quot;0264 M. Pin (Grégoire, Jean, Edouard), né le 30 septembre 1993.\r&quot;                         
+[31] &quot;0265 Mme Fernandes (Amélie, Laura), née le 22 novembre 1992.\r&quot;                            
+[32] &quot;0266 Mme Tortonese (Sarah), née le 8 juin 1993.\r&quot;                                         
+[33] &quot;0267 M. Ferrand (Benjamin, Christophe), né le 18 juillet 1993.\r&quot;                          
+[34] &quot;0268 M. Varnier (Quentin, Rémy), né le 23 février 1992.\r&quot;                                 
+[35] &quot;0269 Mme Cornée (Charlène, Anaïs), née le 9 décembre 1993.\r&quot;                              
+[36] &quot;0270 Mme Masson (Laure), née le 10 mars 1993.\r&quot;                                           
+[37] &quot;0271 Mme Chehem Daoud Chehem (Ferida), née le 3 février 1993.\r&quot;                           
+[38] &quot;0272 Mme Trintignac (Mathilde, Isabelle, Sabine), née le 30 mars 1993.\r&quot;                  
+[39] &quot;0273 Mlle Le Hir (Anne-Sophie, Marie, Mai Lan), née le 19 septembre 1989.\r&quot;               
+[40] &quot;0274 M. Kielwasser (Gauthier, Christian, Léon), né le 23 janvier 1993.\r&quot;                  
+[41] &quot;0275 Mme Frenais De Coutard (Alix, Marie Antoinette, Flamine), née le 9 août 1993.\r&quot;      
+[42] &quot;0276 M. Grolleau (Emmanuel, Bernard, François), né le 17 mai 1993.\r&quot;                      
+[43] &quot;0277 M. Tondu (Maxence), né le 9 avril 1993.\r&quot;                                            
+[44] &quot;0278 Mme Mallart (Elise), née le 18 août 1993.\r&quot;                                          
+[45] &quot;0279 M. Barbarroux (Aymeric), né le 20 décembre 1994.\r&quot;                                   
+[46] &quot;0280 Mme Carrer (Mathilde, Marie), née le 28 juin 1993.\r&quot;                                 
+[47] &quot;0281 Mme Nilles (Christelle), née le 19 avril 1993.\r&quot;                                     
+[48] &quot;0282 Mme Martinet (Pauline, Juliette), née le 1 octobre 1993.\r&quot;                           
+[49] &quot;0283 Mme Bhujoo-Spiegelhoff (Zoé), née le 1 août 1993.\r&quot;                                  
+[50] &quot;0284 M. Receveur (Matthieu), né le 4 octobre 1994.\r&quot;                                      
+[51] &quot;0285 M. Salardaine (Quentin), né le 24 juillet 1993.\r&quot;                                    
+[52] &quot;0286 M. Gravier (Alban, Pierre), né le 19 mai 1993.\r&quot;                                     
+[53] &quot;0287 Mme Miladi (Sarra), née le 11 mai 1994.\r&quot;                                            
+[54] &quot;0288 M. Gobert (Baptiste, Valère), né le 21 avril 1994.\r&quot;                                 
+[55] &quot;0289 M. L&#39;official (Guillaume, Yvon, Jean-Pierre), né le 30 décembre 1993.\r&quot;              
+[56] &quot;0290 M. Baba (Aki), né le 22 mai 1993.\r&quot;                                                  
+[57] &quot;0291 Mme Leherpeur (Hélène, Thuy, Geneviève), née le 26 avril 1993.\r&quot;                     
+[58] &quot;0292 Mme Roger (Clémentine), née le 9 décembre 1994.\r&quot;                                    
+[59] &quot;0293 M. Di Felici (Fabien, Guy, Franz), né le 11 février 1992.\r&quot;                          
+[60] &quot;0294 Mme M&#39;henni (Rania), née le 21 octobre 1989.\r&quot;                                       
+[61] &quot;0295 Mme Haikal (Christelle, Claude, Marie), née le 9 décembre 1993.\r&quot;                    
+[62] &quot;0296 M. Gall (Emmanuel), né le 12 mars 1992.\r&quot;                                            
+[63] &quot;0297 Mme Bardoux (Elise, Marie, Germaine), née le 10 septembre 1992.\r&quot;                    
+[64] &quot;0298 Mlle Nykolyszyn (Charlotte), née le 25 août 1994.\r&quot;                                  
+[65] &quot;0299 M. Dallery (Romain), né le 24 octobre 1993.\r&quot;                                        
+[66] &quot;0300 M. Bon (Grégoire, Louis, Gerald), né le 17 novembre 1992.\r&quot;                          
+[67] &quot;0301 M. Durrechou (Quentin), né le 20 juin 1991.\r&quot;                                        
+[68] &quot;0302 M. Delemar (Victor, Philippe, Yves), né le 18 mars 1993.\r&quot;                           
+[69] &quot;                                                             5\r&quot;                          
+
+[[6]]
+ [1] &quot;0303 M. Pantalacci (Thibaut, Luc, Maxime), né le 19 mai 1992.\r&quot;           
+ [2] &quot;0304 M. Bauer (Jules, Henri, Claude), né le 8 juillet 1992.\r&quot;             
+ [3] &quot;0305 Mme Zegrari (Samira), née le 24 juillet 1994.\r&quot;                      
+ [4] &quot;0306 Mme Suc (Violette), née le 27 juillet 1993.\r&quot;                        
+ [5] &quot;0307 Mme Marcin (Kennie, Chanice), née le 16 septembre 1992.\r&quot;            
+ [6] &quot;0308 M. Crequit (Simon), né le 11 juin 1990.\r&quot;                            
+ [7] &quot;0309 Mlle Le Guyader (Maud), née le 23 août 1994.\r&quot;                       
+ [8] &quot;0310 Mme Auger (Apolline), née le 4 février 1994.\r&quot;                       
+ [9] &quot;0311 Mme Trouillard (Marion, Evy), née le 11 septembre 1993.\r&quot;            
+[10] &quot;0312 M. Henry (Guillaume), né le 13 mai 1993.\r&quot;                           
+[11] &quot;0313 Mme Martin (Clarisse, Marie), née le 21 janvier 1994.\r&quot;              
+[12] &quot;0314 M. Michel (Florian, Benoît, Valentin), né le 2 septembre 1993.\r&quot;     
+[13] &quot;0315 M. Ejjelthi (Hamza), né le 20 avril 1994.\r&quot;                          
+[14] &quot;0316 M. Crespin (Nikolas), né le 22 avril 1992.\r&quot;                         
+[15] &quot;0317 M. Denis (Thomas, Louis, Henri), né le 8 juin 1993.\r&quot;                
+[16] &quot;0318 Mme Winock (Auranne, Geneviève, Gisèle), née le 5 décembre 1993.\r&quot;   
+[17] &quot;0319 M. Lassozé (Simon, Pierre), né le 2 mai 1993.\r&quot;                      
+[18] &quot;0320 Mme Cordeil (Stéphanie, Jacqueline), née le 1 décembre 1986.\r&quot;       
+[19] &quot;0321 Mme Trystram (Noémie), née le 17 décembre 1993.\r&quot;                    
+[20] &quot;0322 M. Lanore (Aymeric, Christophe, Hervé), né le 19 décembre 1993.\r&quot;    
+[21] &quot;0323 Mme Planty-Bonjour (Alexia), née le 30 janvier 1994.\r&quot;               
+[22] &quot;0324 M. Sermet (Kevin), né le 22 avril 1993.\r&quot;                            
+[23] &quot;0325 M. Cavaille (Mathieu), né le 21 mars 1992.\r&quot;                         
+[24] &quot;0326 M. Hermitte (Laurent), né le 1 mars 1993.\r&quot;                          
+[25] &quot;0327 M. Tredez (Grégoire, Émmanuel, Bernard), né le 6 décembre 1993.\r&quot;    
+[26] &quot;0328 M. Daire (Emilien, Sacha, Louis), né le 31 juillet 1993.\r&quot;           
+[27] &quot;0329 M. Monnin (Boris, Alain, Maxime), né le 14 mai 1993.\r&quot;               
+[28] &quot;0330 Mlle Toubol (Amélie, Muriel), née le 4 mars 1994.\r&quot;                  
+[29] &quot;0331 M. Aden Hassan (Anthony, Libaneayanleh, Aden), né le 25 avril 1994.\r&quot;
+[30] &quot;0332 Mme Dangien (Ambre), née le 23 janvier 1993.\r&quot;                       
+[31] &quot;0333 Mme Vennier (Alice), née le 1 mai 1994.\r&quot;                            
+[32] &quot;0334 Mme Fort (Justine, Marie), née le 1 mai 1994.\r&quot;                      
+[33] &quot;0335 Mme Fabre (Juliette, Marjolaine, Frédérique), née le 22 juin 1992.\r&quot; 
+[34] &quot;0336 Mme Rouchosse (Ninon), née le 4 janvier 1993.\r&quot;                      
+[35] &quot;0337 M. Le Boedec (Antoine, Pierre), né le 10 juin 1993.\r&quot;                
+[36] &quot;0338 Mme Rolland (Maud, Marine, Anne), née le 15 mars 1993.\r&quot;             
+[37] &quot;0339 Mme Ivashchenko (Véronique), née le 29 septembre 1992.\r&quot;             
+[38] &quot;0340 M. Naveau (Thibaut, Marie), né le 21 octobre 1993.\r&quot;                 
+[39] &quot;0341 M. Cervantes (Baptiste, Alain, Pierre), né le 4 novembre 1992.\r&quot;     
+[40] &quot;0342 Mme Peyre (Marion, Noëlle), née le 24 janvier 1993.\r&quot;                
+[41] &quot;0343 Mme Ortuno (Sofia, Elisabeth, Luce), née le 1 novembre 1993.\r&quot;       
+[42] &quot;0344 Mme Uguen (Justine), née le 25 octobre 1993.\r&quot;                       
+[43] &quot;0345 Mlle Addi (Alix, Marion, Suzanne), née le 12 novembre 1992.\r&quot;        
+[44] &quot;0346 M. Cirotteau (Paul, Emile, Bernard), né le 22 novembre 1992.\r&quot;       
+[45] &quot;0347 Mme Fuentes (Inès, Marie), née le 25 août 1994.\r&quot;                    
+[46] &quot;0348 Mme Fitoussi (Léa, Gisèle), née le 24 juillet 1992.\r&quot;                
+[47] &quot;0349 Mme Dedieu (Daphné), née le 4 avril 1992.\r&quot;                          
+[48] &quot;0350 Mme Noret (Clara), née le 26 juin 1993.\r&quot;                            
+[49] &quot;0351 M. Degouge (Théophane, Pierre, Alain), né le 21 juillet 1993.\r&quot;      
+[50] &quot;0352 M. Lamirault (Rémy, Cédric), né le 9 juillet 1994.\r&quot;                 
+[51] &quot;0353 Mme Devilliers (Marie-Juliette), née le 25 juillet 1993.\r&quot;           
+[52] &quot;0354 M. Bernier (Raphaël, Jean-Sébastien, Pierre), né le 23 avril 1992.\r&quot; 
+[53] &quot;0355 M. Testory (Maxime), né le 3 avril 1992.\r&quot;                           
+[54] &quot;0356 Mme Augoyard (Laureline, Marie), née le 31 décembre 1993.\r&quot;          
+[55] &quot;0357 M. Dubost (Tanguy, Bruno, Marie), né le 9 août 1992.\r&quot;               
+[56] &quot;0358 Mme Plassais (Caroline), née le 8 février 1994.\r&quot;                    
+[57] &quot;0359 Mme Kedra (Alice), née le 14 décembre 1993.\r&quot;                        
+[58] &quot;0360 M. Voilque (Pierre), né le 24 mars 1993.\r&quot;                           
+[59] &quot;0361 Mme O&#39;shaughnessy (Emma, Chloé, Elaine), née le 5 juillet 1992.\r&quot;    
+[60] &quot;0362 M. Touboul (Olivier), né le 23 septembre 1993.\r&quot;                     
+[61] &quot;0363 M. Morlon (Quentin), né le 4 novembre 1993.\r&quot;                        
+[62] &quot;0364 M. Bassompierre (Adrien), né le 12 novembre 1993.\r&quot;                  
+[63] &quot;0365 Mlle Ménard (Coline, Elane), née le 7 décembre 1993.\r&quot;               
+[64] &quot;0366 Mlle Kauffmann (Maëlis, Coralie, Anaïs), née le 7 décembre 1992.\r&quot;   
+[65] &quot;0367 M. Abou Khalil (Kassem), né le 10 juillet 1993.\r&quot;                    
+[66] &quot;0368 M. Dutertre (Martin, Victor), né le 18 septembre 1992.\r&quot;             
+[67] &quot;0369 Mlle Dupessey (Florence), née le 26 février 1993.\r&quot;                  
+[68] &quot;0370 Mme Delaie (Camille, Angele, Geneviève), née le 21 août 1993.\r&quot;      
+[69] &quot;                                                             6\r&quot;          </code></pre>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb920-1"><a href="26-ranking-medical-school.html#cb920-1" aria-hidden="true" tabindex="-1"></a>data_parsed <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA_character_</span>, <span class="fu">length</span>(data), <span class="dv">7</span>)</span>
+<span id="cb920-2"><a href="26-ranking-medical-school.html#cb920-2" aria-hidden="true" tabindex="-1"></a>data_words <span class="ot">&lt;-</span> <span class="fu">str_extract_all</span>(data, <span class="fu">boundary</span>(<span class="st">&quot;word&quot;</span>))</span>
+<span id="cb920-3"><a href="26-ranking-medical-school.html#cb920-3" aria-hidden="true" tabindex="-1"></a>data_parsed[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(data_words, head, <span class="at">n =</span> <span class="dv">4</span>))</span>
+<span id="cb920-4"><a href="26-ranking-medical-school.html#cb920-4" aria-hidden="true" tabindex="-1"></a>data_parsed[, <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(data_words, tail, <span class="at">n =</span> <span class="dv">3</span>))</span>
+<span id="cb920-5"><a href="26-ranking-medical-school.html#cb920-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_parsed)</span></code></pre></div>
+<pre><code>     [,1] [,2]    [,3]  [,4]         [,5] [,6] [,7]
+[1,] &quot;c&quot;  &quot;Paris&quot; &quot;le&quot;  &quot;28&quot;         &quot;r&quot;  &quot;1&quot;  &quot;r&quot; 
+[2,] &quot;c&quot;  &quot;0031&quot;  &quot;Mme&quot; &quot;Bourhis&quot;    &quot;r&quot;  &quot;2&quot;  &quot;r&quot; 
+[3,] &quot;c&quot;  &quot;0099&quot;  &quot;Mme&quot; &quot;Meynard&quot;    &quot;r&quot;  &quot;3&quot;  &quot;r&quot; 
+[4,] &quot;c&quot;  &quot;0167&quot;  &quot;M&quot;   &quot;Orion&quot;      &quot;r&quot;  &quot;4&quot;  &quot;r&quot; 
+[5,] &quot;c&quot;  &quot;0235&quot;  &quot;Mme&quot; &quot;Lemonnier&quot;  &quot;r&quot;  &quot;5&quot;  &quot;r&quot; 
+[6,] &quot;c&quot;  &quot;0303&quot;  &quot;M&quot;   &quot;Pantalacci&quot; &quot;r&quot;  &quot;6&quot;  &quot;r&quot; </code></pre>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb922-1"><a href="26-ranking-medical-school.html#cb922-1" aria-hidden="true" tabindex="-1"></a>data_parsed2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(data_parsed) <span class="sc">%&gt;%</span></span>
+<span id="cb922-2"><a href="26-ranking-medical-school.html#cb922-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb922-3"><a href="26-ranking-medical-school.html#cb922-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">ranking =</span> <span class="fu">as.integer</span>(V1),</span>
+<span id="cb922-4"><a href="26-ranking-medical-school.html#cb922-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">is_male =</span> (V2 <span class="sc">==</span> <span class="st">&quot;M&quot;</span>),</span>
+<span id="cb922-5"><a href="26-ranking-medical-school.html#cb922-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">family_name =</span> V3,</span>
+<span id="cb922-6"><a href="26-ranking-medical-school.html#cb922-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">first_name =</span> V4,</span>
+<span id="cb922-7"><a href="26-ranking-medical-school.html#cb922-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">birth_date =</span> <span class="fu">pmap</span>(<span class="fu">list</span>(V5, V6, V7), <span class="cf">function</span>(d, m, y) {</span>
+<span id="cb922-8"><a href="26-ranking-medical-school.html#cb922-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(d, m, y, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb922-9"><a href="26-ranking-medical-school.html#cb922-9" aria-hidden="true" tabindex="-1"></a>    }) <span class="sc">%&gt;%</span> lubridate<span class="sc">::</span><span class="fu">dmy</span>()</span>
+<span id="cb922-10"><a href="26-ranking-medical-school.html#cb922-10" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb922-11"><a href="26-ranking-medical-school.html#cb922-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb922-12"><a href="26-ranking-medical-school.html#cb922-12" aria-hidden="true" tabindex="-1"></a>data_parsed2</span></code></pre></div>
+<pre><code># A tibble: 124 x 5
+   ranking is_male family_name first_name     birth_date
+     &lt;int&gt; &lt;lgl&gt;   &lt;chr&gt;       &lt;chr&gt;          &lt;date&gt;    
+ 1      NA FALSE   le          28             NA        
+ 2      NA FALSE   Mme         Bourhis        NA        
+ 3      NA FALSE   Mme         Meynard        NA        
+ 4      NA FALSE   M           Orion          NA        
+ 5      NA FALSE   Mme         Lemonnier      NA        
+ 6      NA FALSE   M           Pantalacci     NA        
+ 7      NA FALSE   M           Jean           NA        
+ 8      NA FALSE   Mme         Chaligne       NA        
+ 9      NA FALSE   Mme         Brillat        NA        
+10      NA FALSE   M           Meguerditchian NA        
+# ... with 114 more rows</code></pre>
+<p>Note: there is a problem with people who have a family name composed of multiple words.</p>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="26-ranking-medical-school.html#cb924-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Proportion male/female</span></span>
+<span id="cb924-2"><a href="26-ranking-medical-school.html#cb924-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(data_parsed2<span class="sc">$</span>is_male)</span>
+<span id="cb924-3"><a href="26-ranking-medical-school.html#cb924-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 43% of males.</span></span>
+<span id="cb924-4"><a href="26-ranking-medical-school.html#cb924-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb924-5"><a href="26-ranking-medical-school.html#cb924-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb924-6"><a href="26-ranking-medical-school.html#cb924-6" aria-hidden="true" tabindex="-1"></a>myggplot <span class="ot">&lt;-</span> <span class="cf">function</span>(...) bigstatsr<span class="sc">:::</span><span class="fu">MY_THEME</span>(<span class="fu">ggplot</span>(...))</span>
+<span id="cb924-7"><a href="26-ranking-medical-school.html#cb924-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb924-8"><a href="26-ranking-medical-school.html#cb924-8" aria-hidden="true" tabindex="-1"></a><span class="fu">myggplot</span>(data_parsed2) <span class="sc">+</span></span>
+<span id="cb924-9"><a href="26-ranking-medical-school.html#cb924-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> birth_date), <span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p>If a recent A-level graduate attempts the exam for the first time, they would be born in 1993. Due to the very competitive nature of the exam, a second and more attempts are also possible. Those who attempts the exam for the second time were born in 1992. Nonetheless, one can attempt the exam at any age, so a lot of older people are also appearing in the dataset.</p>
+<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb925-1"><a href="26-ranking-medical-school.html#cb925-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myggplot</span>(<span class="fu">mutate</span>(data_parsed2, <span class="at">prop_male =</span> <span class="fu">cummean</span>(data_parsed2<span class="sc">$</span>is_male))) <span class="sc">+</span> </span>
+<span id="cb925-2"><a href="26-ranking-medical-school.html#cb925-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(data_parsed2<span class="sc">$</span>is_male), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb925-3"><a href="26-ranking-medical-school.html#cb925-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> ranking, <span class="at">y =</span> prop_male))</span>
+<span id="cb925-4"><a href="26-ranking-medical-school.html#cb925-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb925-5"><a href="26-ranking-medical-school.html#cb925-5" aria-hidden="true" tabindex="-1"></a>(<span class="fu">myggplot</span>(data_parsed2) <span class="sc">+</span></span>
+<span id="cb925-6"><a href="26-ranking-medical-school.html#cb925-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_point</span>(<span class="fu">aes</span>(ranking, birth_date, <span class="at">color =</span> is_male)) <span class="sc">+</span></span>
+<span id="cb925-7"><a href="26-ranking-medical-school.html#cb925-7" aria-hidden="true" tabindex="-1"></a>   <span class="fu">aes</span>(<span class="at">text =</span> bigstatsr<span class="sc">::</span><span class="fu">asPlotlyText</span>(data_parsed2))) <span class="sc">%&gt;%</span></span>
+<span id="cb925-8"><a href="26-ranking-medical-school.html#cb925-8" aria-hidden="true" tabindex="-1"></a>  plotly<span class="sc">::</span><span class="fu">ggplotly</span>(<span class="at">tooltip =</span> <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<p>We can see a female 19 year old (with a really high ranking!) and a 54-year old man (with a poor ranking).</p>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="26-ranking-medical-school.html#cb926-1" aria-hidden="true" tabindex="-1"></a><span class="fu">myggplot</span>(data_parsed2, <span class="fu">aes</span>(ranking, birth_date)) <span class="sc">+</span></span>
+<span id="cb926-2"><a href="26-ranking-medical-school.html#cb926-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb926-3"><a href="26-ranking-medical-school.html#cb926-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> is_male), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1282,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="25-interview-attendance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="27-webscraping-linkedin.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1314,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/25-ranking-medical-schools.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 13 Gender Pay Gap | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 13 Gender Pay Gap | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 13 Gender Pay Gap | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="12-thinking-with-data.html"/>
+<link rel="next" href="14-stop-appraisals.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,475 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
+<div id="pay-gap" class="section level1" number="13">
+<h1><span class="header-section-number">Chapter 13</span> Gender Pay Gap</h1>
+<p>According to a recent Glassdoor survey, more than two-thirds (67 percent)
+of U.S. employees say they would not apply for jobs at employers where they
+believe a gender pay gap exists.1 Today, the gender pay gap is more than
+a social or legal issue. It’s an issue that can affect the ability of employers to
+attract and retain talent.</p>
+<p>How should HR practitioners react to concerns about the gender pay gap?
+One increasingly popular way is to perform an internal gender pay audit to
+understand whether a gap exists at your company. This involves examining
+your own payroll data for evidence of a gender pay gap, and making
+recommendations to senior management about ways to lower gender
+barriers in recruitment, hiring, pay and promotion before they arise as
+broader organizational concerns.</p>
+<p>The following example appeared on the Glassdor website in March 2017, with the title “How to Audit Your Gender Pay Gap: An Employers Guide Using R” and was written by Andrew Chamberlain, Ph.D.</p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="13-pay-gap.html#cb472-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load R libraries.</span></span>
+<span id="cb472-2"><a href="13-pay-gap.html#cb472-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb472-3"><a href="13-pay-gap.html#cb472-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code></pre></div>
+<pre><code>-- Attaching packages -------------------------------------- tidymodels 0.1.1 --</code></pre>
+<pre><code>v dials     0.0.9      v rsample   0.0.8 
+v modeldata 0.0.2      v tune      0.1.1 
+v parsnip   0.1.3      v workflows 0.2.1 
+v recipes   0.1.13     v yardstick 0.0.7 </code></pre>
+<pre><code>-- Conflicts ----------------------------------------- tidymodels_conflicts() --
+x purrr::discard()         masks scales::discard()
+x dplyr::filter()          masks stats::filter()
+x recipes::fixed()         masks stringr::fixed()
+x kableExtra::group_rows() masks dplyr::group_rows()
+x dplyr::lag()             masks stats::lag()
+x yardstick::spec()        masks readr::spec()
+x recipes::step()          masks stats::step()</code></pre>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="13-pay-gap.html#cb476-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code></pre></div>
+<pre><code>Loading required package: usethis</code></pre>
+<pre><code>
+Attaching package: &#39;devtools&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:recipes&#39;:
+
+    check</code></pre>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="13-pay-gap.html#cb480-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install_github(&quot;Hendrik147/HR_Analytics_in_R_book_v2/HRAnalytics&quot;)</span></span>
+<span id="cb480-2"><a href="13-pay-gap.html#cb480-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(HRAnalytics) <span class="co"># Helper package</span></span>
+<span id="cb480-3"><a href="13-pay-gap.html#cb480-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb480-4"><a href="13-pay-gap.html#cb480-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Turn off scientific notation. </span></span>
+<span id="cb480-5"><a href="13-pay-gap.html#cb480-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="13-pay-gap.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data. </span></span>
+<span id="cb481-2"><a href="13-pay-gap.html#cb481-2" aria-hidden="true" tabindex="-1"></a>gd_data <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://glassdoor.box.com/shared/static/beukjzgrsu35fqe59f7502hruribd5tt.csv&quot;</span>)</span></code></pre></div>
+<pre><code>
+-- Column specification --------------------------------------------------------
+cols(
+  jobTitle = col_character(),
+  gender = col_character(),
+  age = col_double(),
+  perfEval = col_double(),
+  edu = col_character(),
+  dept = col_character(),
+  seniority = col_double(),
+  basePay = col_double(),
+  bonus = col_double()
+)</code></pre>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="13-pay-gap.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="co"># N = 1000 total observations.</span></span></code></pre></div>
+<div id="data-cleaning-and-prep." class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Data Cleaning and Prep.</h2>
+<p>Before we can analyse whether we have gender pay gap, we need to prepare our data so it is cleaned up and has useful columns we can analyse.</p>
+<p>We will perform the following steps in our process:</p>
+<ol style="list-style-type: decimal">
+<li>Make a number of sensible age brackets e.g. &lt;25, 25-34, 35-44, 45-54, &gt;54</li>
+<li>Create total compensation variable (base pay + bonus)</li>
+<li>Take natural logarithm of compensation variables (for percentage pay gap interpretation in regressions).</li>
+<li>Convert values like department into values that can act as flags in our model and making the most commonly occuring value the default which everything else gets compared to in our model.</li>
+</ol>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="13-pay-gap.html#cb484-1" aria-hidden="true" tabindex="-1"></a>gd_data <span class="sc">%&gt;%</span></span>
+<span id="cb484-2"><a href="13-pay-gap.html#cb484-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Age brackets</span></span>
+<span id="cb484-3"><a href="13-pay-gap.html#cb484-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_bin =</span> <span class="fu">cut</span>(age,</span>
+<span id="cb484-4"><a href="13-pay-gap.html#cb484-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dv">35</span>, <span class="dv">45</span>, <span class="dv">55</span>, <span class="cn">Inf</span>),</span>
+<span id="cb484-5"><a href="13-pay-gap.html#cb484-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">right =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb484-6"><a href="13-pay-gap.html#cb484-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Total compensation</span></span>
+<span id="cb484-7"><a href="13-pay-gap.html#cb484-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_pay =</span> basePay <span class="sc">+</span> bonus) <span class="sc">%&gt;%</span></span>
+<span id="cb484-8"><a href="13-pay-gap.html#cb484-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Log of compensation</span></span>
+<span id="cb484-9"><a href="13-pay-gap.html#cb484-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_base =</span> <span class="fu">log</span>(basePay, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)),</span>
+<span id="cb484-10"><a href="13-pay-gap.html#cb484-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_total =</span> <span class="fu">log</span>(total_pay, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)),</span>
+<span id="cb484-11"><a href="13-pay-gap.html#cb484-11" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Adds 1 to allow for log of 0 bonus values.</span></span>
+<span id="cb484-12"><a href="13-pay-gap.html#cb484-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_bonus =</span> <span class="fu">log</span>(bonus <span class="sc">+</span> <span class="dv">1</span>, <span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb484-13"><a href="13-pay-gap.html#cb484-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make flags</span></span>
+<span id="cb484-14"><a href="13-pay-gap.html#cb484-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is_character, fct_infreq) <span class="sc">%&gt;%</span></span>
+<span id="cb484-15"><a href="13-pay-gap.html#cb484-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_bin =</span> <span class="fu">fct_infreq</span>(age_bin)) <span class="ot">-&gt;</span></span>
+<span id="cb484-16"><a href="13-pay-gap.html#cb484-16" aria-hidden="true" tabindex="-1"></a>  gd_data_clean</span></code></pre></div>
 </div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
+<div id="summary-statistics-by-gender" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Summary Statistics by gender</h2>
+<p>We can look at summary statistics by gender.</p>
+<div class="sourceCode" id="cb485"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb485-1"><a href="13-pay-gap.html#cb485-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base pay summary stats.</span></span>
+<span id="cb485-2"><a href="13-pay-gap.html#cb485-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb485-3"><a href="13-pay-gap.html#cb485-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exclude stuff with missing info</span></span>
+<span id="cb485-4"><a href="13-pay-gap.html#cb485-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(basePay)) <span class="sc">%&gt;%</span></span>
+<span id="cb485-5"><a href="13-pay-gap.html#cb485-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Analyse by gender</span></span>
+<span id="cb485-6"><a href="13-pay-gap.html#cb485-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb485-7"><a href="13-pay-gap.html#cb485-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Retrieve summary statistics</span></span>
+<span id="cb485-8"><a href="13-pay-gap.html#cb485-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb485-9"><a href="13-pay-gap.html#cb485-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_base =</span> <span class="fu">mean</span>(basePay),</span>
+<span id="cb485-10"><a href="13-pay-gap.html#cb485-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_base =</span> <span class="fu">median</span>(basePay),</span>
+<span id="cb485-11"><a href="13-pay-gap.html#cb485-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>()</span>
+<span id="cb485-12"><a href="13-pay-gap.html#cb485-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="ot">-&gt;</span></span>
+<span id="cb485-13"><a href="13-pay-gap.html#cb485-13" aria-hidden="true" tabindex="-1"></a>  gd_summary_gender_base</span>
+<span id="cb485-14"><a href="13-pay-gap.html#cb485-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb485-15"><a href="13-pay-gap.html#cb485-15" aria-hidden="true" tabindex="-1"></a>gd_summary_gender_base</span></code></pre></div>
+<pre><code># A tibble: 2 x 4
+  gender mean_base median_base count
+  &lt;fct&gt;      &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;
+1 Male     98457.5     98223     532
+2 Female   89942.8     89913.5   468</code></pre>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="13-pay-gap.html#cb487-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Total pay summary stats.</span></span>
+<span id="cb487-2"><a href="13-pay-gap.html#cb487-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb487-3"><a href="13-pay-gap.html#cb487-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use a helper function to save typing</span></span>
+<span id="cb487-4"><a href="13-pay-gap.html#cb487-4" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">gap_summary</span>(gender, total_pay) <span class="ot">-&gt;</span></span>
+<span id="cb487-5"><a href="13-pay-gap.html#cb487-5" aria-hidden="true" tabindex="-1"></a>  gd_summary_gender_total</span>
+<span id="cb487-6"><a href="13-pay-gap.html#cb487-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-7"><a href="13-pay-gap.html#cb487-7" aria-hidden="true" tabindex="-1"></a>gd_summary_gender_total</span></code></pre></div>
+<pre><code># A tibble: 2 x 4
+  gender     mean  median count
+  &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
+1 Male   104919.  105100.   532
+2 Female  96416.8  96571    468</code></pre>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="13-pay-gap.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bonus summary stats. </span></span>
+<span id="cb489-2"><a href="13-pay-gap.html#cb489-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb489-3"><a href="13-pay-gap.html#cb489-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use a helper function to save typing</span></span>
+<span id="cb489-4"><a href="13-pay-gap.html#cb489-4" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">gap_summary</span>(gender, bonus) <span class="ot">-&gt;</span></span>
+<span id="cb489-5"><a href="13-pay-gap.html#cb489-5" aria-hidden="true" tabindex="-1"></a>  gd_summary_gender_bonus</span>
+<span id="cb489-6"><a href="13-pay-gap.html#cb489-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb489-7"><a href="13-pay-gap.html#cb489-7" aria-hidden="true" tabindex="-1"></a>gd_summary_gender_bonus</span></code></pre></div>
+<pre><code># A tibble: 2 x 4
+  gender    mean median count
+  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
+1 Male   6461.13 6480.5   532
+2 Female 6474.01 6553     468</code></pre>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="13-pay-gap.html#cb491-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performance evaluations summary stats. </span></span>
+<span id="cb491-2"><a href="13-pay-gap.html#cb491-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb491-3"><a href="13-pay-gap.html#cb491-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use a helper function to save typing</span></span>
+<span id="cb491-4"><a href="13-pay-gap.html#cb491-4" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">gap_summary</span>(gender, perfEval)  <span class="ot">-&gt;</span></span>
+<span id="cb491-5"><a href="13-pay-gap.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  gd_summary_gender_perf</span>
+<span id="cb491-6"><a href="13-pay-gap.html#cb491-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb491-7"><a href="13-pay-gap.html#cb491-7" aria-hidden="true" tabindex="-1"></a>gd_summary_gender_perf</span></code></pre></div>
+<pre><code># A tibble: 2 x 4
+  gender    mean median count
+  &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
+1 Male   3.12594      3   532
+2 Female 2.93590      3   468</code></pre>
 </div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
+<div id="avoiding-simpsons-paradox" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Avoiding Simpson’s Paradox</h2>
+<p>Simspson’s Paradox is where some high level aggregations lead to a different conclusion than would have been arrived at if a lower level of detail had been looked at. We should check out values split by department and job title to see if they showcase wage differences.</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="13-pay-gap.html#cb493-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performance evaluations summary stats. </span></span>
+<span id="cb493-2"><a href="13-pay-gap.html#cb493-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb493-3"><a href="13-pay-gap.html#cb493-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(total_pay)) <span class="sc">%&gt;%</span></span>
+<span id="cb493-4"><a href="13-pay-gap.html#cb493-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a summary by department and gender</span></span>
+<span id="cb493-5"><a href="13-pay-gap.html#cb493-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dept, gender) <span class="sc">%&gt;%</span></span>
+<span id="cb493-6"><a href="13-pay-gap.html#cb493-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb493-7"><a href="13-pay-gap.html#cb493-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_perf =</span> <span class="fu">mean</span>(total_pay),</span>
+<span id="cb493-8"><a href="13-pay-gap.html#cb493-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_perf =</span> <span class="fu">median</span>(total_pay),</span>
+<span id="cb493-9"><a href="13-pay-gap.html#cb493-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>()</span>
+<span id="cb493-10"><a href="13-pay-gap.html#cb493-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb493-11"><a href="13-pay-gap.html#cb493-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;Unpivot&quot; the data</span></span>
+<span id="cb493-12"><a href="13-pay-gap.html#cb493-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(measure, value, mean_perf<span class="sc">:</span>count) <span class="sc">%&gt;%</span></span>
+<span id="cb493-13"><a href="13-pay-gap.html#cb493-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the gender with measure</span></span>
+<span id="cb493-14"><a href="13-pay-gap.html#cb493-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(combo, measure, gender) <span class="sc">%&gt;%</span></span>
+<span id="cb493-15"><a href="13-pay-gap.html#cb493-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></span>
+<span id="cb493-16"><a href="13-pay-gap.html#cb493-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(combo, value) <span class="ot">-&gt;</span></span>
+<span id="cb493-17"><a href="13-pay-gap.html#cb493-17" aria-hidden="true" tabindex="-1"></a>  gd_summary_dept_gender_total</span>
+<span id="cb493-18"><a href="13-pay-gap.html#cb493-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb493-19"><a href="13-pay-gap.html#cb493-19" aria-hidden="true" tabindex="-1"></a>gd_summary_dept_gender_total</span></code></pre></div>
+<pre><code># A tibble: 5 x 7
+# Groups:   dept [5]
+  dept  count_Female count_Male mean_perf_Female mean_perf_Male median_perf_Fem~
+  &lt;fct&gt;        &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;
+1 Oper~           96        114          93098.5        99214.7          93236.5
+2 Sales          101        106          99222.3       108388.           99069  
+3 Mana~           87        111          99172.1       106201.           96329  
+4 Admi~           95         98          93429.2       102680.           94481  
+5 Engi~           89        103          97308.1       108408.           97867  
+# ... with 1 more variable: median_perf_Male &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="13-pay-gap.html#cb495-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Performance evaluations summary stats. </span></span>
+<span id="cb495-2"><a href="13-pay-gap.html#cb495-2" aria-hidden="true" tabindex="-1"></a>gd_data_clean <span class="sc">%&gt;%</span></span>
+<span id="cb495-3"><a href="13-pay-gap.html#cb495-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(total_pay)) <span class="sc">%&gt;%</span></span>
+<span id="cb495-4"><a href="13-pay-gap.html#cb495-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create a summary by job and gender</span></span>
+<span id="cb495-5"><a href="13-pay-gap.html#cb495-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(jobTitle, gender) <span class="sc">%&gt;%</span></span>
+<span id="cb495-6"><a href="13-pay-gap.html#cb495-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb495-7"><a href="13-pay-gap.html#cb495-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_perf =</span> <span class="fu">mean</span>(total_pay),</span>
+<span id="cb495-8"><a href="13-pay-gap.html#cb495-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_perf =</span> <span class="fu">median</span>(total_pay),</span>
+<span id="cb495-9"><a href="13-pay-gap.html#cb495-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>()</span>
+<span id="cb495-10"><a href="13-pay-gap.html#cb495-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb495-11"><a href="13-pay-gap.html#cb495-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;Unpivot&quot; the data</span></span>
+<span id="cb495-12"><a href="13-pay-gap.html#cb495-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(measure, value, mean_perf<span class="sc">:</span>count) <span class="sc">%&gt;%</span></span>
+<span id="cb495-13"><a href="13-pay-gap.html#cb495-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the gender with measure</span></span>
+<span id="cb495-14"><a href="13-pay-gap.html#cb495-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(combo, measure, gender) <span class="sc">%&gt;%</span></span>
+<span id="cb495-15"><a href="13-pay-gap.html#cb495-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># &quot;Pivot&quot; the data to see all the measures split by gender</span></span>
+<span id="cb495-16"><a href="13-pay-gap.html#cb495-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(combo, value) <span class="ot">-&gt;</span></span>
+<span id="cb495-17"><a href="13-pay-gap.html#cb495-17" aria-hidden="true" tabindex="-1"></a>  gd_summary_job_gender_total</span>
+<span id="cb495-18"><a href="13-pay-gap.html#cb495-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb495-19"><a href="13-pay-gap.html#cb495-19" aria-hidden="true" tabindex="-1"></a>gd_summary_job_gender_total</span></code></pre></div>
+<pre><code># A tibble: 10 x 7
+# Groups:   jobTitle [10]
+   jobTitle count_Female count_Male mean_perf_Female mean_perf_Male
+   &lt;fct&gt;           &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+ 1 Marketi~          107         11          82251.1        88161.6
+ 2 Softwar~            8        101         101147.        113034. 
+ 3 Data Sc~           53         54         102452.         95450  
+ 4 Financi~           49         58         101744.        101116. 
+ 5 Graphic~           48         50          98810.4        96584.1
+ 6 IT                 50         46          96837.9        97239.6
+ 7 Sales A~           43         51          98220.5       100894. 
+ 8 Driver             46         45          93197.3        98417.8
+ 9 Manager            18         72         133244.        130929. 
+10 Warehou~           46         44         100084.         93363.6
+# ... with 2 more variables: median_perf_Female &lt;dbl&gt;, median_perf_Male &lt;dbl&gt;</code></pre>
 </div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="model-estimation-ols-with-controls." class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Model Estimation: OLS with controls.</h2>
+<p>Coefficient on “male” has the interpretation of approximate male pay advantage (“gender pay gap”).</p>
+<div id="logarithm-of-base-pay" class="section level3" number="13.4.1">
+<h3><span class="header-section-number">13.4.1</span> Logarithm of Base Pay</h3>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="13-pay-gap.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No controls. (&quot;unadjusted&quot; pay gap.)</span></span>
+<span id="cb497-2"><a href="13-pay-gap.html#cb497-2" aria-hidden="true" tabindex="-1"></a>lm_gender <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_base <span class="sc">~</span> gender, <span class="at">data =</span> gd_data_clean)</span>
+<span id="cb497-3"><a href="13-pay-gap.html#cb497-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb497-4"><a href="13-pay-gap.html#cb497-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding &quot;human capital&quot; controls (performance evals, age and education).</span></span>
+<span id="cb497-5"><a href="13-pay-gap.html#cb497-5" aria-hidden="true" tabindex="-1"></a>lm_humancapital <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_base <span class="sc">~</span> gender <span class="sc">+</span> perfEval <span class="sc">+</span> age_bin <span class="sc">+</span> edu, <span class="at">data =</span> gd_data_clean)</span>
+<span id="cb497-6"><a href="13-pay-gap.html#cb497-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb497-7"><a href="13-pay-gap.html#cb497-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding all controls. (&quot;adjusted&quot; pay gap.)</span></span>
+<span id="cb497-8"><a href="13-pay-gap.html#cb497-8" aria-hidden="true" tabindex="-1"></a>lm_allcontrols <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_base <span class="sc">~</span> gender <span class="sc">+</span> perfEval <span class="sc">+</span> age_bin <span class="sc">+</span> edu <span class="sc">+</span> dept <span class="sc">+</span> seniority <span class="sc">+</span> jobTitle, <span class="at">data =</span> gd_data_clean)</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="13-pay-gap.html#cb498-1" aria-hidden="true" tabindex="-1"></a>lm_gender <span class="sc">%&gt;%</span></span>
+<span id="cb498-2"><a href="13-pay-gap.html#cb498-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = log_base ~ gender, data = gd_data_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.9529 -0.1610  0.0356  0.2080  0.6374 
+
+Coefficients:
+             Estimate Std. Error t value             Pr(&gt;|t|)    
+(Intercept)   11.4618     0.0123  933.21 &lt; 0.0000000000000002 ***
+genderFemale  -0.0953     0.0180   -5.31           0.00000014 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.283 on 998 degrees of freedom
+Multiple R-squared:  0.0275,    Adjusted R-squared:  0.0265 
+F-statistic: 28.2 on 1 and 998 DF,  p-value: 0.000000136</code></pre>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="13-pay-gap.html#cb500-1" aria-hidden="true" tabindex="-1"></a>lm_gender <span class="sc">%&gt;%</span></span>
+<span id="cb500-2"><a href="13-pay-gap.html#cb500-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the predicted values</span></span>
+<span id="cb500-3"><a href="13-pay-gap.html#cb500-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb500-4"><a href="13-pay-gap.html#cb500-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename columns to more friendly names</span></span>
+<span id="cb500-5"><a href="13-pay-gap.html#cb500-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">actual =</span> log_base, <span class="at">predicted =</span> .fitted) <span class="sc">%&gt;%</span></span>
+<span id="cb500-6"><a href="13-pay-gap.html#cb500-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build a chart</span></span>
+<span id="cb500-7"><a href="13-pay-gap.html#cb500-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb500-8"><a href="13-pay-gap.html#cb500-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add columns to it</span></span>
+<span id="cb500-9"><a href="13-pay-gap.html#cb500-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>actual, <span class="at">y=</span>predicted) <span class="sc">+</span></span>
+<span id="cb500-10"><a href="13-pay-gap.html#cb500-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Choose chart type</span></span>
+<span id="cb500-11"><a href="13-pay-gap.html#cb500-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb500-12"><a href="13-pay-gap.html#cb500-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a diagonal line representing perfect predictions</span></span>
+<span id="cb500-13"><a href="13-pay-gap.html#cb500-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">colour=</span><span class="st">&quot;blue&quot;</span>, <span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>)<span class="sc">+</span></span>
+<span id="cb500-14"><a href="13-pay-gap.html#cb500-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Split by gender</span></span>
+<span id="cb500-15"><a href="13-pay-gap.html#cb500-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gender) <span class="sc">+</span></span>
+<span id="cb500-16"><a href="13-pay-gap.html#cb500-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add some labels</span></span>
+<span id="cb500-17"><a href="13-pay-gap.html#cb500-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </span>
+<span id="cb500-18"><a href="13-pay-gap.html#cb500-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing gender&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/lm_gender%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="13-pay-gap.html#cb501-1" aria-hidden="true" tabindex="-1"></a>lm_humancapital <span class="sc">%&gt;%</span> </span>
+<span id="cb501-2"><a href="13-pay-gap.html#cb501-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = log_base ~ gender + perfEval + age_bin + edu, data = gd_data_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.7985 -0.1384  0.0216  0.1550  0.5663 
+
+Coefficients:
+               Estimate Std. Error t value             Pr(&gt;|t|)    
+(Intercept)    11.62854    0.02500  465.06 &lt; 0.0000000000000002 ***
+genderFemale   -0.10019    0.01472   -6.81       0.000000000017 ***
+perfEval       -0.00696    0.00516   -1.35                0.178    
+age_bin[25,35) -0.35168    0.02191  -16.05 &lt; 0.0000000000000002 ***
+age_bin[45,55) -0.11506    0.02206   -5.21       0.000000223886 ***
+age_bin[35,45) -0.19201    0.02238   -8.58 &lt; 0.0000000000000002 ***
+age_bin[0,25)  -0.43181    0.02307  -18.72 &lt; 0.0000000000000002 ***
+eduMasters      0.08767    0.02029    4.32       0.000017159218 ***
+eduCollege      0.03757    0.02056    1.83                0.068 .  
+eduPhD          0.11096    0.02072    5.35       0.000000106653 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.231 on 990 degrees of freedom
+Multiple R-squared:  0.361, Adjusted R-squared:  0.355 
+F-statistic: 62.2 on 9 and 990 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="13-pay-gap.html#cb503-1" aria-hidden="true" tabindex="-1"></a>lm_humancapital <span class="sc">%&gt;%</span> </span>
+<span id="cb503-2"><a href="13-pay-gap.html#cb503-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the predicted values</span></span>
+<span id="cb503-3"><a href="13-pay-gap.html#cb503-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb503-4"><a href="13-pay-gap.html#cb503-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename columns to more friendly names</span></span>
+<span id="cb503-5"><a href="13-pay-gap.html#cb503-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">actual =</span> log_base, <span class="at">predicted =</span> .fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb503-6"><a href="13-pay-gap.html#cb503-6" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">pred_vs_actuals</span>() <span class="sc">+</span></span>
+<span id="cb503-7"><a href="13-pay-gap.html#cb503-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add some labels</span></span>
+<span id="cb503-8"><a href="13-pay-gap.html#cb503-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </span>
+<span id="cb503-9"><a href="13-pay-gap.html#cb503-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Values predicted using a linear model containing human capital measures&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/lm_humancapital%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="13-pay-gap.html#cb504-1" aria-hidden="true" tabindex="-1"></a>lm_allcontrols <span class="sc">%&gt;%</span> </span>
+<span id="cb504-2"><a href="13-pay-gap.html#cb504-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>
+Call:
+lm(formula = log_base ~ gender + perfEval + age_bin + edu + dept + 
+    seniority + jobTitle, data = gd_data_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.5679 -0.0824  0.0099  0.0865  0.3378 
+
+Coefficients:
+                             Estimate Std. Error t value             Pr(&gt;|t|)
+(Intercept)                 11.006946   0.022887  480.93 &lt; 0.0000000000000002
+genderFemale                -0.010945   0.009246   -1.18               0.2368
+perfEval                     0.000107   0.002948    0.04               0.9709
+age_bin[25,35)              -0.336882   0.012492  -26.97 &lt; 0.0000000000000002
+age_bin[45,55)              -0.100828   0.012613   -7.99   0.0000000000000037
+age_bin[35,45)              -0.197028   0.012808  -15.38 &lt; 0.0000000000000002
+age_bin[0,25)               -0.432314   0.013127  -32.93 &lt; 0.0000000000000002
+eduMasters                   0.068456   0.011553    5.93   0.0000000043195308
+eduCollege                   0.012278   0.011735    1.05               0.2957
+eduPhD                       0.080431   0.011793    6.82   0.0000000000158866
+deptSales                    0.077778   0.012933    6.01   0.0000000025571978
+deptManagement               0.034401   0.013069    2.63               0.0086
+deptAdministration           0.002596   0.013114    0.20               0.8431
+deptEngineering              0.035649   0.013148    2.71               0.0068
+seniority                    0.108084   0.002990   36.15 &lt; 0.0000000000000002
+jobTitleSoftware Engineer    0.345077   0.019067   18.10 &lt; 0.0000000000000002
+jobTitleData Scientist       0.206233   0.017899   11.52 &lt; 0.0000000000000002
+jobTitleFinancial Analyst    0.252215   0.018063   13.96 &lt; 0.0000000000000002
+jobTitleGraphic Designer     0.178280   0.018388    9.70 &lt; 0.0000000000000002
+jobTitleIT                   0.179373   0.018364    9.77 &lt; 0.0000000000000002
+jobTitleSales Associate      0.212518   0.018659   11.39 &lt; 0.0000000000000002
+jobTitleDriver               0.168299   0.018679    9.01 &lt; 0.0000000000000002
+jobTitleManager              0.511504   0.019565   26.14 &lt; 0.0000000000000002
+jobTitleWarehouse Associate  0.198159   0.018752   10.57 &lt; 0.0000000000000002
+                               
+(Intercept)                 ***
+genderFemale                   
+perfEval                       
+age_bin[25,35)              ***
+age_bin[45,55)              ***
+age_bin[35,45)              ***
+age_bin[0,25)               ***
+eduMasters                  ***
+eduCollege                     
+eduPhD                      ***
+deptSales                   ***
+deptManagement              ** 
+deptAdministration             
+deptEngineering             ** 
+seniority                   ***
+jobTitleSoftware Engineer   ***
+jobTitleData Scientist      ***
+jobTitleFinancial Analyst   ***
+jobTitleGraphic Designer    ***
+jobTitleIT                  ***
+jobTitleSales Associate     ***
+jobTitleDriver              ***
+jobTitleManager             ***
+jobTitleWarehouse Associate ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.131 on 976 degrees of freedom
+Multiple R-squared:  0.798, Adjusted R-squared:  0.793 
+F-statistic:  167 on 23 and 976 DF,  p-value: &lt;0.0000000000000002</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="13-pay-gap.html#cb506-1" aria-hidden="true" tabindex="-1"></a>lm_allcontrols <span class="sc">%&gt;%</span> </span>
+<span id="cb506-2"><a href="13-pay-gap.html#cb506-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the predicted values</span></span>
+<span id="cb506-3"><a href="13-pay-gap.html#cb506-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb506-4"><a href="13-pay-gap.html#cb506-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename columns to more friendly names</span></span>
+<span id="cb506-5"><a href="13-pay-gap.html#cb506-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">actual =</span> log_base, <span class="at">predicted =</span> .fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb506-6"><a href="13-pay-gap.html#cb506-6" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">pred_vs_actuals</span>() <span class="sc">+</span></span>
+<span id="cb506-7"><a href="13-pay-gap.html#cb506-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add some labels</span></span>
+<span id="cb506-8"><a href="13-pay-gap.html#cb506-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </span>
+<span id="cb506-9"><a href="13-pay-gap.html#cb506-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols%20viz-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="13-pay-gap.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Gather up all the models</span></span>
+<span id="cb507-2"><a href="13-pay-gap.html#cb507-2" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(lm_gender, lm_humancapital, lm_allcontrols) <span class="sc">%&gt;%</span> </span>
+<span id="cb507-3"><a href="13-pay-gap.html#cb507-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract coefficients for all models at once and combine into a single table</span></span>
+<span id="cb507-4"><a href="13-pay-gap.html#cb507-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_df</span>(tidy, <span class="at">.id =</span> <span class="st">&quot;model&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb507-5"><a href="13-pay-gap.html#cb507-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Let&#39;s look at the impact of gender</span></span>
+<span id="cb507-6"><a href="13-pay-gap.html#cb507-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">&quot;genderFemale&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb507-7"><a href="13-pay-gap.html#cb507-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># P values less than 0.05 are usually taken to mean an estimate is reliable</span></span>
+<span id="cb507-8"><a href="13-pay-gap.html#cb507-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(model, <span class="at">log_gap=</span>estimate, p.value)</span></code></pre></div>
+<pre><code># A tibble: 3 x 3
+  model    log_gap     p.value
+  &lt;chr&gt;      &lt;dbl&gt;       &lt;dbl&gt;
+1 1     -0.0953156 1.35864e- 7
+2 2     -0.100189  1.71745e-11
+3 3     -0.0109446 2.36793e- 1</code></pre>
+<p>Note that too little data can make results unreliable for a complex model because there are so few records to use for each combination of values.</p>
+</div>
+<div id="results-by-department" class="section level3" number="13.4.2">
+<h3><span class="header-section-number">13.4.2</span> Results by Department</h3>
+<p>(Interaction of gender x dept)
+To test for differences by department, examine significance of each “gender x dept” coefficient.
+For the gender pay gap by department, add the “gender” + “gender x dept” coefficients from this model.</p>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="13-pay-gap.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All controls with department interaction terms. </span></span>
+<span id="cb509-2"><a href="13-pay-gap.html#cb509-2" aria-hidden="true" tabindex="-1"></a>lm_allcontrols_dept <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_base <span class="sc">~</span> gender<span class="sc">*</span>dept <span class="sc">+</span> perfEval <span class="sc">+</span> age_bin <span class="sc">+</span> edu <span class="sc">+</span> seniority <span class="sc">+</span> jobTitle, <span class="at">data =</span> gd_data_clean)</span>
+<span id="cb509-3"><a href="13-pay-gap.html#cb509-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb509-4"><a href="13-pay-gap.html#cb509-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_allcontrols_dept)</span></code></pre></div>
+<pre><code># A tibble: 28 x 5
+   term                    estimate  std.error    statistic      p.value
+   &lt;chr&gt;                      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 (Intercept)        11.0016       0.0237984  462.284      0.          
+ 2 genderFemale        0.00152592   0.0184980    0.0824912  9.34273e-  1
+ 3 deptSales           0.0902054    0.0177766    5.07438    4.65639e-  7
+ 4 deptManagement      0.0426739    0.0176537    2.41728    1.58202e-  2
+ 5 deptAdministration  0.00182408   0.0181763    0.100355   9.20083e-  1
+ 6 deptEngineering     0.0446260    0.0180041    2.47865    1.33567e-  2
+ 7 perfEval           -0.0000291152 0.00295858  -0.00984092 9.92150e-  1
+ 8 age_bin[25,35)     -0.336629     0.0125206  -26.8860     1.73518e-119
+ 9 age_bin[45,55)     -0.100342     0.0126338   -7.94233    5.46121e- 15
+10 age_bin[35,45)     -0.196490     0.0128459  -15.2959     1.73511e- 47
+# ... with 18 more rows</code></pre>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="13-pay-gap.html#cb511-1" aria-hidden="true" tabindex="-1"></a>lm_allcontrols_dept <span class="sc">%&gt;%</span> </span>
+<span id="cb511-2"><a href="13-pay-gap.html#cb511-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the predicted values</span></span>
+<span id="cb511-3"><a href="13-pay-gap.html#cb511-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb511-4"><a href="13-pay-gap.html#cb511-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename columns to more friendly names</span></span>
+<span id="cb511-5"><a href="13-pay-gap.html#cb511-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">actual =</span> log_base, <span class="at">predicted =</span> .fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb511-6"><a href="13-pay-gap.html#cb511-6" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">pred_vs_actuals</span>() <span class="sc">+</span></span>
+<span id="cb511-7"><a href="13-pay-gap.html#cb511-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add some labels</span></span>
+<span id="cb511-8"><a href="13-pay-gap.html#cb511-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </span>
+<span id="cb511-9"><a href="13-pay-gap.html#cb511-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; department interaction&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols_dept-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+</div>
+<div id="results-by-job-title" class="section level3" number="13.4.3">
+<h3><span class="header-section-number">13.4.3</span> Results by Job Title</h3>
+<p>(Interaction of gender x job )
+To test for differences by department, examine significance of each “gender x job title” coefficient.
+For the gender pay gap by job, add the “gender” + “gender x job title” coefficients from this model.</p>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="13-pay-gap.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="co"># All controls with department interaction terms. </span></span>
+<span id="cb512-2"><a href="13-pay-gap.html#cb512-2" aria-hidden="true" tabindex="-1"></a>lm_allcontrols_job <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_base <span class="sc">~</span> gender<span class="sc">*</span>jobTitle <span class="sc">+</span> perfEval <span class="sc">+</span> age_bin <span class="sc">+</span> edu <span class="sc">+</span> seniority <span class="sc">+</span> dept, <span class="at">data =</span> gd_data_clean)</span>
+<span id="cb512-3"><a href="13-pay-gap.html#cb512-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb512-4"><a href="13-pay-gap.html#cb512-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_allcontrols_job)</span></code></pre></div>
+<pre><code># A tibble: 33 x 5
+   term                        estimate std.error statistic     p.value
+   &lt;chr&gt;                          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+ 1 (Intercept)               11.0638    0.0442857 249.828   0.         
+ 2 genderFemale              -0.0724912 0.0416612  -1.74002 8.21742e- 2
+ 3 jobTitleSoftware Engineer  0.289254  0.0418482   6.91198 8.66714e-12
+ 4 jobTitleData Scientist     0.142351  0.0435503   3.26866 1.11867e- 3
+ 5 jobTitleFinancial Analyst  0.202106  0.0433312   4.66421 3.53339e- 6
+ 6 jobTitleGraphic Designer   0.110316  0.0439206   2.51171 1.21768e- 2
+ 7 jobTitleIT                 0.130398  0.0441617   2.95273 3.22592e- 3
+ 8 jobTitleSales Associate    0.166820  0.0438793   3.80180 1.52646e- 4
+ 9 jobTitleDriver             0.106498  0.0442196   2.40840 1.62091e- 2
+10 jobTitleManager            0.455642  0.0426281  10.6888  2.77904e-25
+# ... with 23 more rows</code></pre>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="13-pay-gap.html#cb514-1" aria-hidden="true" tabindex="-1"></a>lm_allcontrols_job <span class="sc">%&gt;%</span> </span>
+<span id="cb514-2"><a href="13-pay-gap.html#cb514-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get the predicted values</span></span>
+<span id="cb514-3"><a href="13-pay-gap.html#cb514-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">augment</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb514-4"><a href="13-pay-gap.html#cb514-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Rename columns to more friendly names</span></span>
+<span id="cb514-5"><a href="13-pay-gap.html#cb514-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">actual =</span> log_base, <span class="at">predicted =</span> .fitted) <span class="sc">%&gt;%</span> </span>
+<span id="cb514-6"><a href="13-pay-gap.html#cb514-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build a chart</span></span>
+<span id="cb514-7"><a href="13-pay-gap.html#cb514-7" aria-hidden="true" tabindex="-1"></a>  HRAnalytics<span class="sc">::</span><span class="fu">pred_vs_actuals</span>() <span class="sc">+</span></span>
+<span id="cb514-8"><a href="13-pay-gap.html#cb514-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add some labels</span></span>
+<span id="cb514-9"><a href="13-pay-gap.html#cb514-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Actual vs predicted&quot;</span>, </span>
+<span id="cb514-10"><a href="13-pay-gap.html#cb514-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">&quot;Values predicted using a linear model all controls &amp; job interaction&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/lm_allcontrols_job-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p>For additional analysis via Oaxaca-Blinder decomposition, please see documentation for the <a href="https://cran.r-project.org/package=oaxaca"><code>oaxaca</code> package</a> in R.</p>
+
+</div>
+</div>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1230,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="12-thinking-with-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="14-stop-appraisals.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1262,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/12-pay-gap.Rmd",
 "text": "Edit"
 },
 "history": {

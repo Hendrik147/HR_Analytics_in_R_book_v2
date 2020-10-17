@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 22 Absenteeism at work | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 22 Absenteeism at work | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 22 Absenteeism at work | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="21-absenteeism-MFG.html"/>
+<link rel="next" href="23-accidents-work.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,376 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
+<div id="absenteeism-work" class="section level1" number="22">
+<h1><span class="header-section-number">Chapter 22</span> Absenteeism at work</h1>
+<p>The high competitiveness in the market, professional development combined with the development of organizations and the pressure to reach increasingly audacious goals, create increasingly overburdened employees and end up acquiring some disturbance in the state of health related to the type of work activity, including depression considered the evil of the 21st century. Taking employees to absenteeism. Absenteeism is defined as absence to work as expected, represents for the company the loss of productivity and quality of work.</p>
+<p>The data set has been taken from <a href="https://archive.ics.uci.edu/ml/datasets/Absenteeism+at+work#">UCI - Absenteeism at work</a>. The database used has 21 attributes and 740 records from documents that prove that they are absent from work and was collected from January 2008 to December 2016.</p>
+<div id="data-reading" class="section level2" number="22.1">
+<h2><span class="header-section-number">22.1</span> Data reading</h2>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="22-absenteeism-work.html#cb848-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb848-2"><a href="22-absenteeism-work.html#cb848-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb848-3"><a href="22-absenteeism-work.html#cb848-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb848-4"><a href="22-absenteeism-work.html#cb848-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb848-5"><a href="22-absenteeism-work.html#cb848-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb848-6"><a href="22-absenteeism-work.html#cb848-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb848-7"><a href="22-absenteeism-work.html#cb848-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="22-absenteeism-work.html#cb849-1" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">col =</span> <span class="fu">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/Absenteeism_at_work.csv&quot;</span>)</span></code></pre></div>
 </div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
+<div id="basic-statistics-and-data-preparation" class="section level2" number="22.2">
+<h2><span class="header-section-number">22.2</span> Basic statistics and data preparation</h2>
+<p><strong>Factors are in interger format , so for the sake of analysis we have changed them to factor format.</strong></p>
+<div class="sourceCode" id="cb850"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb850-1"><a href="22-absenteeism-work.html#cb850-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(absenteeism_at_work)</span></code></pre></div>
+<pre><code>tibble [740 x 21] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ ID                             : num [1:740] 11 36 3 7 11 3 10 20 14 1 ...
+ $ Reason for absence             : num [1:740] 26 0 23 7 23 23 22 23 19 22 ...
+ $ Month of absence               : num [1:740] 7 7 7 7 7 7 7 7 7 7 ...
+ $ Day of the week                : num [1:740] 3 3 4 5 5 6 6 6 2 2 ...
+ $ Seasons                        : num [1:740] 1 1 1 1 1 1 1 1 1 1 ...
+ $ Transportation expense         : num [1:740] 289 118 179 279 289 179 361 260 155 235 ...
+ $ Distance from Residence to Work: num [1:740] 36 13 51 5 36 51 52 50 12 11 ...
+ $ Service time                   : num [1:740] 13 18 18 14 13 18 3 11 14 14 ...
+ $ Age                            : num [1:740] 33 50 38 39 33 38 28 36 34 37 ...
+ $ Work load Average/day          : num [1:740] 240 240 240 240 240 ...
+ $ Hit target                     : num [1:740] 97 97 97 97 97 97 97 97 97 97 ...
+ $ Disciplinary failure           : num [1:740] 0 1 0 0 0 0 0 0 0 0 ...
+ $ Education                      : num [1:740] 1 1 1 1 1 1 1 1 1 3 ...
+ $ Son                            : num [1:740] 2 1 0 2 2 0 1 4 2 1 ...
+ $ Social drinker                 : num [1:740] 1 1 1 1 1 1 1 1 1 0 ...
+ $ Social smoker                  : num [1:740] 0 0 0 1 0 0 0 0 0 0 ...
+ $ Pet                            : num [1:740] 1 0 0 0 1 0 4 0 0 1 ...
+ $ Weight                         : num [1:740] 90 98 89 68 90 89 80 65 95 88 ...
+ $ Height                         : num [1:740] 172 178 170 168 172 170 172 168 196 172 ...
+ $ Body mass index                : num [1:740] 30 31 31 24 30 31 27 23 25 29 ...
+ $ Absenteeism time in hours      : num [1:740] 4 0 2 4 2 2 8 4 40 8 ...
+ - attr(*, &quot;spec&quot;)=
+  .. cols(
+  ..   ID = col_double(),
+  ..   `Reason for absence` = col_double(),
+  ..   `Month of absence` = col_double(),
+  ..   `Day of the week` = col_double(),
+  ..   Seasons = col_double(),
+  ..   `Transportation expense` = col_double(),
+  ..   `Distance from Residence to Work` = col_double(),
+  ..   `Service time` = col_double(),
+  ..   Age = col_double(),
+  ..   `Work load Average/day ` = col_double(),
+  ..   `Hit target` = col_double(),
+  ..   `Disciplinary failure` = col_double(),
+  ..   Education = col_double(),
+  ..   Son = col_double(),
+  ..   `Social drinker` = col_double(),
+  ..   `Social smoker` = col_double(),
+  ..   Pet = col_double(),
+  ..   Weight = col_double(),
+  ..   Height = col_double(),
+  ..   `Body mass index` = col_double(),
+  ..   `Absenteeism time in hours` = col_double()
+  .. )</code></pre>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="22-absenteeism-work.html#cb852-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(absenteeism_at_work)</span></code></pre></div>
+<pre><code>       ID     Reason for absence Month of absence Day of the week
+ Min.   : 1   Min.   : 0.0       Min.   : 0.00    Min.   :2.00   
+ 1st Qu.: 9   1st Qu.:13.0       1st Qu.: 3.00    1st Qu.:3.00   
+ Median :18   Median :23.0       Median : 6.00    Median :4.00   
+ Mean   :18   Mean   :19.2       Mean   : 6.32    Mean   :3.91   
+ 3rd Qu.:28   3rd Qu.:26.0       3rd Qu.: 9.00    3rd Qu.:5.00   
+ Max.   :36   Max.   :28.0       Max.   :12.00    Max.   :6.00   
+    Seasons     Transportation expense Distance from Residence to Work
+ Min.   :1.00   Min.   :118            Min.   : 5.0                   
+ 1st Qu.:2.00   1st Qu.:179            1st Qu.:16.0                   
+ Median :3.00   Median :225            Median :26.0                   
+ Mean   :2.54   Mean   :221            Mean   :29.6                   
+ 3rd Qu.:4.00   3rd Qu.:260            3rd Qu.:50.0                   
+ Max.   :4.00   Max.   :388            Max.   :52.0                   
+  Service time       Age       Work load Average/day    Hit target   
+ Min.   : 1.0   Min.   :27.0   Min.   :206            Min.   : 81.0  
+ 1st Qu.: 9.0   1st Qu.:31.0   1st Qu.:244            1st Qu.: 93.0  
+ Median :13.0   Median :37.0   Median :264            Median : 95.0  
+ Mean   :12.6   Mean   :36.5   Mean   :271            Mean   : 94.6  
+ 3rd Qu.:16.0   3rd Qu.:40.0   3rd Qu.:294            3rd Qu.: 97.0  
+ Max.   :29.0   Max.   :58.0   Max.   :379            Max.   :100.0  
+ Disciplinary failure   Education         Son       Social drinker 
+ Min.   :0.000        Min.   :1.00   Min.   :0.00   Min.   :0.000  
+ 1st Qu.:0.000        1st Qu.:1.00   1st Qu.:0.00   1st Qu.:0.000  
+ Median :0.000        Median :1.00   Median :1.00   Median :1.000  
+ Mean   :0.054        Mean   :1.29   Mean   :1.02   Mean   :0.568  
+ 3rd Qu.:0.000        3rd Qu.:1.00   3rd Qu.:2.00   3rd Qu.:1.000  
+ Max.   :1.000        Max.   :4.00   Max.   :4.00   Max.   :1.000  
+ Social smoker        Pet           Weight        Height    Body mass index
+ Min.   :0.000   Min.   :0.00   Min.   : 56   Min.   :163   Min.   :19.0   
+ 1st Qu.:0.000   1st Qu.:0.00   1st Qu.: 69   1st Qu.:169   1st Qu.:24.0   
+ Median :0.000   Median :0.00   Median : 83   Median :170   Median :25.0   
+ Mean   :0.073   Mean   :0.75   Mean   : 79   Mean   :172   Mean   :26.7   
+ 3rd Qu.:0.000   3rd Qu.:1.00   3rd Qu.: 89   3rd Qu.:172   3rd Qu.:31.0   
+ Max.   :1.000   Max.   :8.00   Max.   :108   Max.   :196   Max.   :38.0   
+ Absenteeism time in hours
+ Min.   :  0.0            
+ 1st Qu.:  2.0            
+ Median :  3.0            
+ Mean   :  6.9            
+ 3rd Qu.:  8.0            
+ Max.   :120.0            </code></pre>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="22-absenteeism-work.html#cb854-1" aria-hidden="true" tabindex="-1"></a><span class="co"># converting variables to factors</span></span>
+<span id="cb854-2"><a href="22-absenteeism-work.html#cb854-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-3"><a href="22-absenteeism-work.html#cb854-3" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">12</span><span class="sc">:</span><span class="dv">17</span>)</span>
+<span id="cb854-4"><a href="22-absenteeism-work.html#cb854-4" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work</span>
+<span id="cb854-5"><a href="22-absenteeism-work.html#cb854-5" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored[col] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(absenteeism_at_work_factored[col], factor)</span>
+<span id="cb854-6"><a href="22-absenteeism-work.html#cb854-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-7"><a href="22-absenteeism-work.html#cb854-7" aria-hidden="true" tabindex="-1"></a><span class="co"># converting codes to meaningful information</span></span>
+<span id="cb854-8"><a href="22-absenteeism-work.html#cb854-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-9"><a href="22-absenteeism-work.html#cb854-9" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-10"><a href="22-absenteeism-work.html#cb854-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Reason for absence</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Reason for absence</span><span class="st">`</span>,<span class="st">`</span><span class="at">Infectious, parasitic diseases</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;0&quot;</span>, <span class="st">`</span><span class="at">Neoplasms</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;1&quot;</span>,<span class="st">`</span><span class="at">Diseases of the blood</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;2&quot;</span>,<span class="st">`</span><span class="at">Endocrine and metabolic diseases</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;3&quot;</span>,<span class="st">`</span><span class="at">Mental and behavioural disorders</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;4&quot;</span>,<span class="st">`</span><span class="at">Diseases of the nervous system</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;5&quot;</span>,<span class="st">`</span><span class="at">Diseases of the eye and adnexa</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;6&quot;</span>,<span class="st">`</span><span class="at">Diseases of the ear and mastoid process</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;7&quot;</span>,<span class="st">`</span><span class="at">Diseases of the circulatory system</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;8&quot;</span>,<span class="st">`</span><span class="at">Diseases of the respiratory system</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;9&quot;</span>,<span class="st">`</span><span class="at">Diseases of the digestive system</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;10&quot;</span>, <span class="st">`</span><span class="at">Diseases of the skin and subcutaneous tissue</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;11&quot;</span>,<span class="st">`</span><span class="at">Diseases of the musculoskeletal system and connective tissue</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;12&quot;</span>, <span class="st">`</span><span class="at">Diseases of the genitourinary system</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;13&quot;</span>,<span class="st">`</span><span class="at">Pregnancy, childbirth and the puerperium</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;14&quot;</span>,<span class="st">`</span><span class="at">Certain conditions originating in the perinatal</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;15&quot;</span>,  <span class="st">`</span><span class="at">Congenital malformations, deformations and chromosomal abnormalities</span><span class="st">`</span><span class="ot">=</span> <span class="st">&quot;16&quot;</span>,<span class="st">`</span><span class="at">Symptoms, signs and abnormal clinical  findings</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;17&quot;</span>, <span class="st">`</span><span class="at">Injury, poisoning and certain other consequences of external causes</span><span class="st">`</span><span class="ot">=</span> <span class="st">&quot;18&quot;</span>,<span class="st">`</span><span class="at">causes of morbidity and mortality</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;19&quot;</span>, <span class="st">`</span><span class="at">Factors influencing health status and contact with health services</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;21&quot;</span>,<span class="st">`</span><span class="at">patient follow-up</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;22&quot;</span>,<span class="st">`</span><span class="at">medical consultation</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;23&quot;</span>,<span class="st">`</span><span class="at">blood donation</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;24&quot;</span>, <span class="st">`</span><span class="at">laboratory examination</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;25&quot;</span>, <span class="st">`</span><span class="at">unjustified absence</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;26&quot;</span>, <span class="st">`</span><span class="at">physiotherapy</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;27&quot;</span>, <span class="st">`</span><span class="at">dental consultation</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;28&quot;</span>))</span>
+<span id="cb854-11"><a href="22-absenteeism-work.html#cb854-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-12"><a href="22-absenteeism-work.html#cb854-12" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-13"><a href="22-absenteeism-work.html#cb854-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Month of absence</span><span class="st">`</span><span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Month of absence</span><span class="st">`</span>,<span class="at">None=</span><span class="st">&quot;0&quot;</span>,<span class="at">Jan=</span><span class="st">&quot;1&quot;</span>,<span class="at">Feb=</span><span class="st">&quot;2&quot;</span>,<span class="at">Mar=</span><span class="st">&quot;3&quot;</span>,<span class="at">Apr=</span><span class="st">&quot;4&quot;</span>,<span class="at">May=</span><span class="st">&quot;5&quot;</span>, <span class="at">Jun=</span><span class="st">&quot;6&quot;</span>,<span class="at">Jul=</span><span class="st">&quot;7&quot;</span>,<span class="at">Aug=</span><span class="st">&quot;8&quot;</span>,<span class="at">Sep=</span><span class="st">&quot;9&quot;</span>,<span class="at">Oct=</span><span class="st">&quot;10&quot;</span>,<span class="at">Nov=</span><span class="st">&quot;11&quot;</span>,<span class="at">Dec=</span><span class="st">&quot;12&quot;</span>) )</span>
+<span id="cb854-14"><a href="22-absenteeism-work.html#cb854-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-15"><a href="22-absenteeism-work.html#cb854-15" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-16"><a href="22-absenteeism-work.html#cb854-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Seasons=</span> <span class="fu">fct_recode</span>(Seasons,<span class="at">summer=</span><span class="st">&quot;1&quot;</span>,<span class="at">autumn=</span><span class="st">&quot;2&quot;</span>,<span class="at">winter=</span><span class="st">&quot;3&quot;</span>,<span class="at">spring=</span><span class="st">&quot;4&quot;</span>))</span>
+<span id="cb854-17"><a href="22-absenteeism-work.html#cb854-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-18"><a href="22-absenteeism-work.html#cb854-18" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-19"><a href="22-absenteeism-work.html#cb854-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Education =</span> <span class="fu">fct_recode</span>(Education,<span class="at">highschool=</span><span class="st">&quot;1&quot;</span>,<span class="at">graduate=</span><span class="st">&quot;2&quot;</span>,<span class="at">postgraduate=</span><span class="st">&quot;3&quot;</span>,<span class="st">`</span><span class="at">master&amp; doctrate</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;4&quot;</span>))</span>
+<span id="cb854-20"><a href="22-absenteeism-work.html#cb854-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-21"><a href="22-absenteeism-work.html#cb854-21" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-22"><a href="22-absenteeism-work.html#cb854-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Disciplinary failure</span><span class="st">`</span><span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Disciplinary failure</span><span class="st">`</span>,<span class="at">No=</span><span class="st">&quot;0&quot;</span>,<span class="at">Yes=</span><span class="st">&quot;1&quot;</span>))</span>
+<span id="cb854-23"><a href="22-absenteeism-work.html#cb854-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-24"><a href="22-absenteeism-work.html#cb854-24" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-25"><a href="22-absenteeism-work.html#cb854-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Social drinker</span><span class="st">`</span><span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Social drinker</span><span class="st">`</span>,<span class="at">No=</span><span class="st">&quot;0&quot;</span>,<span class="at">Yes=</span><span class="st">&quot;1&quot;</span>))</span>
+<span id="cb854-26"><a href="22-absenteeism-work.html#cb854-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-27"><a href="22-absenteeism-work.html#cb854-27" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-28"><a href="22-absenteeism-work.html#cb854-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Social smoker</span><span class="st">`</span><span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Social smoker</span><span class="st">`</span>,<span class="at">No=</span><span class="st">&quot;0&quot;</span>,<span class="at">Yes=</span><span class="st">&quot;1&quot;</span>))</span>
+<span id="cb854-29"><a href="22-absenteeism-work.html#cb854-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb854-30"><a href="22-absenteeism-work.html#cb854-30" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work_factored <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span></span>
+<span id="cb854-31"><a href="22-absenteeism-work.html#cb854-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Day of the week</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">fct_recode</span>(<span class="st">`</span><span class="at">Day of the week</span><span class="st">`</span>, <span class="at">Monday=</span><span class="st">&quot;2&quot;</span>, <span class="at">Tuesday=</span><span class="st">&quot;3&quot;</span>, <span class="at">Wednesday=</span><span class="st">&quot;4&quot;</span>, <span class="at">Thursday=</span><span class="st">&quot;5&quot;</span>, <span class="at">Friday=</span><span class="st">&quot;6&quot;</span>))</span></code></pre></div>
 </div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
+<div id="data-exploration" class="section level2" number="22.3">
+<h2><span class="header-section-number">22.3</span> Data exploration</h2>
+<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="22-absenteeism-work.html#cb855-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span> </span>
+<span id="cb855-2"><a href="22-absenteeism-work.html#cb855-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb855-3"><a href="22-absenteeism-work.html#cb855-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> Pet, <span class="at">fill =</span> Pet) <span class="sc">+</span> </span>
+<span id="cb855-4"><a href="22-absenteeism-work.html#cb855-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span>
+<span id="cb855-5"><a href="22-absenteeism-work.html#cb855-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-6"><a href="22-absenteeism-work.html#cb855-6" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span> </span>
+<span id="cb855-7"><a href="22-absenteeism-work.html#cb855-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb855-8"><a href="22-absenteeism-work.html#cb855-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> Son, <span class="at">fill =</span> Son) <span class="sc">+</span> </span>
+<span id="cb855-9"><a href="22-absenteeism-work.html#cb855-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb855-10"><a href="22-absenteeism-work.html#cb855-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-11"><a href="22-absenteeism-work.html#cb855-11" aria-hidden="true" tabindex="-1"></a>SS <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span> </span>
+<span id="cb855-12"><a href="22-absenteeism-work.html#cb855-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb855-13"><a href="22-absenteeism-work.html#cb855-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span><span class="st">`</span><span class="at">Social smoker</span><span class="st">`</span>, <span class="at">fill =</span><span class="st">`</span><span class="at">Social drinker</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb855-14"><a href="22-absenteeism-work.html#cb855-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span>
+<span id="cb855-15"><a href="22-absenteeism-work.html#cb855-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-16"><a href="22-absenteeism-work.html#cb855-16" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span> </span>
+<span id="cb855-17"><a href="22-absenteeism-work.html#cb855-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb855-18"><a href="22-absenteeism-work.html#cb855-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span>   Seasons,<span class="at">fill =</span> Seasons) <span class="sc">+</span> </span>
+<span id="cb855-19"><a href="22-absenteeism-work.html#cb855-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb855-20"><a href="22-absenteeism-work.html#cb855-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-21"><a href="22-absenteeism-work.html#cb855-21" aria-hidden="true" tabindex="-1"></a>Day <span class="ot">&lt;-</span> absenteeism_at_work_factored <span class="sc">%&gt;%</span> </span>
+<span id="cb855-22"><a href="22-absenteeism-work.html#cb855-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb855-23"><a href="22-absenteeism-work.html#cb855-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span><span class="st">`</span><span class="at">Day of the week</span><span class="st">`</span>, <span class="at">fill =</span><span class="st">`</span><span class="at">Day of the week</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb855-24"><a href="22-absenteeism-work.html#cb855-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() </span>
+<span id="cb855-25"><a href="22-absenteeism-work.html#cb855-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb855-26"><a href="22-absenteeism-work.html#cb855-26" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p,s, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-631-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="22-absenteeism-work.html#cb856-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(SS,S, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-631-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="22-absenteeism-work.html#cb857-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(Day, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-631-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 </div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="some-more-digging-into-the-data" class="section level2" number="22.4">
+<h2><span class="header-section-number">22.4</span> Some more digging into the data</h2>
+<p><strong>I have taken those data that consists of Absenteesim in hours that are relavent to the analysis.</strong><br />
+<strong>The 649 obs were found to have absent with respect to total of 740 obs.</strong></p>
+<p><strong>Here the proportion of elements of categorical variables that contribute to the target variable.</strong><br />
+<strong>I have taken only certain variable that I thought would come in to process.</strong></p>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="22-absenteeism-work.html#cb858-1" aria-hidden="true" tabindex="-1"></a>absent <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(absenteeism_at_work_factored <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="st">`</span><span class="at">Absenteeism time in hours</span><span class="st">`</span> <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb858-2"><a href="22-absenteeism-work.html#cb858-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-3"><a href="22-absenteeism-work.html#cb858-3" aria-hidden="true" tabindex="-1"></a>season1 <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(absent <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(Seasons) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span> <span class="fu">n</span>(), <span class="at">percent =</span> <span class="fu">round</span>(count<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">nrow</span>(absent),<span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(count)))</span>
+<span id="cb858-4"><a href="22-absenteeism-work.html#cb858-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb858-5"><a href="22-absenteeism-work.html#cb858-5" aria-hidden="true" tabindex="-1"></a>season1 <span class="sc">%&gt;%</span></span>
+<span id="cb858-6"><a href="22-absenteeism-work.html#cb858-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb858-7"><a href="22-absenteeism-work.html#cb858-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> <span class="fu">reorder</span>(Seasons,percent), <span class="at">y=</span> percent, <span class="at">fill =</span> Seasons) <span class="sc">+</span></span>
+<span id="cb858-8"><a href="22-absenteeism-work.html#cb858-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb858-9"><a href="22-absenteeism-work.html#cb858-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb858-10"><a href="22-absenteeism-work.html#cb858-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> percent), <span class="at">vjust =</span> <span class="fl">1.1</span>, <span class="at">hjust =</span> <span class="fl">1.2</span>) <span class="sc">+</span> </span>
+<span id="cb858-11"><a href="22-absenteeism-work.html#cb858-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;Seasons&#39;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-632-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p><strong>The attribute disciplinary failure is taken into consideration and it was found it had no obvious part on target variable. Basically all disciplinary failures resulted in zero hours absences.</strong></p>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="22-absenteeism-work.html#cb859-1" aria-hidden="true" tabindex="-1"></a>disciplinary <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(absent <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(<span class="st">`</span><span class="at">Disciplinary failure</span><span class="st">`</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span> <span class="fu">n</span>(), <span class="at">percent =</span> <span class="fu">round</span>(count<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">nrow</span>(absent),<span class="dv">1</span>))<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(count)))</span>
+<span id="cb859-2"><a href="22-absenteeism-work.html#cb859-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb859-3"><a href="22-absenteeism-work.html#cb859-3" aria-hidden="true" tabindex="-1"></a>disciplinary <span class="sc">%&gt;%</span></span>
+<span id="cb859-4"><a href="22-absenteeism-work.html#cb859-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb859-5"><a href="22-absenteeism-work.html#cb859-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> <span class="fu">reorder</span>(<span class="st">`</span><span class="at">Disciplinary failure</span><span class="st">`</span>,percent), </span>
+<span id="cb859-6"><a href="22-absenteeism-work.html#cb859-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">y=</span> percent, <span class="at">fill =</span> <span class="st">`</span><span class="at">Disciplinary failure</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb859-7"><a href="22-absenteeism-work.html#cb859-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb859-8"><a href="22-absenteeism-work.html#cb859-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb859-9"><a href="22-absenteeism-work.html#cb859-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> percent), <span class="at">vjust =</span> <span class="fl">1.1</span>, <span class="at">hjust =</span> <span class="fl">1.2</span>) <span class="sc">+</span> </span>
+<span id="cb859-10"><a href="22-absenteeism-work.html#cb859-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;Disciplinary failure&#39;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-633-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+</div>
+<div id="here-the-various-types-of-reasons-for-absence-attribute-is-analysed" class="section level2" number="22.5">
+<h2><span class="header-section-number">22.5</span> Here the various types of reasons for absence attribute is analysed</h2>
+<p><strong>NOTE: The top four of them cover 50% of the resons for absence</strong><br />
+* <strong>medical consultation</strong><br />
+* <strong>dental consultation</strong><br />
+* <strong>physiotherapy</strong><br />
+* <strong>Disease of genitourinary system</strong><br />
+<strong>The unjusitified absence amounts to 4.7% of total.</strong></p>
+<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="22-absenteeism-work.html#cb860-1" aria-hidden="true" tabindex="-1"></a>Reason <span class="ot">&lt;-</span>  <span class="fu">as.data.frame</span>(absent <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Reason for absence</span><span class="st">`</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span> <span class="fu">n</span>(), <span class="at">percent =</span> <span class="fu">round</span>(count<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">nrow</span>(absent),<span class="dv">1</span>))<span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(count)))</span>
+<span id="cb860-2"><a href="22-absenteeism-work.html#cb860-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb860-3"><a href="22-absenteeism-work.html#cb860-3" aria-hidden="true" tabindex="-1"></a>Reason <span class="sc">%&gt;%</span></span>
+<span id="cb860-4"><a href="22-absenteeism-work.html#cb860-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb860-5"><a href="22-absenteeism-work.html#cb860-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(<span class="st">`</span><span class="at">Reason for absence</span><span class="st">`</span>,percent), </span>
+<span id="cb860-6"><a href="22-absenteeism-work.html#cb860-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">y=</span> percent, <span class="at">fill=</span> <span class="st">`</span><span class="at">Reason for absence</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb860-7"><a href="22-absenteeism-work.html#cb860-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb860-8"><a href="22-absenteeism-work.html#cb860-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb860-9"><a href="22-absenteeism-work.html#cb860-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&#39;none&#39;</span>) <span class="sc">+</span>  </span>
+<span id="cb860-10"><a href="22-absenteeism-work.html#cb860-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> percent), <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>) <span class="sc">+</span> </span>
+<span id="cb860-11"><a href="22-absenteeism-work.html#cb860-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;Reason for absence&#39;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-634-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p><strong>Close to the half of employees drink alcohol(320/420), so the attempted analysis can be taken into consideration that the it can be a element that influence the target variable.</strong></p>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="22-absenteeism-work.html#cb861-1" aria-hidden="true" tabindex="-1"></a>absent <span class="sc">%&gt;%</span></span>
+<span id="cb861-2"><a href="22-absenteeism-work.html#cb861-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb861-3"><a href="22-absenteeism-work.html#cb861-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> Age,<span class="at">y=</span> <span class="st">`</span><span class="at">Absenteeism time in hours</span><span class="st">`</span>,<span class="at">fill=</span> <span class="st">`</span><span class="at">Social drinker</span><span class="st">`</span>)<span class="sc">+</span> </span>
+<span id="cb861-4"><a href="22-absenteeism-work.html#cb861-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&#39;identity&#39;</span>,<span class="at">position=</span> <span class="fu">position_dodge</span>()) <span class="sc">+</span> </span>
+<span id="cb861-5"><a href="22-absenteeism-work.html#cb861-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span><span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">20</span>,<span class="dv">60</span>,<span class="dv">5</span>)),<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">60</span>))</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-635-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p><strong>Service time across hit target</strong></p>
+<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="22-absenteeism-work.html#cb862-1" aria-hidden="true" tabindex="-1"></a>absent <span class="sc">%&gt;%</span></span>
+<span id="cb862-2"><a href="22-absenteeism-work.html#cb862-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb862-3"><a href="22-absenteeism-work.html#cb862-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> <span class="st">`</span><span class="at">Service time</span><span class="st">`</span>,</span>
+<span id="cb862-4"><a href="22-absenteeism-work.html#cb862-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">y=</span> <span class="st">`</span><span class="at">Hit target</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb862-5"><a href="22-absenteeism-work.html#cb862-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb862-6"><a href="22-absenteeism-work.html#cb862-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;loess&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb862-7"><a href="22-absenteeism-work.html#cb862-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&#39;Analysis of Hit target across Service time&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb862-8"><a href="22-absenteeism-work.html#cb862-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&#39;Service time(years)&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb862-9"><a href="22-absenteeism-work.html#cb862-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&#39;Hit target(%)&#39;</span>)</span></code></pre></div>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-636-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p><strong>Hit target is achieved by the employees of different age segments</strong></p>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="22-absenteeism-work.html#cb864-1" aria-hidden="true" tabindex="-1"></a>absent <span class="sc">%&gt;%</span></span>
+<span id="cb864-2"><a href="22-absenteeism-work.html#cb864-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb864-3"><a href="22-absenteeism-work.html#cb864-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> Age,<span class="at">y=</span> <span class="st">`</span><span class="at">Hit target</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb864-4"><a href="22-absenteeism-work.html#cb864-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb864-5"><a href="22-absenteeism-work.html#cb864-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;loess&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb864-6"><a href="22-absenteeism-work.html#cb864-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;Analysis of Hit target across Age&#39;</span>,</span>
+<span id="cb864-7"><a href="22-absenteeism-work.html#cb864-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&#39;Age&#39;</span>,</span>
+<span id="cb864-8"><a href="22-absenteeism-work.html#cb864-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&#39;Hit target(%)&#39;</span>)</span></code></pre></div>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-637-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<p><strong>Here trend of service time across age is taken. And they have positive correlation</strong></p>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="22-absenteeism-work.html#cb866-1" aria-hidden="true" tabindex="-1"></a>absent <span class="sc">%&gt;%</span></span>
+<span id="cb866-2"><a href="22-absenteeism-work.html#cb866-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb866-3"><a href="22-absenteeism-work.html#cb866-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span> Age,<span class="at">y=</span> <span class="st">`</span><span class="at">Service time</span><span class="st">`</span>) <span class="sc">+</span> </span>
+<span id="cb866-4"><a href="22-absenteeism-work.html#cb866-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb866-5"><a href="22-absenteeism-work.html#cb866-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>) <span class="sc">+</span> </span>
+<span id="cb866-6"><a href="22-absenteeism-work.html#cb866-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&#39;Analysis of Service time across Age&#39;</span>,</span>
+<span id="cb866-7"><a href="22-absenteeism-work.html#cb866-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&#39;Age&#39;</span>,</span>
+<span id="cb866-8"><a href="22-absenteeism-work.html#cb866-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&#39;Service time&#39;</span>)</span></code></pre></div>
+<pre><code>`geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-638-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+</div>
+<div id="principal-component-analysis-pca" class="section level2" number="22.6">
+<h2><span class="header-section-number">22.6</span> Principal component analysis (PCA)</h2>
+<p>A principal component analysis is used to extract the most important information from a multivariate data table and to express this information as a set of new variables called principal components. Principal component analysis (PCA) reduces the dimensionality of multivariate data, to two or three that can be visualized graphically with minimal loss of information.</p>
+<p>The information in a given data set corresponds to the total variation it contains. The goal of PCA is to identify directions along which the variation in the data is maximal. These directions (called also principal components) can be used to visualize graphically the data.</p>
+<p>We will be using the FactoMineR (for computing PCA) and factoextra (for PCA visualization) packages.</p>
+<p>The first part of this article describes quickly how to compute and visualize principal component analysis using FactoMineR and factoextra
+The second part shows how to identify the most important variables that explain the variations in your data</p>
+<p><strong>Data preparation for PCA</strong></p>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="22-absenteeism-work.html#cb868-1" aria-hidden="true" tabindex="-1"></a>absenteeism_at_work<span class="sc">$</span><span class="st">`</span><span class="at">Work load Average/day </span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(absenteeism_at_work<span class="sc">$</span><span class="st">`</span><span class="at">Work load Average/day </span><span class="st">`</span> ))</span>
+<span id="cb868-2"><a href="22-absenteeism-work.html#cb868-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb868-3"><a href="22-absenteeism-work.html#cb868-3" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> absenteeism_at_work <span class="sc">%&gt;%</span></span>
+<span id="cb868-4"><a href="22-absenteeism-work.html#cb868-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">%&gt;%</span></span>
+<span id="cb868-5"><a href="22-absenteeism-work.html#cb868-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Absenteeism time in hours</span><span class="st">`</span>)</span>
+<span id="cb868-6"><a href="22-absenteeism-work.html#cb868-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb868-7"><a href="22-absenteeism-work.html#cb868-7" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">scale</span>(d1)  </span></code></pre></div>
+<p><strong>PCA</strong></p>
+<p>In the following we will produce a scree plot. The scree plot is a an analysis that shows you how many factors or components you have to retain in your factor or principal components analysis. It is a graphical representation. The assumption is that “the elbow” tells you how many factors or components you have to retain. The elbow means when the line of the graph starts to smooth up.</p>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="22-absenteeism-work.html#cb869-1" aria-hidden="true" tabindex="-1"></a>pcaex <span class="ot">&lt;-</span> <span class="fu">PCA</span>(d1,<span class="at">graph =</span> F) </span>
+<span id="cb869-2"><a href="22-absenteeism-work.html#cb869-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb869-3"><a href="22-absenteeism-work.html#cb869-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The output of the function PCA() is a list including :</span></span>
+<span id="cb869-4"><a href="22-absenteeism-work.html#cb869-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(pcaex)</span></code></pre></div>
+<pre><code>**Results for the Principal Component Analysis (PCA)**
+The analysis was performed on 740 individuals, described by 19 variables
+*The results are available in the following objects:
+
+   name               description                          
+1  &quot;$eig&quot;             &quot;eigenvalues&quot;                        
+2  &quot;$var&quot;             &quot;results for the variables&quot;          
+3  &quot;$var$coord&quot;       &quot;coord. for the variables&quot;           
+4  &quot;$var$cor&quot;         &quot;correlations variables - dimensions&quot;
+5  &quot;$var$cos2&quot;        &quot;cos2 for the variables&quot;             
+6  &quot;$var$contrib&quot;     &quot;contributions of the variables&quot;     
+7  &quot;$ind&quot;             &quot;results for the individuals&quot;        
+8  &quot;$ind$coord&quot;       &quot;coord. for the individuals&quot;         
+9  &quot;$ind$cos2&quot;        &quot;cos2 for the individuals&quot;           
+10 &quot;$ind$contrib&quot;     &quot;contributions of the individuals&quot;   
+11 &quot;$call&quot;            &quot;summary statistics&quot;                 
+12 &quot;$call$centre&quot;     &quot;mean of the variables&quot;              
+13 &quot;$call$ecart.type&quot; &quot;standard error of the variables&quot;    
+14 &quot;$call$row.w&quot;      &quot;weights for the individuals&quot;        
+15 &quot;$call$col.w&quot;      &quot;weights for the variables&quot;          </code></pre>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="22-absenteeism-work.html#cb871-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The proportion of variation retained by the principal components (PCs) can be extracted as follow :</span></span>
+<span id="cb871-2"><a href="22-absenteeism-work.html#cb871-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb871-3"><a href="22-absenteeism-work.html#cb871-3" aria-hidden="true" tabindex="-1"></a>egv1 <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(pcaex)</span>
+<span id="cb871-4"><a href="22-absenteeism-work.html#cb871-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(egv1[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span></code></pre></div>
+<pre><code>      eigenvalue variance.percent
+Dim.1       3.34            17.58
+Dim.2       2.26            11.88
+Dim.3       1.94            10.21
+Dim.4       1.51             7.94
+Dim.5       1.39             7.30
+Dim.6       1.23             6.49</code></pre>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="22-absenteeism-work.html#cb873-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Here, 60% of the information (variances) contained in the data are retained by the first six principal components.</span></span>
+<span id="cb873-2"><a href="22-absenteeism-work.html#cb873-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb873-3"><a href="22-absenteeism-work.html#cb873-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The amount of variation retained by each PC is called eigenvalues. The first PC corresponds to the direction with the maximum amount of variation in the data set.</span></span>
+<span id="cb873-4"><a href="22-absenteeism-work.html#cb873-4" aria-hidden="true" tabindex="-1"></a><span class="co">#The importance of PCs can be visualized using a scree plot :</span></span>
+<span id="cb873-5"><a href="22-absenteeism-work.html#cb873-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb873-6"><a href="22-absenteeism-work.html#cb873-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot the eigenvalues/variances against the number of dimensions</span></span>
+<span id="cb873-7"><a href="22-absenteeism-work.html#cb873-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb873-8"><a href="22-absenteeism-work.html#cb873-8" aria-hidden="true" tabindex="-1"></a><span class="co"># eigen values -</span></span>
+<span id="cb873-9"><a href="22-absenteeism-work.html#cb873-9" aria-hidden="true" tabindex="-1"></a>egv1 <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(pcaex)</span>
+<span id="cb873-10"><a href="22-absenteeism-work.html#cb873-10" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(pcaex,<span class="at">addlabels=</span>T)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-640-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="22-absenteeism-work.html#cb874-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation of variables with PCA components-</span></span>
+<span id="cb874-2"><a href="22-absenteeism-work.html#cb874-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pcaex,<span class="at">col.var=</span><span class="st">&#39;red&#39;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="22-absenteeism-work.html#cb875-1" aria-hidden="true" tabindex="-1"></a>pcaex<span class="sc">$</span>var<span class="sc">$</span>contrib</span></code></pre></div>
+<pre><code>                                  Dim.1    Dim.2    Dim.3    Dim.4  Dim.5
+Reason for absence               0.0795  1.17165 25.29507  5.32313  1.849
+Month of absence                 0.0128  8.41604  7.75872 21.03291  4.322
+Day of the week                  0.1891  0.32499  1.76749  0.70991 13.827
+Seasons                          0.0428  2.16080  9.28314  6.51084  3.818
+Transportation expense           3.3278 21.18599  0.26722  1.22436  2.164
+Distance from Residence to Work  0.3434 13.77449 16.09334  0.00193  0.306
+Service time                    18.4990  0.72408  0.03471  2.54520 10.232
+Age                             14.3386  0.23638  1.85544  4.78763  7.462
+Work load Average/day            0.1028  0.00934  2.01150  3.14305  0.965
+Hit target                       0.3061  5.93894  5.62363 10.88925  1.762
+Disciplinary failure             0.1471  3.67096 20.46621  3.84722  0.230
+Education                        6.6039  9.08390  1.03185  0.86395  1.020
+Son                              0.2764 10.25788  0.00737 12.83974  0.553
+Social drinker                   8.9983  8.37065  2.81965  1.34722  1.728
+Social smoker                    0.6560  0.01194  1.78505 21.24828  5.712
+Pet                              3.8900  8.61414  0.45296  0.01825 10.086
+Weight                          20.7634  0.07215  0.41055  0.95704 11.429
+Height                           0.1488  5.43333  3.02288  0.79817 20.343
+Body mass index                 21.2742  0.54235  0.01320  1.91192  2.190</code></pre>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="22-absenteeism-work.html#cb877-1" aria-hidden="true" tabindex="-1"></a><span class="co"># quality of presentation of variables in correlogram-</span></span>
+<span id="cb877-2"><a href="22-absenteeism-work.html#cb877-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cos2</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="22-absenteeism-work.html#cb878-1" aria-hidden="true" tabindex="-1"></a><span class="co"># contribution of variables to the respective principal components-</span></span>
+<span id="cb878-2"><a href="22-absenteeism-work.html#cb878-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="22-absenteeism-work.html#cb879-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-4.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="22-absenteeism-work.html#cb880-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-5.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="22-absenteeism-work.html#cb881-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">4</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-6.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="22-absenteeism-work.html#cb882-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pcaex,<span class="at">choice=</span><span class="st">&#39;var&#39;</span>,<span class="at">axes=</span><span class="dv">5</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-641-7.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+
+</div>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1131,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="21-absenteeism-MFG.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="23-accidents-work.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1163,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/21-absenteeism-work.Rmd",
 "text": "Edit"
 },
 "history": {

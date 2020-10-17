@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 20 Masking HR data | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 20 Masking HR data | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 20 Masking HR data | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="19-job-classification.html"/>
+<link rel="next" href="21-absenteeism-MFG.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,423 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
+<div id="masking-data" class="section level1" number="20">
+<h1><span class="header-section-number">Chapter 20</span> Masking HR data</h1>
+<p>In the toolbox of every HR Analytics expert, the ability to quickly anonymize data for test and development environments finds an important place. Surely you want to be able to protect confidential data from inappropriate views.</p>
+<p>Ensure all needed libraries are installed</p>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="20-masking-data.html#cb723-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb723-2"><a href="20-masking-data.html#cb723-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randNames)</span>
+<span id="cb723-3"><a href="20-masking-data.html#cb723-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(smoothmest)</span></code></pre></div>
+<div id="whitehouse-dataset" class="section level3" number="20.0.1">
+<h3><span class="header-section-number">20.0.1</span> Whitehouse dataset</h3>
+<p>Load a data set with first and last names and let us preview the dataset</p>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="20-masking-data.html#cb724-1" aria-hidden="true" tabindex="-1"></a>whitehouse <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/2016-Report-White-House-Staff.csv&quot;</span>)</span></code></pre></div>
+<p>Let us replace original names with fake names</p>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="20-masking-data.html#cb725-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a set of new names of equal length as the original dataset</span></span>
+<span id="cb725-2"><a href="20-masking-data.html#cb725-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-3"><a href="20-masking-data.html#cb725-3" aria-hidden="true" tabindex="-1"></a>fake <span class="ot">&lt;-</span> <span class="fu">nrow</span>(whitehouse) <span class="sc">%&gt;%</span></span>
+<span id="cb725-4"><a href="20-masking-data.html#cb725-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rand_names</span> (<span class="at">nat=</span><span class="st">&quot;US&quot;</span>)</span>
+<span id="cb725-5"><a href="20-masking-data.html#cb725-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-6"><a href="20-masking-data.html#cb725-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Function to capitalise the first letter</span></span>
+<span id="cb725-7"><a href="20-masking-data.html#cb725-7" aria-hidden="true" tabindex="-1"></a>firstup <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb725-8"><a href="20-masking-data.html#cb725-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">substr</span>(x, <span class="dv">1</span>, <span class="dv">1</span>) <span class="ot">&lt;-</span> <span class="fu">toupper</span>(<span class="fu">substr</span>(x, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb725-9"><a href="20-masking-data.html#cb725-9" aria-hidden="true" tabindex="-1"></a>  x</span>
+<span id="cb725-10"><a href="20-masking-data.html#cb725-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb725-11"><a href="20-masking-data.html#cb725-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-12"><a href="20-masking-data.html#cb725-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a dataframe without the original names columns</span></span>
+<span id="cb725-13"><a href="20-masking-data.html#cb725-13" aria-hidden="true" tabindex="-1"></a>whitehouse_with_no_names <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>(whitehouse, <span class="sc">-</span>Name)</span>
+<span id="cb725-14"><a href="20-masking-data.html#cb725-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-15"><a href="20-masking-data.html#cb725-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a column of fake last and first names</span></span>
+<span id="cb725-16"><a href="20-masking-data.html#cb725-16" aria-hidden="true" tabindex="-1"></a>fake<span class="sc">$</span>newnames <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">firstup</span>(fake<span class="sc">$</span>name.last), <span class="st">&quot;, &quot;</span>, <span class="fu">firstup</span>(fake<span class="sc">$</span>name.first))</span>
+<span id="cb725-17"><a href="20-masking-data.html#cb725-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-18"><a href="20-masking-data.html#cb725-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a column of fake last and first names of exactly the length of the data frame without the original names</span></span>
+<span id="cb725-19"><a href="20-masking-data.html#cb725-19" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> fake[<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(whitehouse_with_no_names),]</span>
+<span id="cb725-20"><a href="20-masking-data.html#cb725-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-21"><a href="20-masking-data.html#cb725-21" aria-hidden="true" tabindex="-1"></a><span class="co">#Bind the dataset without names with the new dataset containing fake names</span></span>
+<span id="cb725-22"><a href="20-masking-data.html#cb725-22" aria-hidden="true" tabindex="-1"></a>whitehouse_masked <span class="ot">&lt;-</span> <span class="fu">cbind</span>(result<span class="sc">$</span>newnames, whitehouse_with_no_names)</span>
+<span id="cb725-23"><a href="20-masking-data.html#cb725-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb725-24"><a href="20-masking-data.html#cb725-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Rename the column title to &quot;Name&quot;</span></span>
+<span id="cb725-25"><a href="20-masking-data.html#cb725-25" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(whitehouse_masked)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Name&quot;</span></span></code></pre></div>
+<p>Let us replace original names with random numbers</p>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="20-masking-data.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility of the random numbers</span></span>
+<span id="cb726-2"><a href="20-masking-data.html#cb726-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb726-3"><a href="20-masking-data.html#cb726-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb726-4"><a href="20-masking-data.html#cb726-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace names with random numbers from 1 to 1000</span></span>
+<span id="cb726-5"><a href="20-masking-data.html#cb726-5" aria-hidden="true" tabindex="-1"></a>whitehouse_no_names <span class="ot">&lt;-</span> whitehouse_masked <span class="sc">%&gt;%</span></span>
+<span id="cb726-6"><a href="20-masking-data.html#cb726-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Name =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>, <span class="fu">nrow</span>(whitehouse_masked)))</span></code></pre></div>
+<p>Let us anonymise the salary data</p>
+<p>We can use four different methods to anonymise data:
+* Rounding Salary to the nearest ten thousand
+* Top coding consists of bringing data to an upper limit.
+* Bottom coding consists of bringing data to a lower limit.</p>
+<p>In data analysis exists various types of transformations, reciprocal, logarithm, cube root, square root and square, however in the following we will demonstrate only the square root transformation.</p>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="20-masking-data.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rounding Salary to the nearest ten thousand</span></span>
+<span id="cb727-2"><a href="20-masking-data.html#cb727-2" aria-hidden="true" tabindex="-1"></a>whitehouse_no_identifiers <span class="ot">&lt;-</span> whitehouse_no_names <span class="sc">%&gt;%</span></span>
+<span id="cb727-3"><a href="20-masking-data.html#cb727-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Salary =</span> <span class="fu">round</span>(Salary, <span class="at">digits =</span> <span class="sc">-</span><span class="dv">4</span>))</span>
+<span id="cb727-4"><a href="20-masking-data.html#cb727-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb727-5"><a href="20-masking-data.html#cb727-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Top coding convert the salaries into three categories</span></span>
+<span id="cb727-6"><a href="20-masking-data.html#cb727-6" aria-hidden="true" tabindex="-1"></a>whitehouse.gen <span class="ot">&lt;-</span> whitehouse_masked <span class="sc">%&gt;%</span></span>
+<span id="cb727-7"><a href="20-masking-data.html#cb727-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Salary =</span> <span class="fu">ifelse</span>(Salary <span class="sc">&lt;</span> <span class="dv">50000</span>, <span class="dv">0</span>, </span>
+<span id="cb727-8"><a href="20-masking-data.html#cb727-8" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">ifelse</span>(Salary <span class="sc">&gt;=</span> <span class="dv">50000</span> <span class="sc">&amp;</span> Salary <span class="sc">&lt;</span> <span class="dv">100000</span>, <span class="dv">1</span>, <span class="dv">2</span>)))</span>
+<span id="cb727-9"><a href="20-masking-data.html#cb727-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb727-10"><a href="20-masking-data.html#cb727-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Bottom Coding</span></span>
+<span id="cb727-11"><a href="20-masking-data.html#cb727-11" aria-hidden="true" tabindex="-1"></a>whitehouse.bottom <span class="ot">&lt;-</span> whitehouse_masked <span class="sc">%&gt;%</span></span>
+<span id="cb727-12"><a href="20-masking-data.html#cb727-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Salary =</span> <span class="fu">ifelse</span>(Salary<span class="sc">&lt;=</span><span class="dv">45000</span>, <span class="dv">45000</span>, Salary))</span></code></pre></div>
 </div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
+<div id="fertility-dataset" class="section level3" number="20.0.2">
+<h3><span class="header-section-number">20.0.2</span> Fertility dataset</h3>
+<p>Let us explore deeper anonymisation option of generating synthetic data. We will do on the basis of the fertility dataset available from UCI website:
+<a href="https://archive.ics.uci.edu/ml/datasets/Fertility" class="uri">https://archive.ics.uci.edu/ml/datasets/Fertility</a></p>
+<div class="figure">
+<img src="images/UCI_logo.png" alt="" />
+<p class="caption">UCI logo</p>
 </div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
+<p>It needs to be loaded first and let us preview it.</p>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="20-masking-data.html#cb728-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/fertility_Diagnosis.txt&quot;</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="20-masking-data.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us assign significant column titles</span></span>
+<span id="cb729-2"><a href="20-masking-data.html#cb729-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(fertility) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Season&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Child_Disease&quot;</span>, <span class="st">&quot;Accident_Trauma&quot;</span>, <span class="st">&quot;Surgical_Intervention&quot;</span>,<span class="st">&quot;High_Fevers&quot;</span>, <span class="st">&quot;Alcohol_Consumption&quot;</span>,<span class="st">&quot;Smoking_Habit&quot;</span>,<span class="st">&quot;Hours_Sitting&quot;</span>,<span class="st">&quot;Diagnosis&quot;</span>)</span>
+<span id="cb729-3"><a href="20-masking-data.html#cb729-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb729-4"><a href="20-masking-data.html#cb729-4" aria-hidden="true" tabindex="-1"></a><span class="co"># View fertility data</span></span>
+<span id="cb729-5"><a href="20-masking-data.html#cb729-5" aria-hidden="true" tabindex="-1"></a>fertility</span></code></pre></div>
+<pre><code># A tibble: 100 x 10
+   Season     Age Child_Disease Accident_Trauma Surgical_Interv~ High_Fevers
+    &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;
+ 1  -0.33 0.69000             0               1                1           0
+ 2  -0.33 0.94                1               0                1           0
+ 3  -0.33 0.5                 1               0                0           0
+ 4  -0.33 0.75                0               1                1           0
+ 5  -0.33 0.67                1               1                0           0
+ 6  -0.33 0.67                1               0                1           0
+ 7  -0.33 0.67                0               0                0          -1
+ 8  -0.33 1                   1               1                1           0
+ 9   1    0.64                0               0                1           0
+10   1    0.61                1               0                0           0
+# ... with 90 more rows, and 4 more variables: Alcohol_Consumption &lt;dbl&gt;,
+#   Smoking_Habit &lt;dbl&gt;, Hours_Sitting &lt;dbl&gt;, Diagnosis &lt;chr&gt;</code></pre>
+<p>Let us examine the dataset.</p>
+<p>More on the data attributes is availalble here:
+<a href="https://archive.ics.uci.edu/ml/datasets/Fertility" class="uri">https://archive.ics.uci.edu/ml/datasets/Fertility</a></p>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="20-masking-data.html#cb731-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of participants with Surgical_Intervention and Diagnosis</span></span>
+<span id="cb731-2"><a href="20-masking-data.html#cb731-2" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb731-3"><a href="20-masking-data.html#cb731-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diagnosis) <span class="sc">%&gt;%</span></span>
+<span id="cb731-4"><a href="20-masking-data.html#cb731-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Surgical_Intervention), sum)</span></code></pre></div>
+<pre><code># A tibble: 2 x 2
+  Diagnosis Surgical_Intervention
+  &lt;chr&gt;                     &lt;dbl&gt;
+1 N                            44
+2 O                             7</code></pre>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="20-masking-data.html#cb733-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of participants with Surgical_Intervention and Diagnosis</span></span>
+<span id="cb733-2"><a href="20-masking-data.html#cb733-2" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb733-3"><a href="20-masking-data.html#cb733-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Age), <span class="fu">funs</span>(mean, sd))</span></code></pre></div>
+<pre><code># A tibble: 1 x 2
+   mean       sd
+  &lt;dbl&gt;    &lt;dbl&gt;
+1 0.669 0.121319</code></pre>
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="20-masking-data.html#cb735-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of the Groups in High_Fevers</span></span>
+<span id="cb735-2"><a href="20-masking-data.html#cb735-2" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb735-3"><a href="20-masking-data.html#cb735-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(High_Fevers)</span></code></pre></div>
+<pre><code># A tibble: 3 x 2
+  High_Fevers     n
+        &lt;dbl&gt; &lt;int&gt;
+1          -1     9
+2           0    63
+3           1    28</code></pre>
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="20-masking-data.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts of the Groups in Child_Disease and Accident_Trauma </span></span>
+<span id="cb737-2"><a href="20-masking-data.html#cb737-2" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb737-3"><a href="20-masking-data.html#cb737-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Child_Disease,Accident_Trauma)</span></code></pre></div>
+<pre><code># A tibble: 4 x 3
+  Child_Disease Accident_Trauma     n
+          &lt;dbl&gt;           &lt;dbl&gt; &lt;int&gt;
+1             0               0    10
+2             0               1     3
+3             1               0    46
+4             1               1    41</code></pre>
+<div class="sourceCode" id="cb739"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb739-1"><a href="20-masking-data.html#cb739-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average of Child_Disease</span></span>
+<span id="cb739-2"><a href="20-masking-data.html#cb739-2" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb739-3"><a href="20-masking-data.html#cb739-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Child_Disease), mean)</span></code></pre></div>
+<pre><code># A tibble: 1 x 1
+  Child_Disease
+          &lt;dbl&gt;
+1          0.87</code></pre>
+<p>In the following we will generate synthetic data sampling from a normal distribution through the subsequent steps:
+1. First create a new dataset called “fert,” after applying a log transformation on the hours sitting variable.
+2. Calculate the average and the standard deviation
+3. Set a seed for reproducibility
+4. Generate new data normally distributed for the hours sitting variable
+5. Retransform back the log variable using exponential.
+6. Hard bound data not falling in the right range
+7. Recheck the range.
+8. Substitute the synthtic data back into the initial fert dataset.</p>
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="20-masking-data.html#cb741-1" aria-hidden="true" tabindex="-1"></a>fert <span class="ot">&lt;-</span> fertility <span class="sc">%&gt;%</span></span>
+<span id="cb741-2"><a href="20-masking-data.html#cb741-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Hours_Sitting =</span> <span class="fu">log</span>(Hours_Sitting))</span>
+<span id="cb741-3"><a href="20-masking-data.html#cb741-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb741-4"><a href="20-masking-data.html#cb741-4" aria-hidden="true" tabindex="-1"></a>fert <span class="sc">%&gt;%</span></span>
+<span id="cb741-5"><a href="20-masking-data.html#cb741-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Hours_Sitting), <span class="fu">funs</span>(mean, sd))</span></code></pre></div>
+<pre><code># A tibble: 1 x 2
+      mean       sd
+     &lt;dbl&gt;    &lt;dbl&gt;
+1 -1.01224 0.504779</code></pre>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="20-masking-data.html#cb743-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb743-2"><a href="20-masking-data.html#cb743-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-3"><a href="20-masking-data.html#cb743-3" aria-hidden="true" tabindex="-1"></a>hours.sit <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="sc">-</span><span class="fl">1.01</span>, <span class="fl">0.50</span>)</span>
+<span id="cb743-4"><a href="20-masking-data.html#cb743-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-5"><a href="20-masking-data.html#cb743-5" aria-hidden="true" tabindex="-1"></a>hours.sit <span class="ot">&lt;-</span> <span class="fu">exp</span>(hours.sit)</span>
+<span id="cb743-6"><a href="20-masking-data.html#cb743-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-7"><a href="20-masking-data.html#cb743-7" aria-hidden="true" tabindex="-1"></a>hours.sit[hours.sit <span class="sc">&lt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb743-8"><a href="20-masking-data.html#cb743-8" aria-hidden="true" tabindex="-1"></a>hours.sit[hours.sit <span class="sc">&gt;</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb743-9"><a href="20-masking-data.html#cb743-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb743-10"><a href="20-masking-data.html#cb743-10" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(hours.sit)</span></code></pre></div>
+<pre><code>[1] 0.0815 1.0000</code></pre>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="20-masking-data.html#cb745-1" aria-hidden="true" tabindex="-1"></a>fert<span class="sc">$</span>Hours_Sitting <span class="ot">&lt;-</span> hours.sit</span></code></pre></div>
+<p>In data analysis exists various types of transformations, reciprocal, logarithm, cube root, square root and square, however in the following we will demonstrate only the square root transformation.</p>
+<div class="sourceCode" id="cb746"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb746-1"><a href="20-masking-data.html#cb746-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Square root Transformation of Salary</span></span>
+<span id="cb746-2"><a href="20-masking-data.html#cb746-2" aria-hidden="true" tabindex="-1"></a>whitehouse.salary <span class="ot">&lt;-</span> whitehouse_masked <span class="sc">%&gt;%</span></span>
+<span id="cb746-3"><a href="20-masking-data.html#cb746-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Salary =</span> <span class="fu">sqrt</span>(Salary))</span>
+<span id="cb746-4"><a href="20-masking-data.html#cb746-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb746-5"><a href="20-masking-data.html#cb746-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean and standard deviation</span></span>
+<span id="cb746-6"><a href="20-masking-data.html#cb746-6" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> whitehouse.salary <span class="sc">%&gt;%</span> </span>
+<span id="cb746-7"><a href="20-masking-data.html#cb746-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Salary), <span class="fu">funs</span>(mean, sd))</span>
+<span id="cb746-8"><a href="20-masking-data.html#cb746-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb746-9"><a href="20-masking-data.html#cb746-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate Synthetic data with the same mean and standard deviation</span></span>
+<span id="cb746-10"><a href="20-masking-data.html#cb746-10" aria-hidden="true" tabindex="-1"></a>salary_transformed <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">nrow</span>(whitehouse_masked), <span class="fu">mean</span>(whitehouse.salary<span class="sc">$</span>Salary), <span class="fu">sd</span>(whitehouse.salary<span class="sc">$</span>Salary))</span>
+<span id="cb746-11"><a href="20-masking-data.html#cb746-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb746-12"><a href="20-masking-data.html#cb746-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Power transformation</span></span>
+<span id="cb746-13"><a href="20-masking-data.html#cb746-13" aria-hidden="true" tabindex="-1"></a>salary_original <span class="ot">&lt;-</span> salary_transformed<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb746-14"><a href="20-masking-data.html#cb746-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb746-15"><a href="20-masking-data.html#cb746-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Hard bound</span></span>
+<span id="cb746-16"><a href="20-masking-data.html#cb746-16" aria-hidden="true" tabindex="-1"></a>salary <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(salary_original <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, salary_original)</span></code></pre></div>
+<p>Let us introduce now the concept of differential privacy, a mathematical concept used by big names like Google, Census Bureau and Apple.
+Why Differential Privacy? It quantifies the privacy loss via a privacy budget, called epsilon. It assumes the worst-case scenario about the data intruder. Smaller privacy budget means less information or a noiser answer, however epsilon cannot be zero or lower.</p>
+<p>Global Sensitivity of Other Queries
+n is total number of observations
+a is the lower bound of the data
+b is the upper bound of the data
+Counting: 1
+Proportion: 1 / n
+Mean: (b - a) / n</p>
+<p>small global sensitivity results in less noise
+large global sensitivity results in more noise</p>
+<p>Number of observations
+n &lt;- nrow(fertility)</p>
+<p>Global sensitivity of counts
+gs.count &lt;- 1</p>
+<p>Global sensitivity of proportions
+gs.prop &lt;- 1/n</p>
+<p>Lower bound
+a &lt;- 0</p>
+<p>Upper bound
+b &lt;- 1</p>
+<p>Global sensitivity of mean
+gs.mean &lt;- (b - a) / n</p>
+<p>Global sensitivity of proportions
+gs.var &lt;- (b - a)^2 / n</p>
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="20-masking-data.html#cb747-1" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb747-2"><a href="20-masking-data.html#cb747-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Child_Disease), sum)</span></code></pre></div>
+<pre><code># A tibble: 1 x 1
+  Child_Disease
+          &lt;dbl&gt;
+1            87</code></pre>
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="20-masking-data.html#cb749-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(smoothmest)</span>
+<span id="cb749-2"><a href="20-masking-data.html#cb749-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb749-3"><a href="20-masking-data.html#cb749-3" aria-hidden="true" tabindex="-1"></a><span class="co">#rdoublex(draws, mean, shaping) </span></span>
+<span id="cb749-4"><a href="20-masking-data.html#cb749-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb749-5"><a href="20-masking-data.html#cb749-5" aria-hidden="true" tabindex="-1"></a><span class="co">#rdoublex is a random number generator. It creates a vector of random numbers generated by the double exponential distribution.</span></span></code></pre></div>
+<p>The double exponential distribution is also commonly referred to as the Laplace distribution. The following is the plot of the double exponential probability density function.</p>
+<div class="figure">
+<img src="images/dexpdf.png" alt="" />
+<p class="caption">plot of double exponential probability density function</p>
 </div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="20-masking-data.html#cb750-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb750-2"><a href="20-masking-data.html#cb750-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb750-3"><a href="20-masking-data.html#cb750-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">87</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>[1] 87</code></pre>
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="20-masking-data.html#cb752-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 87.01983</span></span>
+<span id="cb752-2"><a href="20-masking-data.html#cb752-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb752-3"><a href="20-masking-data.html#cb752-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)    </span>
+<span id="cb752-4"><a href="20-masking-data.html#cb752-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">87</span>, <span class="dv">1</span> <span class="sc">/</span> <span class="fl">0.1</span>)</span></code></pre></div>
+<pre><code>[1] 85</code></pre>
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="20-masking-data.html#cb754-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 88.98337</span></span></code></pre></div>
+<p>Sequential Composition</p>
+<p>Suppose a set of privacy mechanisms M are sequentially performed on a dataset, and each M provides the max epsilon privacy guarantee.</p>
+<p>The sequential composition undertakes the privacy guarantee for a sequence of differentially private computations. When a set of randomized mechanisms has been performed sequentially on a dataset, the final privacy guarantee is determined by the summation of total privacy budgets.</p>
+<p>The privacy budget must be divided by two.</p>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="20-masking-data.html#cb755-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Set Value of Epsilon</span></span>
+<span id="cb755-2"><a href="20-masking-data.html#cb755-2" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb755-3"><a href="20-masking-data.html#cb755-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb755-4"><a href="20-masking-data.html#cb755-4" aria-hidden="true" tabindex="-1"></a><span class="co"># GS of Mean and Variance</span></span>
+<span id="cb755-5"><a href="20-masking-data.html#cb755-5" aria-hidden="true" tabindex="-1"></a>gs.mean <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb755-6"><a href="20-masking-data.html#cb755-6" aria-hidden="true" tabindex="-1"></a>gs.var <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb755-7"><a href="20-masking-data.html#cb755-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb755-8"><a href="20-masking-data.html#cb755-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the Laplace mechanism</span></span>
+<span id="cb755-9"><a href="20-masking-data.html#cb755-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb755-10"><a href="20-masking-data.html#cb755-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="fl">0.41</span>, gs.mean <span class="sc">/</span> eps)</span></code></pre></div>
+<pre><code>[1] 0.37</code></pre>
+<div class="sourceCode" id="cb757"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb757-1"><a href="20-masking-data.html#cb757-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 0.4496674</span></span>
+<span id="cb757-2"><a href="20-masking-data.html#cb757-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="fl">0.19</span>, gs.var <span class="sc">/</span> eps)</span></code></pre></div>
+<pre><code>[1] 0.247</code></pre>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="20-masking-data.html#cb759-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 0.2466982</span></span></code></pre></div>
+<p>Parallel Composition</p>
+<p>Suppose a set of privacy mechanisms M are sequentially performed on a dataset, and each M provides the sum epsilon privacy guarantee.</p>
+<p>The sequential composition undertakes the privacy guarantee for a sequence of differentially private computations. When a set of randomized mechanisms has been performed sequentially on a dataset, the final privacy guarantee is determined by the summation of total privacy budgets.</p>
+<p>The privacy budget does not need to be divided.
+The query with the most epsilon is the budget for the data.</p>
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="20-masking-data.html#cb760-1" aria-hidden="true" tabindex="-1"></a><span class="co">#High_Fevers and Mean of Hours_Sitting</span></span>
+<span id="cb760-2"><a href="20-masking-data.html#cb760-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb760-3"><a href="20-masking-data.html#cb760-3" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb760-4"><a href="20-masking-data.html#cb760-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(High_Fevers <span class="sc">&gt;=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb760-5"><a href="20-masking-data.html#cb760-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Hours_Sitting), mean)</span></code></pre></div>
+<pre><code># A tibble: 1 x 1
+  Hours_Sitting
+          &lt;dbl&gt;
+1      0.393297</code></pre>
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="20-masking-data.html#cb762-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Hours_Sitting 0.3932967</span></span>
+<span id="cb762-2"><a href="20-masking-data.html#cb762-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb762-3"><a href="20-masking-data.html#cb762-3" aria-hidden="true" tabindex="-1"></a><span class="co"># No High_Fevers and Mean of Hours_Sitting</span></span>
+<span id="cb762-4"><a href="20-masking-data.html#cb762-4" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb762-5"><a href="20-masking-data.html#cb762-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(High_Fevers <span class="sc">==</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb762-6"><a href="20-masking-data.html#cb762-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Hours_Sitting), mean)</span></code></pre></div>
+<pre><code># A tibble: 1 x 1
+  Hours_Sitting
+          &lt;dbl&gt;
+1      0.543333</code></pre>
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="20-masking-data.html#cb764-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Hours_Sitting 0.5433333</span></span>
+<span id="cb764-2"><a href="20-masking-data.html#cb764-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb764-3"><a href="20-masking-data.html#cb764-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Set Value of Epsilon</span></span>
+<span id="cb764-4"><a href="20-masking-data.html#cb764-4" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb764-5"><a href="20-masking-data.html#cb764-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb764-6"><a href="20-masking-data.html#cb764-6" aria-hidden="true" tabindex="-1"></a><span class="co"># GS of mean for Hours_Sitting</span></span>
+<span id="cb764-7"><a href="20-masking-data.html#cb764-7" aria-hidden="true" tabindex="-1"></a>gs.mean <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">100</span></span>
+<span id="cb764-8"><a href="20-masking-data.html#cb764-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb764-9"><a href="20-masking-data.html#cb764-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the Laplace mechanism</span></span>
+<span id="cb764-10"><a href="20-masking-data.html#cb764-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb764-11"><a href="20-masking-data.html#cb764-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="fl">0.39</span>, gs.mean <span class="sc">/</span> eps)</span></code></pre></div>
+<pre><code>[1] 0.37</code></pre>
+<div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="20-masking-data.html#cb766-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 0.4098337</span></span>
+<span id="cb766-2"><a href="20-masking-data.html#cb766-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="fl">0.54</span>, gs.mean <span class="sc">/</span> eps)</span></code></pre></div>
+<pre><code>[1] 0.568</code></pre>
+<div class="sourceCode" id="cb768"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb768-1"><a href="20-masking-data.html#cb768-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 0.5683491</span></span></code></pre></div>
+<p>Prepping up data</p>
+<div class="sourceCode" id="cb769"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb769-1"><a href="20-masking-data.html#cb769-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Value of Epsilon</span></span>
+<span id="cb769-2"><a href="20-masking-data.html#cb769-2" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb769-3"><a href="20-masking-data.html#cb769-3" aria-hidden="true" tabindex="-1"></a><span class="co"># GS of counts</span></span>
+<span id="cb769-4"><a href="20-masking-data.html#cb769-4" aria-hidden="true" tabindex="-1"></a>gs.count <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb769-5"><a href="20-masking-data.html#cb769-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb769-6"><a href="20-masking-data.html#cb769-6" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb769-7"><a href="20-masking-data.html#cb769-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Smoking_Habit)</span></code></pre></div>
+<pre><code># A tibble: 3 x 2
+  Smoking_Habit     n
+          &lt;dbl&gt; &lt;int&gt;
+1            -1    56
+2             0    23
+3             1    21</code></pre>
+<div class="sourceCode" id="cb771"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb771-1"><a href="20-masking-data.html#cb771-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Smoking Count</span></span>
+<span id="cb771-2"><a href="20-masking-data.html#cb771-2" aria-hidden="true" tabindex="-1"></a><span class="co">#-1      56</span></span>
+<span id="cb771-3"><a href="20-masking-data.html#cb771-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 0      23</span></span>
+<span id="cb771-4"><a href="20-masking-data.html#cb771-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1     21</span></span>
+<span id="cb771-5"><a href="20-masking-data.html#cb771-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-6"><a href="20-masking-data.html#cb771-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Apply the Laplace mechanism</span></span>
+<span id="cb771-7"><a href="20-masking-data.html#cb771-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb771-8"><a href="20-masking-data.html#cb771-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-9"><a href="20-masking-data.html#cb771-9" aria-hidden="true" tabindex="-1"></a>smoking1 <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">56</span>, gs.count <span class="sc">/</span> eps <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb771-10"><a href="20-masking-data.html#cb771-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>()</span>
+<span id="cb771-11"><a href="20-masking-data.html#cb771-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-12"><a href="20-masking-data.html#cb771-12" aria-hidden="true" tabindex="-1"></a>smoking2 <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">23</span>, gs.count <span class="sc">/</span> eps <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb771-13"><a href="20-masking-data.html#cb771-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>()</span>
+<span id="cb771-14"><a href="20-masking-data.html#cb771-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-15"><a href="20-masking-data.html#cb771-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Post-process based on previous queries</span></span>
+<span id="cb771-16"><a href="20-masking-data.html#cb771-16" aria-hidden="true" tabindex="-1"></a>smoking3 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(fertility) <span class="sc">-</span> smoking1 <span class="sc">-</span> smoking2</span>
+<span id="cb771-17"><a href="20-masking-data.html#cb771-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb771-18"><a href="20-masking-data.html#cb771-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking the noisy answers</span></span>
+<span id="cb771-19"><a href="20-masking-data.html#cb771-19" aria-hidden="true" tabindex="-1"></a>smoking1</span></code></pre></div>
+<pre><code>[1] 46</code></pre>
+<div class="sourceCode" id="cb773"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb773-1"><a href="20-masking-data.html#cb773-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 60</span></span>
+<span id="cb773-2"><a href="20-masking-data.html#cb773-2" aria-hidden="true" tabindex="-1"></a>smoking2</span></code></pre></div>
+<pre><code>[1] 37</code></pre>
+<div class="sourceCode" id="cb775"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb775-1"><a href="20-masking-data.html#cb775-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 29</span></span>
+<span id="cb775-2"><a href="20-masking-data.html#cb775-2" aria-hidden="true" tabindex="-1"></a>smoking3</span></code></pre></div>
+<pre><code>[1] 17</code></pre>
+<div class="sourceCode" id="cb777"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb777-1"><a href="20-masking-data.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 11</span></span></code></pre></div>
+<p>Impossible and
+Inconsistent Answers</p>
+<div class="sourceCode" id="cb778"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb778-1"><a href="20-masking-data.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Value of Epsilon</span></span>
+<span id="cb778-2"><a href="20-masking-data.html#cb778-2" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb778-3"><a href="20-masking-data.html#cb778-3" aria-hidden="true" tabindex="-1"></a><span class="co"># GS of counts</span></span>
+<span id="cb778-4"><a href="20-masking-data.html#cb778-4" aria-hidden="true" tabindex="-1"></a>gs.count <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb778-5"><a href="20-masking-data.html#cb778-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb778-6"><a href="20-masking-data.html#cb778-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display Participants with Abnormal Diagnosis</span></span>
+<span id="cb778-7"><a href="20-masking-data.html#cb778-7" aria-hidden="true" tabindex="-1"></a>Number_abnormal <span class="ot">&lt;-</span> fertility <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Diagnosis<span class="sc">==</span><span class="st">&quot;O&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">sum_x1 =</span> <span class="fu">sum</span>(Diagnosis<span class="sc">==</span><span class="st">&quot;O&quot;</span>))</span>
+<span id="cb778-8"><a href="20-masking-data.html#cb778-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb778-9"><a href="20-masking-data.html#cb778-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Negative Counts: Applying the Laplace mechanism</span></span>
+<span id="cb778-10"><a href="20-masking-data.html#cb778-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the Laplace mechanism and set.seed(22)</span></span>
+<span id="cb778-11"><a href="20-masking-data.html#cb778-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">22</span>)</span>
+<span id="cb778-12"><a href="20-masking-data.html#cb778-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">12</span>, gs.count <span class="sc">/</span> eps) <span class="sc">%&gt;%</span></span>
+<span id="cb778-13"><a href="20-masking-data.html#cb778-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>()</span></code></pre></div>
+<pre><code>[1] -79</code></pre>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="20-masking-data.html#cb780-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] -79</span></span>
+<span id="cb780-2"><a href="20-masking-data.html#cb780-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb780-3"><a href="20-masking-data.html#cb780-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the Laplace mechanism and set.seed(22)</span></span>
+<span id="cb780-4"><a href="20-masking-data.html#cb780-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">22</span>)</span>
+<span id="cb780-5"><a href="20-masking-data.html#cb780-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">12</span>, gs.count <span class="sc">/</span> eps) <span class="sc">%&gt;%</span></span>
+<span id="cb780-6"><a href="20-masking-data.html#cb780-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb780-7"><a href="20-masking-data.html#cb780-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="dv">0</span>)</span></code></pre></div>
+<pre><code>[1] 0</code></pre>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="20-masking-data.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 0</span></span>
+<span id="cb782-2"><a href="20-masking-data.html#cb782-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-3"><a href="20-masking-data.html#cb782-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Suppose we set a different seed</span></span>
+<span id="cb782-4"><a href="20-masking-data.html#cb782-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
+<span id="cb782-5"><a href="20-masking-data.html#cb782-5" aria-hidden="true" tabindex="-1"></a>noisy_answer <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">12</span>, gs.count <span class="sc">/</span> eps) <span class="sc">%&gt;%</span></span>
+<span id="cb782-6"><a href="20-masking-data.html#cb782-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb782-7"><a href="20-masking-data.html#cb782-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="dv">0</span>)</span>
+<span id="cb782-8"><a href="20-masking-data.html#cb782-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-9"><a href="20-masking-data.html#cb782-9" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(fertility)</span>
+<span id="cb782-10"><a href="20-masking-data.html#cb782-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-11"><a href="20-masking-data.html#cb782-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ifelse example</span></span>
+<span id="cb782-12"><a href="20-masking-data.html#cb782-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(noisy_answer <span class="sc">&gt;</span> n, n, noisy_answer)</span></code></pre></div>
+<pre><code>[1] 100</code></pre>
+<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="20-masking-data.html#cb784-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 100</span></span>
+<span id="cb784-2"><a href="20-masking-data.html#cb784-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb784-3"><a href="20-masking-data.html#cb784-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Normalising</span></span>
+<span id="cb784-4"><a href="20-masking-data.html#cb784-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set Value of Epsilon</span></span>
+<span id="cb784-5"><a href="20-masking-data.html#cb784-5" aria-hidden="true" tabindex="-1"></a>eps <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb784-6"><a href="20-masking-data.html#cb784-6" aria-hidden="true" tabindex="-1"></a><span class="co"># GS of Counts</span></span>
+<span id="cb784-7"><a href="20-masking-data.html#cb784-7" aria-hidden="true" tabindex="-1"></a>gs.count <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb784-8"><a href="20-masking-data.html#cb784-8" aria-hidden="true" tabindex="-1"></a>fertility <span class="sc">%&gt;%</span></span>
+<span id="cb784-9"><a href="20-masking-data.html#cb784-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Smoking_Habit)</span></code></pre></div>
+<pre><code># A tibble: 3 x 2
+  Smoking_Habit     n
+          &lt;dbl&gt; &lt;int&gt;
+1            -1    56
+2             0    23
+3             1    21</code></pre>
+<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="20-masking-data.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Smoking Count</span></span>
+<span id="cb786-2"><a href="20-masking-data.html#cb786-2" aria-hidden="true" tabindex="-1"></a><span class="co"># -1     56</span></span>
+<span id="cb786-3"><a href="20-masking-data.html#cb786-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  0     23</span></span>
+<span id="cb786-4"><a href="20-masking-data.html#cb786-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  1     21</span></span>
+<span id="cb786-5"><a href="20-masking-data.html#cb786-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb786-6"><a href="20-masking-data.html#cb786-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the Laplace mechanism and set.seed(42)</span></span>
+<span id="cb786-7"><a href="20-masking-data.html#cb786-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb786-8"><a href="20-masking-data.html#cb786-8" aria-hidden="true" tabindex="-1"></a>smoking1 <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">56</span>, gs.count <span class="sc">/</span> eps <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb786-9"><a href="20-masking-data.html#cb786-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="dv">0</span>)</span>
+<span id="cb786-10"><a href="20-masking-data.html#cb786-10" aria-hidden="true" tabindex="-1"></a>smoking2 <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">23</span>, gs.count <span class="sc">/</span> eps <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb786-11"><a href="20-masking-data.html#cb786-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="dv">0</span>)</span>
+<span id="cb786-12"><a href="20-masking-data.html#cb786-12" aria-hidden="true" tabindex="-1"></a>smoking3 <span class="ot">&lt;-</span> <span class="fu">rdoublex</span>(<span class="dv">1</span>, <span class="dv">21</span>, gs.count <span class="sc">/</span> eps <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb786-13"><a href="20-masking-data.html#cb786-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">max</span>(<span class="dv">0</span>)</span>
+<span id="cb786-14"><a href="20-masking-data.html#cb786-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb786-15"><a href="20-masking-data.html#cb786-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking the noisy answers</span></span>
+<span id="cb786-16"><a href="20-masking-data.html#cb786-16" aria-hidden="true" tabindex="-1"></a>smoking <span class="ot">&lt;-</span> <span class="fu">c</span>(smoking1, smoking2, smoking3)</span>
+<span id="cb786-17"><a href="20-masking-data.html#cb786-17" aria-hidden="true" tabindex="-1"></a>smoking</span></code></pre></div>
+<pre><code>[1] 46.1 37.2 44.7</code></pre>
+<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="20-masking-data.html#cb788-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 65.91684 37.17455 0.00000</span></span>
+<span id="cb788-2"><a href="20-masking-data.html#cb788-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb788-3"><a href="20-masking-data.html#cb788-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize smoking</span></span>
+<span id="cb788-4"><a href="20-masking-data.html#cb788-4" aria-hidden="true" tabindex="-1"></a>normalized <span class="ot">&lt;-</span> (smoking<span class="sc">/</span><span class="fu">sum</span>(smoking)) <span class="sc">*</span> (<span class="fu">nrow</span>(fertility))</span>
+<span id="cb788-5"><a href="20-masking-data.html#cb788-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb788-6"><a href="20-masking-data.html#cb788-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Round the values</span></span>
+<span id="cb788-7"><a href="20-masking-data.html#cb788-7" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(normalized)</span></code></pre></div>
+<pre><code>[1] 36 29 35</code></pre>
+<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="20-masking-data.html#cb790-1" aria-hidden="true" tabindex="-1"></a><span class="co">#[1] 64 36 0</span></span></code></pre></div>
+
+</div>
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1178,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="19-job-classification.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="21-absenteeism-MFG.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1210,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/19-masking-data.Rmd",
 "text": "Edit"
 },
 "history": {

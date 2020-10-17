@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 17 Commuting time | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 17 Commuting time | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 17 Commuting time | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="16-personality.html"/>
+<link rel="next" href="18-orgnisational-network.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,153 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="commuting-time" class="section level1" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Commuting time</h1>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="17-commuting-time.html#cb565-1" aria-hidden="true" tabindex="-1"></a>do_eval<span class="ot">=</span><span class="fu">file.exists</span>(<span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
+<p>Commuting time is often mentioned as a valid reason for leaving one employer for another.</p>
+<p>You are asked to calculate the commuting time for the employee working at your company. You decide that hyphotetically they must all arrive in the office at 8.30 am. In the Google you identified that there is google api for doing this, called <a href="https://developers.google.com/maps/documentation/distance-matrix/start?csw=1">Distance Matrix API</a>, which works for a matrix of origins and destinations.</p>
+<p>The information returned is based on the recommended route between start and end points and consists of rows containing duration and distance values for each pair." To use the Distance Matrix API, you must first activate the API in the Google Cloud Platform Console and obtain the proper authentication credentials. You need to provide your own API key in each request.</p>
+<p>The documentation on how to do this is located here: <a href="https://developers.google.com/maps/documentation/distance-matrix/intro" class="uri">https://developers.google.com/maps/documentation/distance-matrix/intro</a></p>
+<p>A file with 200 fake names and addresses has been put together for you. The task is to add the commuting time next to each staff member. Normally google will charge us one dollar for checking 200 commuting times.</p>
+<p>Please note that the departure_time specifies the desired time of departure must be in POSIXct. format and must be in the future (i.e.greater than sys.time()). If no value is specified it defaults to Sys.time().</p>
+<p>Please note you can only specify one of arrival_time or departure_time, not both. If both are supplied, departure_time will be used.</p>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="17-commuting-time.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googleway)</span></code></pre></div>
+<pre><code>
+Attaching package: &#39;googleway&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:HRAnalytics&#39;:
+
+    google_distance</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="17-commuting-time.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb569-2"><a href="17-commuting-time.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb569-3"><a href="17-commuting-time.html#cb569-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-4"><a href="17-commuting-time.html#cb569-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up here your api key key=</span></span>
+<span id="cb569-5"><a href="17-commuting-time.html#cb569-5" aria-hidden="true" tabindex="-1"></a>key <span class="ot">=</span> <span class="st">&#39;AIzaSyCOly69PDrlPlM42I378p2lmvNs8I2w&#39;</span></span>
+<span id="cb569-6"><a href="17-commuting-time.html#cb569-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-7"><a href="17-commuting-time.html#cb569-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dmy_hms</span>(<span class="st">&quot;10/09/2018 08:30&quot;</span>)</span>
+<span id="cb569-8"><a href="17-commuting-time.html#cb569-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-9"><a href="17-commuting-time.html#cb569-9" aria-hidden="true" tabindex="-1"></a>arrival <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(d)</span>
+<span id="cb569-10"><a href="17-commuting-time.html#cb569-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-11"><a href="17-commuting-time.html#cb569-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-12"><a href="17-commuting-time.html#cb569-12" aria-hidden="true" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SE3+8UQ,UK&quot;</span>)</span>
+<span id="cb569-13"><a href="17-commuting-time.html#cb569-13" aria-hidden="true" tabindex="-1"></a>to <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;E14+5EU,UK&quot;</span>)</span>
+<span id="cb569-14"><a href="17-commuting-time.html#cb569-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-15"><a href="17-commuting-time.html#cb569-15" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">google_distance</span>(<span class="at">origins =</span> from,</span>
+<span id="cb569-16"><a href="17-commuting-time.html#cb569-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">destinations =</span> to,</span>
+<span id="cb569-17"><a href="17-commuting-time.html#cb569-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">mode =</span> <span class="st">&quot;walking&quot;</span>,</span>
+<span id="cb569-18"><a href="17-commuting-time.html#cb569-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> <span class="fu">as.POSIXct</span>(arrival, <span class="at">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>),</span>
+<span id="cb569-19"><a href="17-commuting-time.html#cb569-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
+<span id="cb569-20"><a href="17-commuting-time.html#cb569-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb569-21"><a href="17-commuting-time.html#cb569-21" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>rows<span class="sc">$</span>elements[[<span class="dv">1</span>]]<span class="sc">$</span>distance</span></code></pre></div>
+<pre><code>NULL</code></pre>
+<p>To make all this simpler, we put together an R function which can be used to analyse many results. Note this calls all modes of transport for every employee making it more costly than just running one mode per employee.</p>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="17-commuting-time.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Get distance data between two points based on all the travel mode options. Works for many origin points.</span></span>
+<span id="cb571-2"><a href="17-commuting-time.html#cb571-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb571-3"><a href="17-commuting-time.html#cb571-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x A vector of origins in address or postcode format</span></span>
+<span id="cb571-4"><a href="17-commuting-time.html#cb571-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dest A single destinationin address or postocde format</span></span>
+<span id="cb571-5"><a href="17-commuting-time.html#cb571-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param arrival_time A POSIXct datetime that folks need to arrive by</span></span>
+<span id="cb571-6"><a href="17-commuting-time.html#cb571-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param key A google distance API key</span></span>
+<span id="cb571-7"><a href="17-commuting-time.html#cb571-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... Additional options to pass to `google_distance()`</span></span>
+<span id="cb571-8"><a href="17-commuting-time.html#cb571-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb571-9"><a href="17-commuting-time.html#cb571-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return Data.frame containing (typically) 4 rows per input element</span></span>
+<span id="cb571-10"><a href="17-commuting-time.html#cb571-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb571-11"><a href="17-commuting-time.html#cb571-11" aria-hidden="true" tabindex="-1"></a>google_distance_all <span class="ot">=</span>  <span class="cf">function</span>(x, dest, arrival_time, key, ...){</span>
+<span id="cb571-12"><a href="17-commuting-time.html#cb571-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb571-13"><a href="17-commuting-time.html#cb571-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># simple hygeine stuff</span></span>
+<span id="cb571-14"><a href="17-commuting-time.html#cb571-14" aria-hidden="true" tabindex="-1"></a>  gd <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">possibly</span>(</span>
+<span id="cb571-15"><a href="17-commuting-time.html#cb571-15" aria-hidden="true" tabindex="-1"></a>    memoise<span class="sc">::</span><span class="fu">memoise</span>(</span>
+<span id="cb571-16"><a href="17-commuting-time.html#cb571-16" aria-hidden="true" tabindex="-1"></a>      google_distance)</span>
+<span id="cb571-17"><a href="17-commuting-time.html#cb571-17" aria-hidden="true" tabindex="-1"></a>    , <span class="st">&quot;Fail&quot;</span></span>
+<span id="cb571-18"><a href="17-commuting-time.html#cb571-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb571-19"><a href="17-commuting-time.html#cb571-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb571-20"><a href="17-commuting-time.html#cb571-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prep dataset</span></span>
+<span id="cb571-21"><a href="17-commuting-time.html#cb571-21" aria-hidden="true" tabindex="-1"></a>   interested_in <span class="ot">=</span> <span class="fu">expand.grid</span>(<span class="at">from=</span>x, </span>
+<span id="cb571-22"><a href="17-commuting-time.html#cb571-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">mode=</span><span class="fu">c</span>(<span class="st">&quot;driving&quot;</span>, <span class="st">&quot;walking&quot;</span>, <span class="st">&quot;bicycling&quot;</span>, <span class="st">&quot;transit&quot;</span>), </span>
+<span id="cb571-23"><a href="17-commuting-time.html#cb571-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb571-24"><a href="17-commuting-time.html#cb571-24" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Perform google_distance calls for all combos</span></span>
+<span id="cb571-25"><a href="17-commuting-time.html#cb571-25" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map2</span>(interested_in<span class="sc">$</span>from,interested_in<span class="sc">$</span>mode, </span>
+<span id="cb571-26"><a href="17-commuting-time.html#cb571-26" aria-hidden="true" tabindex="-1"></a>     <span class="sc">~</span><span class="fu">gd</span>(.x, dest, <span class="at">mode=</span>.y,</span>
+<span id="cb571-27"><a href="17-commuting-time.html#cb571-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> arrival_time,</span>
+<span id="cb571-28"><a href="17-commuting-time.html#cb571-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
+<span id="cb571-29"><a href="17-commuting-time.html#cb571-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb571-30"><a href="17-commuting-time.html#cb571-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract relevant section</span></span>
+<span id="cb571-31"><a href="17-commuting-time.html#cb571-31" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;rows&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb571-32"><a href="17-commuting-time.html#cb571-32" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;elements&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb571-33"><a href="17-commuting-time.html#cb571-33" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">flatten</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb571-34"><a href="17-commuting-time.html#cb571-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplify the data.frames</span></span>
+<span id="cb571-35"><a href="17-commuting-time.html#cb571-35" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(unclass) <span class="sc">%&gt;%</span> </span>
+<span id="cb571-36"><a href="17-commuting-time.html#cb571-36" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(purrr<span class="sc">::</span>flatten) <span class="sc">%&gt;%</span> </span>
+<span id="cb571-37"><a href="17-commuting-time.html#cb571-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add original lookup values</span></span>
+<span id="cb571-38"><a href="17-commuting-time.html#cb571-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(interested_in)</span>
+<span id="cb571-39"><a href="17-commuting-time.html#cb571-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>This needs some packages installed to work</p>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="17-commuting-time.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(purrr)) <span class="fu">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</span>
+<span id="cb572-2"><a href="17-commuting-time.html#cb572-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(memoise)) <span class="fu">install.packages</span>(<span class="st">&quot;memoise&quot;</span>)</span></code></pre></div>
+<pre><code>Loading required package: memoise</code></pre>
+<pre><code>
+Attaching package: &#39;memoise&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:httr&#39;:
+
+    timeout</code></pre>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="17-commuting-time.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(googleway)) <span class="fu">install.packages</span>(<span class="st">&quot;googleway&quot;</span>)</span></code></pre></div>
+<p>We need some information about our google API account, where our office is, and when we’re testing commute times for.</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="17-commuting-time.html#cb577-1" aria-hidden="true" tabindex="-1"></a>office <span class="ot">=</span> <span class="st">&quot;E14 5EU&quot;</span></span>
+<span id="cb577-2"><a href="17-commuting-time.html#cb577-2" aria-hidden="true" tabindex="-1"></a>monday_9am <span class="ot">=</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;2018-12-03 09:00&quot;</span>)</span></code></pre></div>
+<p>Then we can use this function to get data for our 200 employees</p>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="17-commuting-time.html#cb578-1" aria-hidden="true" tabindex="-1"></a>the_200 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/200_staff_members.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="17-commuting-time.html#cb579-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">google_distance_all</span>(</span>
+<span id="cb579-2"><a href="17-commuting-time.html#cb579-2" aria-hidden="true" tabindex="-1"></a>  the_200<span class="sc">$</span>Postcode,</span>
+<span id="cb579-3"><a href="17-commuting-time.html#cb579-3" aria-hidden="true" tabindex="-1"></a>  office,</span>
+<span id="cb579-4"><a href="17-commuting-time.html#cb579-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">arrival_time =</span> monday_9am,</span>
+<span id="cb579-5"><a href="17-commuting-time.html#cb579-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> key</span>
+<span id="cb579-6"><a href="17-commuting-time.html#cb579-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb579-7"><a href="17-commuting-time.html#cb579-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb579-8"><a href="17-commuting-time.html#cb579-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(results, <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>), <span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="17-commuting-time.html#cb580-1" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<pre><code># A tibble: 800 x 5
+   text    value status from     mode   
+   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  
+ 1 16 mins   963 OK     E15 1NS  driving
+ 2 57 mins  3396 OK     W12 8ET  driving
+ 3 41 mins  2469 OK     SW1V 1AP driving
+ 4 19 mins  1123 OK     SE1 2RE  driving
+ 5 37 mins  2206 OK     WC1A 2QS driving
+ 6 43 mins  2604 OK     N6 5JW   driving
+ 7 31 mins  1871 OK     EC1N 8PN driving
+ 8 36 mins  2158 OK     WC2B 6TE driving
+ 9 31 mins  1841 OK     N1 9AZ   driving
+10 24 mins  1423 OK     WC2R 3LD driving
+# ... with 790 more rows</code></pre>
+<p>Now that we have this data we can answer questions about our employee’s commute times.</p>
+<p>Who has the longest commutes by car?</p>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="17-commuting-time.html#cb582-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb582-2"><a href="17-commuting-time.html#cb582-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mode <span class="sc">==</span> <span class="st">&quot;driving&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb582-3"><a href="17-commuting-time.html#cb582-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb582-4"><a href="17-commuting-time.html#cb582-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, hours) <span class="sc">%&gt;%</span> </span>
+<span id="cb582-5"><a href="17-commuting-time.html#cb582-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hours))</span></code></pre></div>
+<pre><code># A tibble: 10 x 6
+   text             value status from     mode       hours
+   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+ 1 10 hours 46 mins 38745 OK     BT49 0BX driving 10.7625 
+ 2 10 hours 33 mins 37986 OK     BT51 3SQ driving 10.5517 
+ 3 6 hours 45 mins  24274 OK     G4 0JY   driving  6.74278
+ 4 5 hours 19 mins  19145 OK     CA1 1BG  driving  5.31806
+ 5 4 hours 35 mins  16519 OK     PL1 4GP  driving  4.58861
+ 6 4 hours 17 mins  15411 OK     BB5 3EZ  driving  4.28083
+ 7 3 hours 57 mins  14239 OK     OL10 2TL driving  3.95528
+ 8 3 hours 30 mins  12585 OK     LS23 7BA driving  3.49583
+ 9 3 hours 26 mins  12341 OK     LS24 9QW driving  3.42806
+10 3 hours 18 mins  11882 OK     S10 3TR  driving  3.30056</code></pre>
+<p>We can look at the distributions overall too.</p>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="17-commuting-time.html#cb584-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb584-2"><a href="17-commuting-time.html#cb584-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb584-3"><a href="17-commuting-time.html#cb584-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb584-4"><a href="17-commuting-time.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>hours) <span class="sc">+</span></span>
+<span id="cb584-5"><a href="17-commuting-time.html#cb584-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb584-6"><a href="17-commuting-time.html#cb584-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb584-7"><a href="17-commuting-time.html#cb584-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mode) <span class="sc">+</span></span>
+<span id="cb584-8"><a href="17-commuting-time.html#cb584-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-554-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +908,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="16-personality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="18-orgnisational-network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +940,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/16-commuting-time.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 23 Accidents at work | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 23 Accidents at work | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 23 Accidents at work | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="22-absenteeism-work.html"/>
+<link rel="next" href="24-attrition.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="accidents-work" class="section level1" number="23">
+<h1><span class="header-section-number">Chapter 23</span> Accidents at work</h1>
+<p>According to the International Labour Organization (ILO), more than 337 million accidents happen on the job each year, resulting, together with occupational diseases, in more than 2.3 million deaths annually.</p>
+<p>Accidents arise from unsafe behavior and/or unsafe conditions. An important factor is the safety climate or safety culture of an organization. Safety culture concerns how workplace safety is managed, consisting of the shared attitudes, beliefs, perceptions, and values among employees.</p>
+<p>Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs:
+* Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year.
+* Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.</p>
+<p>#Source: <a href="https://data.louisvilleky.gov/dataset/absenteeism" class="uri">https://data.louisvilleky.gov/dataset/absenteeism</a></p>
+<p>This dataset shows the number of hours employees were absent from work during a given pay period. The data is broken down by department and type of absence and includes the last 6 years worth of pay periods. Vacation and holiday time is not consider an absence.</p>
+<p>Data dictionary</p>
+<p>DEPT - The name of the department where employees were absent
+BIWEEKLY_PAY_PERIOD_END_DATE - The end date for the pay period when employees were absent
+PARETO_TYPE - The type of absence (vacation and holiday time is excluded)
+TOTAL_HOURS - The total amount of absent hours for the given type of absence, department, and pay period
+TOTAL EMPLOYEE - The total number of employees that worked in the given department and pay period
+TOTAL AVAL HOURS - The total number of hours scheduled for work for all employees in the given department and pay period
+LOST WORKTIME RATE - The total amount of absent hours for the given type of absence, department, and pay period divided by The total number of hours scheduled for work for all employees in the given department and pay period (metric defined by the Bureau of Labor Statistics)</p>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="23-accidents-work.html#cb883-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="23-accidents-work.html#cb884-1" aria-hidden="true" tabindex="-1"></a>LTI_Analysis <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">col =</span> <span class="fu">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/LTI Analysis Data.csv&quot;</span>)</span></code></pre></div>
+<p>Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs:
+* Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year.
+* Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.</p>
+<p>Data dictionary</p>
+<p>DEPT - The name of the department where employees were absent
+BIWEEKLY_PAY_PERIOD_END_DATE = col_character(),
+LTI = col_character(),
+DART = col_character(),
+DESCRIPTION = col_character(),
+Number_OF_Incidents = col_integer(),
+HOURS_YOY = col_double(),
+LTI_YOY = col_integer(),
+DART_YOY = col_integer(),
+OSHA_YOY = col_integer(),</p>
+<p>LTI_Rate = Lost Time Incident Rate: Total number of boxes checked in Column H X 200,000 / Total hours worked by all employees = OSHA Lost Time Incident Rate</p>
+<p>DART_Rate = DART Rate (Days Away Restricted Time); Total number of boxes checked in Columns H and I X 200,000 / Total hours worked by all employees = OSHA DART Rate</p>
+<p>OSHA_Rate = OSHA Incident Rate: Total number of boxes checked in Column G, H, I and J X 200,000 / Total hours worked by all employees = OSHA Lost Time Incident Rate</p>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +798,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="22-absenteeism-work.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="24-attrition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +830,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/22-accidents-work.Rmd",
 "text": "Edit"
 },
 "history": {

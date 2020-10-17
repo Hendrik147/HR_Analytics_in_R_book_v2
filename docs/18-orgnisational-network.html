@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 18 Organisational network analysis | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 18 Organisational network analysis | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 18 Organisational network analysis | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="17-commuting-time.html"/>
+<link rel="next" href="19-job-classification.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,398 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="orgnisational-network" class="section level1" number="18">
+<h1><span class="header-section-number">Chapter 18</span> Organisational network analysis</h1>
+<p>Visualizing and analysing formal and informal relationships in your organization can help you shape business strategy that maximizes organic exchange of information, thereby helping your business become more sustainable and effective.</p>
+<p>For example in Organisational network analysis (ONA), we can ask employees three simple questions: 1) who is important to your ability to accomplish work priorities? 2) who is important for you to have greater access to, and 3) who provides you with career-related advice?</p>
+<p>Nowadays, HR professionals use Organizational Network Analysis (ONA) use to their advantage. A whole new skill set is develping. HR professionals need to develop a structured way to visualise how communications, information, and decisions flow through an organization.</p>
+<p>Organizational networks consist of nodes and edges.</p>
+<p>In the following example, we will use the character interaction network for George R. R. Martin’s “A Song of Ice and Fire” saga.</p>
+<p>These networks were created by connecting two characters whenever their names (or nicknames) appeared within 15 words of one another in one of the books in “A Song of Ice and Fire.” The edge weight corresponds to the number of interactions. A Song of Ice and Fire is an ongoing a series of epic fantasy novels.</p>
+<p>You can use this data to explore the dynamics of the Seven Kingdoms using network science techniques. For example, community detection finds coherent plotlines. Centrality measures uncover the multiple ways in which characters play important roles in the saga.</p>
+<p>This is the data for the work presented here: <a href="https://networkofthrones.wordpress.com" class="uri">https://networkofthrones.wordpress.com</a> by Andrew Beveridge.</p>
+<p>Source: <a href="https://github.com/mathbeveridge/asoiaf" class="uri">https://github.com/mathbeveridge/asoiaf</a>
+Source code: <a href="https://shirinsplayground.netlify.com/2018/03/got_network/" class="uri">https://shirinsplayground.netlify.com/2018/03/got_network/</a>
+Source code: <a href="https://shiring.github.io/networks/2017/05/15/got_final" class="uri">https://shiring.github.io/networks/2017/05/15/got_final</a></p>
+<p>With the following we ensure that all needed libraries are installed.</p>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="18-orgnisational-network.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># tidy data analysis</span></span>
+<span id="cb585-2"><a href="18-orgnisational-network.html#cb585-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidygraph) <span class="co"># tidy graph analysis</span></span>
+<span id="cb585-3"><a href="18-orgnisational-network.html#cb585-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggraph)    <span class="co"># for plotting</span></span>
+<span id="cb585-4"><a href="18-orgnisational-network.html#cb585-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(igraph)    <span class="co"># for plotting</span></span>
+<span id="cb585-5"><a href="18-orgnisational-network.html#cb585-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(visNetwork) <span class="co"># for visualising graph</span></span></code></pre></div>
+<p>First, let’s get the data from the characters from the “Song of Ice and Fire” novels.</p>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="18-orgnisational-network.html#cb586-1" aria-hidden="true" tabindex="-1"></a>cooc_all_edges <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/asoiaf-all-edges.csv&quot;</span>)</span></code></pre></div>
+<p>Let us identify first the main characters contained either as Source or as a target and later the 50 most important charcters:</p>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="18-orgnisational-network.html#cb587-1" aria-hidden="true" tabindex="-1"></a>main_ch <span class="ot">&lt;-</span> cooc_all_edges <span class="sc">%&gt;%</span></span>
+<span id="cb587-2"><a href="18-orgnisational-network.html#cb587-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Type) <span class="sc">%&gt;%</span></span>
+<span id="cb587-3"><a href="18-orgnisational-network.html#cb587-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(x, name, Source<span class="sc">:</span>Target) <span class="sc">%&gt;%</span></span>
+<span id="cb587-4"><a href="18-orgnisational-network.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">%&gt;%</span></span>
+<span id="cb587-5"><a href="18-orgnisational-network.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">sum_weight =</span> <span class="fu">sum</span>(weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb587-6"><a href="18-orgnisational-network.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb587-7"><a href="18-orgnisational-network.html#cb587-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb587-8"><a href="18-orgnisational-network.html#cb587-8" aria-hidden="true" tabindex="-1"></a>main_ch_l <span class="ot">&lt;-</span> main_ch <span class="sc">%&gt;%</span></span>
+<span id="cb587-9"><a href="18-orgnisational-network.html#cb587-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(sum_weight)) <span class="sc">%&gt;%</span></span>
+<span id="cb587-10"><a href="18-orgnisational-network.html#cb587-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">50</span>, sum_weight)</span>
+<span id="cb587-11"><a href="18-orgnisational-network.html#cb587-11" aria-hidden="true" tabindex="-1"></a>main_ch_l</span></code></pre></div>
+<pre><code># A tibble: 50 x 2
+   name               sum_weight
+   &lt;chr&gt;                   &lt;dbl&gt;
+ 1 Tyrion-Lannister         2873
+ 2 Jon-Snow                 2757
+ 3 Cersei-Lannister         2232
+ 4 Joffrey-Baratheon        1762
+ 5 Eddard-Stark             1649
+ 6 Daenerys-Targaryen       1608
+ 7 Jaime-Lannister          1569
+ 8 Sansa-Stark              1547
+ 9 Bran-Stark               1508
+10 Robert-Baratheon         1488
+# ... with 40 more rows</code></pre>
+<p>In the following we select the relationships of the top 50 characters. The edges are undirected, therefore there are no redundant Source-Target combinations; because of this, Source and Target data have been gathered before summing up the weights.</p>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="18-orgnisational-network.html#cb589-1" aria-hidden="true" tabindex="-1"></a>cooc_all_f <span class="ot">&lt;-</span> cooc_all_edges <span class="sc">%&gt;%</span></span>
+<span id="cb589-2"><a href="18-orgnisational-network.html#cb589-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Source <span class="sc">%in%</span> main_ch_l<span class="sc">$</span>name <span class="sc">&amp;</span> Target <span class="sc">%in%</span> main_ch_l<span class="sc">$</span>name)</span></code></pre></div>
+<p>The first step is to convert our edge table into a tbl_graph object structure. Here, we use the as_tbl_graph() function from tidygraph; it can take many different types of input data, like data.frame, matrix, dendrogram, igraph, etc.</p>
+<p>A central aspect of tidygraph is that you can directly manipulate node and edge data from this tbl_graph object by activating nodes or edges. When we first create a tbl_graph object, the nodes will be activated. We can then directly calculate node or edge metrics, like centrality, using tidyverse functions.</p>
+<p>We can change that with the activate() function. We can now, for example, remove multiple edges.</p>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="18-orgnisational-network.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 1 (active)
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+4 Bran-Stark                     
+5 Brienne-of-Tarth               
+6 Bronn                          
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="18-orgnisational-network.html#cb592-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb592-2"><a href="18-orgnisational-network.html#cb592-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span></span>
+<span id="cb592-3"><a href="18-orgnisational-network.html#cb592-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">edge_is_multiple</span>())</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Edge Data: 402 x 5 (active)
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+4     1    28 Undirected    60      5
+5     1    39 Undirected    63      5
+6     1    41 Undirected    64     99
+# ... with 396 more rows
+#
+# Node Data: 50 x 1
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+# ... with 47 more rows</code></pre>
+<p>Node ranking</p>
+<p>There are many options for node ranking (go to ?node_rank for a full list); let’s try out Minimize hamiltonian path length using a travelling salesperson solver.</p>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="18-orgnisational-network.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb594-2"><a href="18-orgnisational-network.html#cb594-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> </span>
+<span id="cb594-3"><a href="18-orgnisational-network.html#cb594-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_rank_trv =</span> <span class="fu">node_rank_traveller</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb594-4"><a href="18-orgnisational-network.html#cb594-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(n_rank_trv)</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name             n_rank_trv
+  &lt;chr&gt;                 &lt;int&gt;
+1 Hizdahr-zo-Loraq          1
+2 Quentyn-Martell           2
+3 Barristan-Selmy           3
+4 Meryn-Trant               4
+5 Jaime-Lannister           5
+6 Arya-Stark                6
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1    28    29 Undirected    54      5
+2    28    30 Undirected    57     25
+3    25    28 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Centrality</p>
+<p>Centrality describes the number of edges that are in- or outgoing to/from nodes. High centrality networks have few nodes with many connections, low centrality networks have many nodes with similar numbers of edges. The centrality of a node measures the importance of it in the network.</p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="18-orgnisational-network.html#cb596-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Centrality</span></span>
+<span id="cb596-2"><a href="18-orgnisational-network.html#cb596-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb596-3"><a href="18-orgnisational-network.html#cb596-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb596-4"><a href="18-orgnisational-network.html#cb596-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> </span>
+<span id="cb596-5"><a href="18-orgnisational-network.html#cb596-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">neighbors =</span> <span class="fu">centrality_degree</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb596-6"><a href="18-orgnisational-network.html#cb596-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>neighbors)</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name              neighbors
+  &lt;chr&gt;                 &lt;dbl&gt;
+1 Tyrion-Lannister         36
+2 Robert-Baratheon         33
+3 Joffrey-Baratheon        32
+4 Cersei-Lannister         30
+5 Eddard-Stark             30
+6 Jaime-Lannister          29
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1    41    47 Undirected    54      5
+2    38    41 Undirected    57     25
+3    14    41 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Grouping and clustering</p>
+<p>Another common operation is to group nodes based on the graph topology, sometimes referred to as community detection based on its commonality in social network analysis. All clustering algorithms from igraph is available in tidygraph using the group_* prefix. All of these functions return an integer vector with nodes (or edges) sharing the same integer being grouped together. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+<p>We can use ?group_graph for an overview about all possible ways to cluster and group nodes. Here I am using group_infomap(): Group nodes by minimizing description length using.</p>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="18-orgnisational-network.html#cb598-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Grouping and clustering</span></span>
+<span id="cb598-2"><a href="18-orgnisational-network.html#cb598-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb598-3"><a href="18-orgnisational-network.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb598-4"><a href="18-orgnisational-network.html#cb598-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> </span>
+<span id="cb598-5"><a href="18-orgnisational-network.html#cb598-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">group_infomap</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb598-6"><a href="18-orgnisational-network.html#cb598-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>group)</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name                            group
+  &lt;chr&gt;                           &lt;int&gt;
+1 Aemon-Targaryen-(Maester-Aemon)     1
+2 Arya-Stark                          1
+3 Barristan-Selmy                     1
+4 Bran-Stark                          1
+5 Brienne-of-Tarth                    1
+6 Bronn                               1
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Querying node types</p>
+<p>We can also query different node types (?node_types gives us a list of options):</p>
+<p>These functions all lets the user query whether each node is of a certain type. All of the functions returns a logical vector indicating whether the node is of the type in question. Do note that the types are not mutually exclusive and that nodes can thus be of multiple types.</p>
+<p>Here, I am trying out node_is_center() (does the node have the minimal eccentricity in the graph) and node_is_keyplayer() to identify the top 10 key-players in the network.</p>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="18-orgnisational-network.html#cb600-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Querying node types</span></span>
+<span id="cb600-2"><a href="18-orgnisational-network.html#cb600-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb600-3"><a href="18-orgnisational-network.html#cb600-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb600-4"><a href="18-orgnisational-network.html#cb600-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> </span>
+<span id="cb600-5"><a href="18-orgnisational-network.html#cb600-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">center =</span> <span class="fu">node_is_center</span>(),</span>
+<span id="cb600-6"><a href="18-orgnisational-network.html#cb600-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">keyplayer =</span> <span class="fu">node_is_keyplayer</span>(<span class="at">k =</span> <span class="dv">10</span>))</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 3 (active)
+  name                            center keyplayer
+  &lt;chr&gt;                           &lt;lgl&gt;  &lt;lgl&gt;    
+1 Aemon-Targaryen-(Maester-Aemon) FALSE  FALSE    
+2 Arya-Stark                      FALSE  TRUE     
+3 Barristan-Selmy                 FALSE  FALSE    
+4 Bran-Stark                      FALSE  FALSE    
+5 Brienne-of-Tarth                FALSE  FALSE    
+6 Bronn                           FALSE  FALSE    
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Node pairs</p>
+<p>Some statistics are a measure between two nodes, such as distance or similarity between nodes. In a tidy context one of the ends must always be the node defined by the row, while the other can be any other node. All of the node pair functions are prefixed with node_* and ends with _from/_to if the measure is not symmetric and _with if it is; e.g. there’s both a node_max_flow_to() and node_max_flow_from() function while only a single node_cocitation_with() function. The other part of the node pair can be specified as an integer vector that will get recycled if needed, or a logical vector which will get recycled and converted to indexes with which(). This means that output from node type functions can be used directly in the calls. <a href="https://www.data-imaginist.com/2017/introducing-tidygraph/" class="uri">https://www.data-imaginist.com/2017/introducing-tidygraph/</a></p>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="18-orgnisational-network.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Node pairs</span></span>
+<span id="cb602-2"><a href="18-orgnisational-network.html#cb602-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb602-3"><a href="18-orgnisational-network.html#cb602-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb602-4"><a href="18-orgnisational-network.html#cb602-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> </span>
+<span id="cb602-5"><a href="18-orgnisational-network.html#cb602-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dist_to_center =</span> <span class="fu">node_distance_to</span>(<span class="fu">node_is_center</span>()))</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Node Data: 50 x 2 (active)
+  name                            dist_to_center
+  &lt;chr&gt;                                    &lt;dbl&gt;
+1 Aemon-Targaryen-(Maester-Aemon)              2
+2 Arya-Stark                                   1
+3 Barristan-Selmy                              1
+4 Bran-Stark                                   1
+5 Brienne-of-Tarth                             1
+6 Bronn                                        1
+# ... with 44 more rows
+#
+# Edge Data: 402 x 5
+   from    to Type          id weight
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;
+1     1    15 Undirected    54      5
+2     1    20 Undirected    57     25
+3     1    23 Undirected    58    110
+# ... with 399 more rows</code></pre>
+<p>Edge betweenness</p>
+<p>Similarly to node metrics, we can calculate all kinds of edge metrics. Betweenness, for example, describes the shortest paths between nodes.</p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="18-orgnisational-network.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Edge betweenness</span></span>
+<span id="cb604-2"><a href="18-orgnisational-network.html#cb604-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-3"><a href="18-orgnisational-network.html#cb604-3" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb604-4"><a href="18-orgnisational-network.html#cb604-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span> </span>
+<span id="cb604-5"><a href="18-orgnisational-network.html#cb604-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">centrality_e =</span> <span class="fu">centrality_edge_betweenness</span>())</span></code></pre></div>
+<pre><code># A tbl_graph: 50 nodes and 402 edges
+#
+# An undirected simple graph with 1 component
+#
+# Edge Data: 402 x 6 (active)
+   from    to Type          id weight centrality_e
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
+1     1    15 Undirected    54      5      4.53552
+2     1    20 Undirected    57     25      2.28205
+3     1    23 Undirected    58    110      8.13462
+4     1    28 Undirected    60      5      2.76619
+5     1    39 Undirected    63      5     23.0559 
+6     1    41 Undirected    64     99      4.63597
+# ... with 396 more rows
+#
+# Node Data: 50 x 1
+  name                           
+  &lt;chr&gt;                          
+1 Aemon-Targaryen-(Maester-Aemon)
+2 Arya-Stark                     
+3 Barristan-Selmy                
+# ... with 47 more rows</code></pre>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="18-orgnisational-network.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="co">#The complete code</span></span>
+<span id="cb606-2"><a href="18-orgnisational-network.html#cb606-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb606-3"><a href="18-orgnisational-network.html#cb606-3" aria-hidden="true" tabindex="-1"></a>cooc_all_f_graph <span class="ot">&lt;-</span> <span class="fu">as_tbl_graph</span>(cooc_all_f, <span class="at">directed =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb606-4"><a href="18-orgnisational-network.html#cb606-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_rank_trv =</span> <span class="fu">node_rank_traveller</span>(),</span>
+<span id="cb606-5"><a href="18-orgnisational-network.html#cb606-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">neighbors =</span> <span class="fu">centrality_degree</span>(),</span>
+<span id="cb606-6"><a href="18-orgnisational-network.html#cb606-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">group_infomap</span>(),</span>
+<span id="cb606-7"><a href="18-orgnisational-network.html#cb606-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">center =</span> <span class="fu">node_is_center</span>(),</span>
+<span id="cb606-8"><a href="18-orgnisational-network.html#cb606-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">dist_to_center =</span> <span class="fu">node_distance_to</span>(<span class="fu">node_is_center</span>()),</span>
+<span id="cb606-9"><a href="18-orgnisational-network.html#cb606-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">keyplayer =</span> <span class="fu">node_is_keyplayer</span>(<span class="at">k =</span> <span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb606-10"><a href="18-orgnisational-network.html#cb606-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span> </span>
+<span id="cb606-11"><a href="18-orgnisational-network.html#cb606-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">edge_is_multiple</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb606-12"><a href="18-orgnisational-network.html#cb606-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">centrality_e =</span> <span class="fu">centrality_edge_betweenness</span>())</span>
+<span id="cb606-13"><a href="18-orgnisational-network.html#cb606-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb606-14"><a href="18-orgnisational-network.html#cb606-14" aria-hidden="true" tabindex="-1"></a>cooc_all_f_graph <span class="sc">%&gt;%</span></span>
+<span id="cb606-15"><a href="18-orgnisational-network.html#cb606-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(nodes) <span class="sc">%&gt;%</span> <span class="co"># %N&gt;%</span></span>
+<span id="cb606-16"><a href="18-orgnisational-network.html#cb606-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div>
+<pre><code># A tibble: 50 x 7
+   name               n_rank_trv neighbors group center dist_to_center keyplayer
+   &lt;chr&gt;                   &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt;           &lt;dbl&gt; &lt;lgl&gt;    
+ 1 Aemon-Targaryen-(~         15         7     1 FALSE               2 FALSE    
+ 2 Arya-Stark                  4        24     1 FALSE               1 FALSE    
+ 3 Barristan-Selmy            49        17     1 FALSE               1 FALSE    
+ 4 Bran-Stark                 12        22     1 FALSE               1 FALSE    
+ 5 Brienne-of-Tarth           33        16     1 FALSE               1 FALSE    
+ 6 Bronn                      28        10     1 FALSE               1 FALSE    
+ 7 Catelyn-Stark              22        26     1 FALSE               1 FALSE    
+ 8 Cersei-Lannister           40        30     1 TRUE                1 FALSE    
+ 9 Daenerys-Targaryen         46        10     1 FALSE               2 TRUE     
+10 Davos-Seaworth             10         6     1 FALSE               2 FALSE    
+# ... with 40 more rows</code></pre>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="18-orgnisational-network.html#cb608-1" aria-hidden="true" tabindex="-1"></a>cooc_all_f_graph <span class="sc">%&gt;%</span></span>
+<span id="cb608-2"><a href="18-orgnisational-network.html#cb608-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">activate</span>(edges) <span class="sc">%&gt;%</span> <span class="co"># %E&gt;%</span></span>
+<span id="cb608-3"><a href="18-orgnisational-network.html#cb608-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>()</span></code></pre></div>
+<pre><code># A tibble: 402 x 6
+    from    to Type          id weight centrality_e
+   &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;
+ 1     1    15 Undirected    54      5      4.53552
+ 2     1    20 Undirected    57     25      2.28205
+ 3     1    23 Undirected    58    110      8.13462
+ 4     1    28 Undirected    60      5      2.76619
+ 5     1    39 Undirected    63      5     23.0559 
+ 6     1    41 Undirected    64     99      4.63597
+ 7     1    44 Undirected    65     12     12.8433 
+ 8     2     4 Undirected   299     40      5.05995
+ 9     2     7 Undirected   303      8      2.99633
+10     2     8 Undirected   304     25      3.30954
+# ... with 392 more rows</code></pre>
+<p>Plotting with the package “ggraph”</p>
+<p>First, I am going to define a layout. There are lots of options for layouts, here I am using a Fruchterman-Reingold algorithm.</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="18-orgnisational-network.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting</span></span>
+<span id="cb610-2"><a href="18-orgnisational-network.html#cb610-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb610-3"><a href="18-orgnisational-network.html#cb610-3" aria-hidden="true" tabindex="-1"></a>layout <span class="ot">&lt;-</span> <span class="fu">create_layout</span>(cooc_all_f_graph, </span>
+<span id="cb610-4"><a href="18-orgnisational-network.html#cb610-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">layout =</span> <span class="st">&quot;fr&quot;</span>)</span></code></pre></div>
+<p>The rest works like any ggplot2 function call, just that we use special geoms for our network, like geom_edge_density() to draw a shadow where the edge density is higher, geom_edge_link() to connect edges with a straight line, geom_node_point() to draw node points and geom_node_text() to draw the labels.</p>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="18-orgnisational-network.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(layout) <span class="sc">+</span> </span>
+<span id="cb611-2"><a href="18-orgnisational-network.html#cb611-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_density</span>(<span class="fu">aes</span>(<span class="at">fill =</span> weight)) <span class="sc">+</span></span>
+<span id="cb611-3"><a href="18-orgnisational-network.html#cb611-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">width =</span> weight), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb611-4"><a href="18-orgnisational-network.html#cb611-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(group)), <span class="at">size =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb611-5"><a href="18-orgnisational-network.html#cb611-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">repel =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb611-6"><a href="18-orgnisational-network.html#cb611-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb611-7"><a href="18-orgnisational-network.html#cb611-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_graph</span>(<span class="at">base_family=</span><span class="st">&quot;sans&quot;</span>) <span class="sc">+</span></span>
+<span id="cb611-8"><a href="18-orgnisational-network.html#cb611-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A Song of Ice and Fire character network&quot;</span>,</span>
+<span id="cb611-9"><a href="18-orgnisational-network.html#cb611-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Nodes are colored by group&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-568-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="18-orgnisational-network.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;plotshiringroup.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">21</span>, <span class="at">height =</span> <span class="fl">29.7</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span>
+<span id="cb612-2"><a href="18-orgnisational-network.html#cb612-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb612-3"><a href="18-orgnisational-network.html#cb612-3" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> RColorBrewer<span class="sc">::</span><span class="fu">brewer.pal</span>(<span class="dv">3</span>, <span class="st">&quot;Set1&quot;</span>)</span>
+<span id="cb612-4"><a href="18-orgnisational-network.html#cb612-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb612-5"><a href="18-orgnisational-network.html#cb612-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggraph</span>(layout) <span class="sc">+</span> </span>
+<span id="cb612-6"><a href="18-orgnisational-network.html#cb612-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_density</span>(<span class="fu">aes</span>(<span class="at">fill =</span> weight)) <span class="sc">+</span></span>
+<span id="cb612-7"><a href="18-orgnisational-network.html#cb612-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_edge_link</span>(<span class="fu">aes</span>(<span class="at">width =</span> weight), <span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb612-8"><a href="18-orgnisational-network.html#cb612-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(center), <span class="at">size =</span> dist_to_center)) <span class="sc">+</span></span>
+<span id="cb612-9"><a href="18-orgnisational-network.html#cb612-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_node_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> name), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">repel =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb612-10"><a href="18-orgnisational-network.html#cb612-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(cols[<span class="dv">2</span>], cols[<span class="dv">1</span>])) <span class="sc">+</span></span>
+<span id="cb612-11"><a href="18-orgnisational-network.html#cb612-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_graph</span>(<span class="at">base_family=</span><span class="st">&quot;sans&quot;</span>) <span class="sc">+</span></span>
+<span id="cb612-12"><a href="18-orgnisational-network.html#cb612-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A Song of Ice and Fire character network&quot;</span>,</span>
+<span id="cb612-13"><a href="18-orgnisational-network.html#cb612-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">&quot;Nodes are colored by centeredness&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-568-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="18-orgnisational-network.html#cb613-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;plotshirin.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">21</span>, <span class="at">height =</span> <span class="fl">29.7</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+<p>Another visualisation, this time with the package “visNetwork”</p>
+<p>Graph-based analyses are many and diverse: whenever you can describe your data in terms of “outgoing” and “receiving” entities, a graph-based analysis and/or visualisation is possible. Let us try visualising previous results with another package called “visNetwork.”</p>
+<p>visNetwork is an R package for network visualization, using vis.js javascript library. Being based on htmlwidgets, it is compatible with shiny, R Markdown documents, and RStudio viewer. It is particularly easy to use, one can customise shapes, styles, colors, size. It works smoothly on any modern browser for up to a few thousand nodes and edges.</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="18-orgnisational-network.html#cb614-1" aria-hidden="true" tabindex="-1"></a>nodes2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> (<span class="fu">unique</span>(<span class="fu">c</span>(cooc_all_f<span class="sc">$</span>Source, cooc_all_f<span class="sc">$</span>Target))), <span class="at">group =</span> layout<span class="sc">$</span>group)</span>
+<span id="cb614-2"><a href="18-orgnisational-network.html#cb614-2" aria-hidden="true" tabindex="-1"></a>                               </span>
+<span id="cb614-3"><a href="18-orgnisational-network.html#cb614-3" aria-hidden="true" tabindex="-1"></a>edges2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">from =</span> cooc_all_f<span class="sc">$</span>Source,</span>
+<span id="cb614-4"><a href="18-orgnisational-network.html#cb614-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">to =</span> (cooc_all_f<span class="sc">$</span>Target))</span>
+<span id="cb614-5"><a href="18-orgnisational-network.html#cb614-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb614-6"><a href="18-orgnisational-network.html#cb614-6" aria-hidden="true" tabindex="-1"></a><span class="fu">visNetwork</span>(nodes2, edges2, <span class="at">height =</span> <span class="st">&quot;1000px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb614-7"><a href="18-orgnisational-network.html#cb614-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visLayout</span>(<span class="at">randomSeed =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span> <span class="co"># to have always the same network </span></span>
+<span id="cb614-8"><a href="18-orgnisational-network.html#cb614-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;1&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb614-9"><a href="18-orgnisational-network.html#cb614-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;2&quot;</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb614-10"><a href="18-orgnisational-network.html#cb614-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;3&quot;</span>, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb614-11"><a href="18-orgnisational-network.html#cb614-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;4&quot;</span>, <span class="at">color =</span> <span class="st">&quot;purple&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb614-12"><a href="18-orgnisational-network.html#cb614-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;5&quot;</span>, <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb614-13"><a href="18-orgnisational-network.html#cb614-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visIgraphLayout</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb614-14"><a href="18-orgnisational-network.html#cb614-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visOptions</span>(<span class="at">highlightNearest =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb614-15"><a href="18-orgnisational-network.html#cb614-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visNodes</span>(<span class="at">size =</span> <span class="dv">15</span>)</span></code></pre></div>
+<div id="htmlwidget-1b1468f41dc30dbf2091" style="width:100%;height:1000px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1b1468f41dc30dbf2091">{"x":{"nodes":{"id":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"],"group":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"x":[-0.6709073433061,0.339512438622399,0.463264869749859,0.150606834509299,0.243560015832168,1,0.51562277579789,0.495668768356309,0.342645249643426,-0.311844371095249,-0.186054869605635,0.441541241261166,0.892623005592304,0.832120621196389,-1,0.399564476496712,0.318205702015115,0.926342595708999,0.630942891729498,-0.507335341991762,0.359795912800124,-0.16022722945379,-0.0329700791362594,-0.195641004471206,0.826074244280776,0.349519411198623,0.0960665955886557,-0.33501118809339,0.994866684617417,0.0159464863991345,-0.357032627823693,0.774345008667721,0.0348389538421834,0.604437569743965,0.436849169186196,0.267226094487019,0.209851110348625,0.297036588121687,0.241516214622748,0.591231623639789,-0.409680555720469,0.584565490180391,0.495717257288948,0.139695814734067,0.342305567535899,0.650858585137682,0.378859974150518,0.68477201144903,0.676581791236265,0.677950817016596],"y":[-0.304626428674761,-0.227440120084033,0.363142587319654,-0.44272042142875,-0.116667630829715,-0.242015277449023,-0.306158515002733,0.0325923658555416,0.512216298417922,-0.0168875290653817,0.727980398196305,-0.153878010659682,-0.353396986247213,0.0137385192309729,-0.491251059978533,1,-0.901377385540954,0.0877071331109416,-0.0673793902266644,-0.150900021979029,-0.111349533927636,-0.946705506137593,-0.332740207901195,0.407402858195342,-0.120713681159733,-0.663995950598292,-0.0963442069655761,-0.431698742838607,-0.030842460960286,-1,-0.259961892101404,0.251820962607708,0.0819178848431115,-0.128777404915907,0.199336011504727,0.00499199624225488,-0.600359679088419,-0.321596943860782,0.0726960345061716,-0.487024626683408,-0.594134846473627,0.151457256705747,-0.0523869656060048,-0.204166130335594,-0.49340899919523,-0.277530860696915,-0.0627807347296326,-0.195287828342275,0.97016574143552,0.0895377914909776],"label":["Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Barristan-Selmy","Bran-Stark","Brienne-of-Tarth","Bronn","Catelyn-Stark","Cersei-Lannister","Daenerys-Targaryen","Davos-Seaworth","Drogo","Eddard-Stark","Edmure-Tully","Gregor-Clegane","Grenn","Hizdahr-zo-Loraq","Hodor","Ilyn-Payne","Jaime-Lannister","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Jorah-Mormont","Loras-Tyrell","Luwin","Lysa-Arryn","Mance-Rayder","Margaery-Tyrell","Meera-Reed","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Quentyn-Martell","Varys"]},"edges":{"from":["Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Aemon-Targaryen-(Maester-Aemon)","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Arya-Stark","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Barristan-Selmy","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Bran-Stark","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Brienne-of-Tarth","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Bronn","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Catelyn-Stark","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Cersei-Lannister","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Daenerys-Targaryen","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Davos-Seaworth","Drogo","Drogo","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Eddard-Stark","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Edmure-Tully","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Gregor-Clegane","Grenn","Grenn","Grenn","Hizdahr-zo-Loraq","Hodor","Hodor","Hodor","Hodor","Hodor","Hodor","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Ilyn-Payne","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jaime-Lannister","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Jeor-Mormont","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Joffrey-Baratheon","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jojen-Reed","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jon-Snow","Jorah-Mormont","Jorah-Mormont","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Loras-Tyrell","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Luwin","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Lysa-Arryn","Mance-Rayder","Mance-Rayder","Mance-Rayder","Mance-Rayder","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Margaery-Tyrell","Meera-Reed","Meera-Reed","Melisandre","Melisandre","Melisandre","Meryn-Trant","Meryn-Trant","Meryn-Trant","Meryn-Trant","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Myrcella-Baratheon","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Petyr-Baelish","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Pycelle","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Renly-Baratheon","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Rickon-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robb-Stark","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Robert-Baratheon","Rodrik-Cassel","Rodrik-Cassel","Samwell-Tarly","Sandor-Clegane","Sandor-Clegane","Sandor-Clegane","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Sansa-Stark","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Stannis-Baratheon","Theon-Greyjoy","Theon-Greyjoy","Tommen-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tyrion-Lannister","Tywin-Lannister"],"to":["Grenn","Jeor-Mormont","Jon-Snow","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Stannis-Baratheon","Bran-Stark","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Mance-Rayder","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Cersei-Lannister","Daenerys-Targaryen","Eddard-Stark","Hizdahr-zo-Loraq","Jaime-Lannister","Joffrey-Baratheon","Jorah-Mormont","Meryn-Trant","Petyr-Baelish","Pycelle","Quentyn-Martell","Renly-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Catelyn-Stark","Cersei-Lannister","Eddard-Stark","Hodor","Jeor-Mormont","Joffrey-Baratheon","Jojen-Reed","Jon-Snow","Luwin","Meera-Reed","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Catelyn-Stark","Cersei-Lannister","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Lysa-Arryn","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Catelyn-Stark","Cersei-Lannister","Gregor-Clegane","Joffrey-Baratheon","Rodrik-Cassel","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Cersei-Lannister","Eddard-Stark","Edmure-Tully","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Daenerys-Targaryen","Eddard-Stark","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Drogo","Eddard-Stark","Hizdahr-zo-Loraq","Jorah-Mormont","Quentyn-Martell","Robert-Baratheon","Tyrion-Lannister","Varys","Eddard-Stark","Joffrey-Baratheon","Melisandre","Renly-Baratheon","Robb-Stark","Stannis-Baratheon","Jorah-Mormont","Robert-Baratheon","Edmure-Tully","Gregor-Clegane","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Luwin","Lysa-Arryn","Petyr-Baelish","Pycelle","Renly-Baratheon","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Ilyn-Payne","Jaime-Lannister","Lysa-Arryn","Petyr-Baelish","Robb-Stark","Tommen-Baratheon","Tywin-Lannister","Ilyn-Payne","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Tywin-Lannister","Jeor-Mormont","Jon-Snow","Samwell-Tarly","Quentyn-Martell","Jojen-Reed","Luwin","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Jaime-Lannister","Joffrey-Baratheon","Loras-Tyrell","Meryn-Trant","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Varys","Joffrey-Baratheon","Jon-Snow","Loras-Tyrell","Lysa-Arryn","Margaery-Tyrell","Meryn-Trant","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Jon-Snow","Jorah-Mormont","Mance-Rayder","Robert-Baratheon","Samwell-Tarly","Tyrion-Lannister","Jon-Snow","Loras-Tyrell","Mance-Rayder","Margaery-Tyrell","Melisandre","Meryn-Trant","Myrcella-Baratheon","Petyr-Baelish","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Luwin","Meera-Reed","Rickon-Stark","Samwell-Tarly","Luwin","Mance-Rayder","Melisandre","Rickon-Stark","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Tyrion-Lannister","Margaery-Tyrell","Petyr-Baelish","Renly-Baratheon","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Meera-Reed","Rickon-Stark","Robb-Stark","Rodrik-Cassel","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Petyr-Baelish","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Melisandre","Samwell-Tarly","Stannis-Baratheon","Theon-Greyjoy","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Varys","Rickon-Stark","Samwell-Tarly","Renly-Baratheon","Samwell-Tarly","Stannis-Baratheon","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Tyrion-Lannister","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Pycelle","Renly-Baratheon","Robb-Stark","Robert-Baratheon","Rodrik-Cassel","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Renly-Baratheon","Robert-Baratheon","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Robert-Baratheon","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Robb-Stark","Rodrik-Cassel","Sansa-Stark","Theon-Greyjoy","Tyrion-Lannister","Robert-Baratheon","Rodrik-Cassel","Samwell-Tarly","Sansa-Stark","Stannis-Baratheon","Theon-Greyjoy","Tyrion-Lannister","Tywin-Lannister","Varys","Sandor-Clegane","Sansa-Stark","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tyrion-Lannister","Stannis-Baratheon","Sansa-Stark","Tommen-Baratheon","Tyrion-Lannister","Stannis-Baratheon","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Theon-Greyjoy","Tommen-Baratheon","Tyrion-Lannister","Tywin-Lannister","Varys","Tyrion-Lannister","Tywin-Lannister","Tyrion-Lannister","Tywin-Lannister","Tywin-Lannister","Varys","Varys"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false,"size":15},"manipulation":{"enabled":false},"layout":{"randomSeed":12},"groups":{"1":{"color":"red"},"2":{"color":"blue"},"3":{"color":"green"},"4":{"color":"purple"},"useDefaultGroups":true,"5":{"color":"orange"}},"edges":{"smooth":false},"physics":{"stabilization":false}},"groups":["1"],"width":"100%","height":"1000px","idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","igraphlayout":{"type":"square"},"highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="18-orgnisational-network.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">visNetwork</span>(nodes2, edges2, <span class="at">height =</span> <span class="st">&quot;1000px&quot;</span>, <span class="at">width =</span> <span class="st">&quot;100%&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-2"><a href="18-orgnisational-network.html#cb615-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visLayout</span>(<span class="at">randomSeed =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span> <span class="co"># to have always the same network </span></span>
+<span id="cb615-3"><a href="18-orgnisational-network.html#cb615-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;1&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb615-4"><a href="18-orgnisational-network.html#cb615-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;2&quot;</span>, <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-5"><a href="18-orgnisational-network.html#cb615-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;3&quot;</span>, <span class="at">color =</span> <span class="st">&quot;green&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb615-6"><a href="18-orgnisational-network.html#cb615-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;4&quot;</span>, <span class="at">color =</span> <span class="st">&quot;purple&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-7"><a href="18-orgnisational-network.html#cb615-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visGroups</span>(<span class="at">groupname =</span> <span class="st">&quot;5&quot;</span>, <span class="at">color =</span> <span class="st">&quot;orange&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb615-8"><a href="18-orgnisational-network.html#cb615-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visIgraphLayout</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb615-9"><a href="18-orgnisational-network.html#cb615-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visOptions</span>(<span class="at">highlightNearest =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-10"><a href="18-orgnisational-network.html#cb615-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visNodes</span>(<span class="at">size =</span> <span class="dv">15</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb615-11"><a href="18-orgnisational-network.html#cb615-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visEdges</span>(<span class="at">arrows =</span> <span class="st">&quot;to&quot;</span>, <span class="at">arrowStrikethrough =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb615-12"><a href="18-orgnisational-network.html#cb615-12" aria-hidden="true" tabindex="-1"></a><span class="fu">visSave</span>(<span class="at">file =</span> <span class="st">&quot;transfers2.html&quot;</span>, <span class="at">selfcontained =</span> T)</span></code></pre></div>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1153,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="17-commuting-time.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="19-job-classification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1185,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/17-organisational-network.Rmd",
 "text": "Edit"
 },
 "history": {

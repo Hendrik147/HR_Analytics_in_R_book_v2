@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 27 Webscraping LinkedIn | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 27 Webscraping LinkedIn | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 27 Webscraping LinkedIn | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="26-ranking-medical-school.html"/>
+<link rel="next" href="28-flexdashboards.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,182 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="webscraping-linkedin" class="section level1" number="27">
+<h1><span class="header-section-number">Chapter 27</span> Webscraping LinkedIn</h1>
+<p>Did you know that the internet is the greatest source of publicly available data. One of the key skills to being able to obtain data from the web is “web-scraping,” where you use a piece of software to run through a website and collect information.</p>
+<p>This technique can be used for collecting data from databases or to collect data that is scattered across a website.</p>
+<p>In the following scenario, you are being asked to extract from LinkedIn all the education qualifications and later compare them with those from your own company. Your senior management is seriously worried that the employees working for your main competitor are better skilled.</p>
+<p>You are tasked to extract all the forenames, the surnames, the job titles and the education qualifications, including the “from to”" dates and the education organisations.</p>
+<p>In our example, we have chosen to look at <a href="https://www.innocentdrinks.co.uk/">Innocent</a>, the famous drink manufacturer. Innocent ranks third among “The Sunday Times 100 Best Companies to Work For.”</p>
+<p>From the <a href="https://appointments.thetimes.co.uk/article/best100companies/">Sunday Times</a>
+you know that Innocent has 289 employees and that brand managers are earning salaries of around £50,000 plus bonuses. Furthermore the male/female ratio is 40:60, the average age is 39, the amount of voluntary leavers 15% and the earning are over £35,000 for 70% of its staff.</p>
+<p>Innocent makes a convincing offer to ambitious types. Nicki Garland is the firm’s team leader for UK and Ireland finance and enjoys the best of both worlds she gets at Innocent. “I wanted to work for a brand that had purpose and meaning,” she says. “When you walk in and see a wall that says the company’s mission is to ‘help people to live well and die old,’ you realise this is definitely a very different business.”</p>
+<p>This will be your <a href="https://www.linkedin.com/search/results/people/v2/?facetCurrentCompany=%5B%2224177%22%5D&amp;page=1">starting page</a> of your web scraping. After a few checks, you realise that according to LinkedIn the company has 543 employees for a total of 55 pages of records. From looking at the urls you also realise that %5B%2224177%22%5D is the code used to identify Innocent by LinkedIn.</p>
+<p>After lengthy googling on the internet, you find an excellent <a href="https://www.datacamp.com/community/tutorials/r-web-scraping-rvest">tutorial on DataCamp for webscraping</a> which does mostly what you plan to do, but unfortunately it is scraping Trustpilot, which on the top of things is a website that looks completely different to LinkedIn. You will need to adapt the code given in that tutorial, open each indivual LinkedIn profile for all 55 pages and scrape the required information. The final end product has to be a table which respects <a href="https://www.jstatsoft.org/article/view/v059i10/v59i10.pdf">“Hadley Wickham’s tidy data rule”</a></p>
+<p>Tidy datasets are easy to manipulate, model and visualize, and have a specific structure: each variable is a column, each observation is a row, and each type of observational unit is a table.</p>
+<div class="sourceCode" id="cb927"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb927-1"><a href="27-webscraping-linkedin.html#cb927-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)     <span class="co"># General purpose data wrangling</span></span>
+<span id="cb927-2"><a href="27-webscraping-linkedin.html#cb927-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)         <span class="co"># Parsing of html/xml files</span></span></code></pre></div>
+<pre><code>Loading required package: xml2</code></pre>
+<pre><code>
+Attaching package: &#39;rvest&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    pluck</code></pre>
+<pre><code>The following object is masked from &#39;package:readr&#39;:
+
+    guess_encoding</code></pre>
+<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb932-1"><a href="27-webscraping-linkedin.html#cb932-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rebus)         <span class="co"># Verbose regular expressions</span></span></code></pre></div>
+<pre><code>
+Attaching package: &#39;rebus&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:kernlab&#39;:
+
+    alpha</code></pre>
+<pre><code>The following objects are masked from &#39;package:igraph&#39;:
+
+    %c%, graph</code></pre>
+<pre><code>The following object is masked from &#39;package:dials&#39;:
+
+    token</code></pre>
+<pre><code>The following object is masked from &#39;package:stringr&#39;:
+
+    regex</code></pre>
+<pre><code>The following object is masked from &#39;package:scales&#39;:
+
+    alpha</code></pre>
+<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
+
+    alpha</code></pre>
+<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb940-1"><a href="27-webscraping-linkedin.html#cb940-1" aria-hidden="true" tabindex="-1"></a>get_last_page <span class="ot">&lt;-</span> <span class="cf">function</span>(html){</span>
+<span id="cb940-2"><a href="27-webscraping-linkedin.html#cb940-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-3"><a href="27-webscraping-linkedin.html#cb940-3" aria-hidden="true" tabindex="-1"></a>    pages_data <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-4"><a href="27-webscraping-linkedin.html#cb940-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;.pagination-page&#39;</span>) <span class="sc">%&gt;%</span> <span class="co"># The &#39;.&#39; indicates the class</span></span>
+<span id="cb940-5"><a href="27-webscraping-linkedin.html#cb940-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_text</span>()                        <span class="co"># Extracts the raw text as a list</span></span>
+<span id="cb940-6"><a href="27-webscraping-linkedin.html#cb940-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-7"><a href="27-webscraping-linkedin.html#cb940-7" aria-hidden="true" tabindex="-1"></a>    pages_data[(<span class="fu">length</span>(pages_data)<span class="sc">-</span><span class="dv">1</span>)] <span class="sc">%&gt;%</span>             <span class="co"># The second to last of the buttons is the one</span></span>
+<span id="cb940-8"><a href="27-webscraping-linkedin.html#cb940-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unname</span>() <span class="sc">%&gt;%</span>                                     <span class="co"># Take the raw string</span></span>
+<span id="cb940-9"><a href="27-webscraping-linkedin.html#cb940-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.numeric</span>()                                     <span class="co"># Convert to number</span></span>
+<span id="cb940-10"><a href="27-webscraping-linkedin.html#cb940-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-11"><a href="27-webscraping-linkedin.html#cb940-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-12"><a href="27-webscraping-linkedin.html#cb940-12" aria-hidden="true" tabindex="-1"></a>get_reviews <span class="ot">&lt;-</span> <span class="cf">function</span>(html){</span>
+<span id="cb940-13"><a href="27-webscraping-linkedin.html#cb940-13" aria-hidden="true" tabindex="-1"></a>    html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-14"><a href="27-webscraping-linkedin.html#cb940-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;.review-info__body__text&#39;</span>) <span class="sc">%&gt;%</span>       <span class="co"># The relevant tag</span></span>
+<span id="cb940-15"><a href="27-webscraping-linkedin.html#cb940-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb940-16"><a href="27-webscraping-linkedin.html#cb940-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_trim</span>() <span class="sc">%&gt;%</span>                       <span class="co"># Trims additional white space</span></span>
+<span id="cb940-17"><a href="27-webscraping-linkedin.html#cb940-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>()                             <span class="co"># Converts the list into a vector</span></span>
+<span id="cb940-18"><a href="27-webscraping-linkedin.html#cb940-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-19"><a href="27-webscraping-linkedin.html#cb940-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-20"><a href="27-webscraping-linkedin.html#cb940-20" aria-hidden="true" tabindex="-1"></a>get_reviewer_names <span class="ot">&lt;-</span> <span class="cf">function</span>(html){</span>
+<span id="cb940-21"><a href="27-webscraping-linkedin.html#cb940-21" aria-hidden="true" tabindex="-1"></a>    html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-22"><a href="27-webscraping-linkedin.html#cb940-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;.consumer-info__details__name&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-23"><a href="27-webscraping-linkedin.html#cb940-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb940-24"><a href="27-webscraping-linkedin.html#cb940-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_trim</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb940-25"><a href="27-webscraping-linkedin.html#cb940-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>()</span>
+<span id="cb940-26"><a href="27-webscraping-linkedin.html#cb940-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-27"><a href="27-webscraping-linkedin.html#cb940-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-28"><a href="27-webscraping-linkedin.html#cb940-28" aria-hidden="true" tabindex="-1"></a>get_review_dates <span class="ot">&lt;-</span> <span class="cf">function</span>(html){</span>
+<span id="cb940-29"><a href="27-webscraping-linkedin.html#cb940-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-30"><a href="27-webscraping-linkedin.html#cb940-30" aria-hidden="true" tabindex="-1"></a>    status <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-31"><a href="27-webscraping-linkedin.html#cb940-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-32"><a href="27-webscraping-linkedin.html#cb940-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_attrs</span>() <span class="sc">%&gt;%</span>              <span class="co"># The status information is this time a tag attribute</span></span>
+<span id="cb940-33"><a href="27-webscraping-linkedin.html#cb940-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map</span>(<span class="dv">2</span>) <span class="sc">%&gt;%</span>                    <span class="co"># Extracts the second element</span></span>
+<span id="cb940-34"><a href="27-webscraping-linkedin.html#cb940-34" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() </span>
+<span id="cb940-35"><a href="27-webscraping-linkedin.html#cb940-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-36"><a href="27-webscraping-linkedin.html#cb940-36" aria-hidden="true" tabindex="-1"></a>    dates <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-37"><a href="27-webscraping-linkedin.html#cb940-37" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;time&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-38"><a href="27-webscraping-linkedin.html#cb940-38" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_attrs</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb940-39"><a href="27-webscraping-linkedin.html#cb940-39" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-40"><a href="27-webscraping-linkedin.html#cb940-40" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ymd_hms</span>() <span class="sc">%&gt;%</span>                 <span class="co"># Using a lubridate function </span></span>
+<span id="cb940-41"><a href="27-webscraping-linkedin.html#cb940-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># to parse the string into a datetime object</span></span>
+<span id="cb940-42"><a href="27-webscraping-linkedin.html#cb940-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>()</span>
+<span id="cb940-43"><a href="27-webscraping-linkedin.html#cb940-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-44"><a href="27-webscraping-linkedin.html#cb940-44" aria-hidden="true" tabindex="-1"></a>    return_dates <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">status =</span> status, <span class="at">dates =</span> dates) <span class="sc">%&gt;%</span>   <span class="co"># You combine the status and the date </span></span>
+<span id="cb940-45"><a href="27-webscraping-linkedin.html#cb940-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># information to filter one via the other</span></span>
+<span id="cb940-46"><a href="27-webscraping-linkedin.html#cb940-46" aria-hidden="true" tabindex="-1"></a>        <span class="fu">filter</span>(status <span class="sc">==</span> <span class="st">&#39;ndate&#39;</span>) <span class="sc">%&gt;%</span>              <span class="co"># Only these are actual reviews</span></span>
+<span id="cb940-47"><a href="27-webscraping-linkedin.html#cb940-47" aria-hidden="true" tabindex="-1"></a>        <span class="fu">pull</span>(dates) <span class="sc">%&gt;%</span>                            <span class="co"># Selects and converts to vector</span></span>
+<span id="cb940-48"><a href="27-webscraping-linkedin.html#cb940-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.POSIXct</span>(<span class="at">origin =</span> <span class="st">&#39;1970-01-01 00:00:00&#39;</span>) <span class="co"># Converts datetimes to POSIX objects</span></span>
+<span id="cb940-49"><a href="27-webscraping-linkedin.html#cb940-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-50"><a href="27-webscraping-linkedin.html#cb940-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The lengths still occasionally do not lign up. You then arbitrarily crop the dates to fit</span></span>
+<span id="cb940-51"><a href="27-webscraping-linkedin.html#cb940-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This can cause data imperfections, however reviews on one page are generally close in time)</span></span>
+<span id="cb940-52"><a href="27-webscraping-linkedin.html#cb940-52" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-53"><a href="27-webscraping-linkedin.html#cb940-53" aria-hidden="true" tabindex="-1"></a>    length_reviews <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">get_reviews</span>(html))</span>
+<span id="cb940-54"><a href="27-webscraping-linkedin.html#cb940-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-55"><a href="27-webscraping-linkedin.html#cb940-55" aria-hidden="true" tabindex="-1"></a>    return_reviews <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="fu">length</span>(return_dates)<span class="sc">&gt;</span> length_reviews){</span>
+<span id="cb940-56"><a href="27-webscraping-linkedin.html#cb940-56" aria-hidden="true" tabindex="-1"></a>        return_dates[<span class="dv">1</span><span class="sc">:</span>length_reviews]</span>
+<span id="cb940-57"><a href="27-webscraping-linkedin.html#cb940-57" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span>{</span>
+<span id="cb940-58"><a href="27-webscraping-linkedin.html#cb940-58" aria-hidden="true" tabindex="-1"></a>        return_dates</span>
+<span id="cb940-59"><a href="27-webscraping-linkedin.html#cb940-59" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb940-60"><a href="27-webscraping-linkedin.html#cb940-60" aria-hidden="true" tabindex="-1"></a>    return_reviews</span>
+<span id="cb940-61"><a href="27-webscraping-linkedin.html#cb940-61" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-62"><a href="27-webscraping-linkedin.html#cb940-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-63"><a href="27-webscraping-linkedin.html#cb940-63" aria-hidden="true" tabindex="-1"></a>get_star_rating <span class="ot">&lt;-</span> <span class="cf">function</span>(html){</span>
+<span id="cb940-64"><a href="27-webscraping-linkedin.html#cb940-64" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-65"><a href="27-webscraping-linkedin.html#cb940-65" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-66"><a href="27-webscraping-linkedin.html#cb940-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The pattern we look for</span></span>
+<span id="cb940-67"><a href="27-webscraping-linkedin.html#cb940-67" aria-hidden="true" tabindex="-1"></a>    pattern <span class="ot">=</span> <span class="st">&#39;star-rating-&#39;</span><span class="sc">%R%</span> <span class="fu">capture</span>(DIGIT)  </span>
+<span id="cb940-68"><a href="27-webscraping-linkedin.html#cb940-68" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-69"><a href="27-webscraping-linkedin.html#cb940-69" aria-hidden="true" tabindex="-1"></a>    vector <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb940-70"><a href="27-webscraping-linkedin.html#cb940-70" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_nodes</span>(<span class="st">&#39;.star-rating&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-71"><a href="27-webscraping-linkedin.html#cb940-71" aria-hidden="true" tabindex="-1"></a>        <span class="fu">html_attr</span>(<span class="st">&#39;class&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-72"><a href="27-webscraping-linkedin.html#cb940-72" aria-hidden="true" tabindex="-1"></a>        <span class="fu">str_match</span>(pattern) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-73"><a href="27-webscraping-linkedin.html#cb940-73" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-74"><a href="27-webscraping-linkedin.html#cb940-74" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.numeric</span>()  </span>
+<span id="cb940-75"><a href="27-webscraping-linkedin.html#cb940-75" aria-hidden="true" tabindex="-1"></a>    vector <span class="ot">&lt;-</span>  vector[<span class="sc">!</span><span class="fu">is.na</span>(vector)]</span>
+<span id="cb940-76"><a href="27-webscraping-linkedin.html#cb940-76" aria-hidden="true" tabindex="-1"></a>    vector <span class="ot">&lt;-</span> vector[<span class="dv">3</span><span class="sc">:</span><span class="fu">length</span>(vector)]</span>
+<span id="cb940-77"><a href="27-webscraping-linkedin.html#cb940-77" aria-hidden="true" tabindex="-1"></a>    vector</span>
+<span id="cb940-78"><a href="27-webscraping-linkedin.html#cb940-78" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-79"><a href="27-webscraping-linkedin.html#cb940-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-80"><a href="27-webscraping-linkedin.html#cb940-80" aria-hidden="true" tabindex="-1"></a>get_data_table <span class="ot">&lt;-</span> <span class="cf">function</span>(html, company_name){</span>
+<span id="cb940-81"><a href="27-webscraping-linkedin.html#cb940-81" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-82"><a href="27-webscraping-linkedin.html#cb940-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the Basic information from the HTML</span></span>
+<span id="cb940-83"><a href="27-webscraping-linkedin.html#cb940-83" aria-hidden="true" tabindex="-1"></a>    reviews <span class="ot">&lt;-</span> <span class="fu">get_reviews</span>(html)</span>
+<span id="cb940-84"><a href="27-webscraping-linkedin.html#cb940-84" aria-hidden="true" tabindex="-1"></a>    reviewer_names <span class="ot">&lt;-</span> <span class="fu">get_reviewer_names</span>(html)</span>
+<span id="cb940-85"><a href="27-webscraping-linkedin.html#cb940-85" aria-hidden="true" tabindex="-1"></a>    dates <span class="ot">&lt;-</span> <span class="fu">get_review_dates</span>(html)</span>
+<span id="cb940-86"><a href="27-webscraping-linkedin.html#cb940-86" aria-hidden="true" tabindex="-1"></a>    ratings <span class="ot">&lt;-</span> <span class="fu">get_star_rating</span>(html)</span>
+<span id="cb940-87"><a href="27-webscraping-linkedin.html#cb940-87" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-88"><a href="27-webscraping-linkedin.html#cb940-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Minimum length</span></span>
+<span id="cb940-89"><a href="27-webscraping-linkedin.html#cb940-89" aria-hidden="true" tabindex="-1"></a>    min_length <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">length</span>(reviews), <span class="fu">length</span>(reviewer_names), <span class="fu">length</span>(dates), <span class="fu">length</span>(ratings))</span>
+<span id="cb940-90"><a href="27-webscraping-linkedin.html#cb940-90" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-91"><a href="27-webscraping-linkedin.html#cb940-91" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine into a tibble</span></span>
+<span id="cb940-92"><a href="27-webscraping-linkedin.html#cb940-92" aria-hidden="true" tabindex="-1"></a>    combined_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">reviewer =</span> reviewer_names[<span class="dv">1</span><span class="sc">:</span>min_length],</span>
+<span id="cb940-93"><a href="27-webscraping-linkedin.html#cb940-93" aria-hidden="true" tabindex="-1"></a>                            <span class="at">date =</span> dates[<span class="dv">1</span><span class="sc">:</span>min_length],</span>
+<span id="cb940-94"><a href="27-webscraping-linkedin.html#cb940-94" aria-hidden="true" tabindex="-1"></a>                            <span class="at">rating =</span> ratings[<span class="dv">1</span><span class="sc">:</span>min_length],</span>
+<span id="cb940-95"><a href="27-webscraping-linkedin.html#cb940-95" aria-hidden="true" tabindex="-1"></a>                            <span class="at">review =</span> reviews[<span class="dv">1</span><span class="sc">:</span>min_length]) </span>
+<span id="cb940-96"><a href="27-webscraping-linkedin.html#cb940-96" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-97"><a href="27-webscraping-linkedin.html#cb940-97" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tag the individual data with the company name</span></span>
+<span id="cb940-98"><a href="27-webscraping-linkedin.html#cb940-98" aria-hidden="true" tabindex="-1"></a>    combined_data <span class="sc">%&gt;%</span> </span>
+<span id="cb940-99"><a href="27-webscraping-linkedin.html#cb940-99" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">company =</span> company_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb940-100"><a href="27-webscraping-linkedin.html#cb940-100" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(company, reviewer, date, rating, review)</span>
+<span id="cb940-101"><a href="27-webscraping-linkedin.html#cb940-101" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-102"><a href="27-webscraping-linkedin.html#cb940-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-103"><a href="27-webscraping-linkedin.html#cb940-103" aria-hidden="true" tabindex="-1"></a>get_data_from_url <span class="ot">&lt;-</span> <span class="cf">function</span>(url, company_name){</span>
+<span id="cb940-104"><a href="27-webscraping-linkedin.html#cb940-104" aria-hidden="true" tabindex="-1"></a>    html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb940-105"><a href="27-webscraping-linkedin.html#cb940-105" aria-hidden="true" tabindex="-1"></a>    <span class="fu">get_data_table</span>(html, company_name)</span>
+<span id="cb940-106"><a href="27-webscraping-linkedin.html#cb940-106" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-107"><a href="27-webscraping-linkedin.html#cb940-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-108"><a href="27-webscraping-linkedin.html#cb940-108" aria-hidden="true" tabindex="-1"></a>scrape_write_table <span class="ot">&lt;-</span> <span class="cf">function</span>(url, company_name){</span>
+<span id="cb940-109"><a href="27-webscraping-linkedin.html#cb940-109" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-110"><a href="27-webscraping-linkedin.html#cb940-110" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read first page</span></span>
+<span id="cb940-111"><a href="27-webscraping-linkedin.html#cb940-111" aria-hidden="true" tabindex="-1"></a>    first_page <span class="ot">&lt;-</span> <span class="fu">read_html</span>(url)</span>
+<span id="cb940-112"><a href="27-webscraping-linkedin.html#cb940-112" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-113"><a href="27-webscraping-linkedin.html#cb940-113" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract the number of pages that have to be queried</span></span>
+<span id="cb940-114"><a href="27-webscraping-linkedin.html#cb940-114" aria-hidden="true" tabindex="-1"></a>    latest_page_number <span class="ot">&lt;-</span> <span class="fu">get_last_page</span>(first_page)</span>
+<span id="cb940-115"><a href="27-webscraping-linkedin.html#cb940-115" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-116"><a href="27-webscraping-linkedin.html#cb940-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Generate the target URLs</span></span>
+<span id="cb940-117"><a href="27-webscraping-linkedin.html#cb940-117" aria-hidden="true" tabindex="-1"></a>    list_of_pages <span class="ot">&lt;-</span> <span class="fu">str_c</span>(url, <span class="st">&#39;?page=&#39;</span>, <span class="dv">1</span><span class="sc">:</span>latest_page_number)</span>
+<span id="cb940-118"><a href="27-webscraping-linkedin.html#cb940-118" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb940-119"><a href="27-webscraping-linkedin.html#cb940-119" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply the extraction and bind the individual results back into one table, </span></span>
+<span id="cb940-120"><a href="27-webscraping-linkedin.html#cb940-120" aria-hidden="true" tabindex="-1"></a>    <span class="co"># which is then written as a tsv file into the working directory</span></span>
+<span id="cb940-121"><a href="27-webscraping-linkedin.html#cb940-121" aria-hidden="true" tabindex="-1"></a>    list_of_pages <span class="sc">%&gt;%</span> </span>
+<span id="cb940-122"><a href="27-webscraping-linkedin.html#cb940-122" aria-hidden="true" tabindex="-1"></a>        <span class="fu">map</span>(get_data_from_url, company_name) <span class="sc">%&gt;%</span>  <span class="co"># Apply to all URLs</span></span>
+<span id="cb940-123"><a href="27-webscraping-linkedin.html#cb940-123" aria-hidden="true" tabindex="-1"></a>        <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span>                           <span class="co"># Combines the tibbles into one tibble</span></span>
+<span id="cb940-124"><a href="27-webscraping-linkedin.html#cb940-124" aria-hidden="true" tabindex="-1"></a>        <span class="fu">write_tsv</span>(<span class="fu">str_c</span>(company_name,<span class="st">&#39;.tsv&#39;</span>))     <span class="co"># Writes a tab separated file</span></span>
+<span id="cb940-125"><a href="27-webscraping-linkedin.html#cb940-125" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb940-126"><a href="27-webscraping-linkedin.html#cb940-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-127"><a href="27-webscraping-linkedin.html#cb940-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb940-128"><a href="27-webscraping-linkedin.html#cb940-128" aria-hidden="true" tabindex="-1"></a><span class="co"># url &lt;-&#39;http://www.trustpilot.com/review/www.amazon.com&#39;</span></span>
+<span id="cb940-129"><a href="27-webscraping-linkedin.html#cb940-129" aria-hidden="true" tabindex="-1"></a><span class="co"># scrape_write_table(url, &#39;amazon&#39;)</span></span>
+<span id="cb940-130"><a href="27-webscraping-linkedin.html#cb940-130" aria-hidden="true" tabindex="-1"></a><span class="co"># amazon_table &lt;- read_tsv(&#39;amazon.tsv&#39;)</span></span></code></pre></div>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +937,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="26-ranking-medical-school.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="28-flexdashboards.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +969,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/26-webscraping-linkedin.Rmd",
 "text": "Edit"
 },
 "history": {

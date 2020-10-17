@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>HR Analytics in R</title>
+  <title>Chapter 15 HR Service Desk | HR Analytics in R</title>
   <meta name="description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="HR Analytics in R" />
+  <meta property="og:title" content="Chapter 15 HR Service Desk | HR Analytics in R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://hranalyticslive.netlify.com/" />
   <meta property="og:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="Hendrik147/HR_Analytics_in_R_book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Analytics in R" />
+  <meta name="twitter:title" content="Chapter 15 HR Service Desk | HR Analytics in R" />
   <meta name="twitter:site" content="@h_feddersen" />
   <meta name="twitter:description" content="An open-source self-training book to assist you in your journey to sustainable HR Analytics" />
   <meta name="twitter:image" content="https://hranalyticslive.netlify.com/images/hranalytics.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="apple-touch-icon-precomposed" sizes="152x152" href="images/logos/favicons/apple-touch-icon.png" />
   <link rel="shortcut icon" href="images/logos/favicons/favicon.ico" type="image/x-icon" />
-
-<link rel="next" href="1-intro.html"/>
+<link rel="prev" href="14-stop-appraisals.html"/>
+<link rel="next" href="16-personality.html"/>
 <script src="libs/header-attrs-2.4.6/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -735,30 +735,355 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <html>
 <img src='images/hranalytics.jpg' alt="HRAnalytics">
 </html>
-<div id="header">
-<h1 class="title">HR Analytics in R</h1>
-<h2 class="subtitle"><em>Common tasks achieved with the power of R</em></h2>
-<p class="author"><em>Chester Ismay, Albert Y. Kim and Hendrik Feddersen</em></p>
-<p class="date"><em>October 17, 2020</em></p>
-</div>
-<div id="welcome-to-hr-analytics.live" class="section level1 unnumbered">
-<h1>Welcome to HR Analytics.live</h1>
-<!-- purl() all the chapter Rmd's in a new session -->
-<p>#Bash does not work for me on Windows PC, I am purling manually.
-#<code>{bash, include=FALSE, purl=FALSE} #Rscript -e "source('purl.R', local = TRUE)" #</code></p>
-<!--
-<div class="announcement">
-<p><strong>This is a previous version (v<code>r version</code>) of <em>HR Analytics.live</em> and may be out of date. For the current version of <em>HR Analytics.live</em>, please go to <a href="https://hranalyticslive.netlify.app//">hranalytics.live</a>.</strong></p>
-</div>
--->
-<div class="learncheck">
-<p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress it is subject to frequent change. I would like to hear from you, as your comments are motivating me to do better.</strong>
-</p>
-</div>
-<p></br>
-<img src="images/logos/book_cover.png" width="350" />
-</br></p>
+<div id="service-desk" class="section level1" number="15">
+<h1><span class="header-section-number">Chapter 15</span> HR Service Desk</h1>
+<p>How to use metrics:</p>
+<ul>
+<li>Inform your stakeholders</li>
+<li>Report measurements so that stakeholders can understand activities and results</li>
+<li>Promote the value of the organization</li>
+<li>Determine the best way to communicate the information to the stakeholders</li>
+<li>Perform better stakeholder analysis to facilitate stakeholder buy-in</li>
+<li>Improve performance - people do what is measured</li>
+</ul>
+<p>Four types of process metrics:</p>
+<ul>
+<li>Monitor progress by checking in process maturity</li>
+<li>Monitor efficiency by checking use of resources</li>
+<li>Monitor effectiveness by checking how many correct and complete first time</li>
+<li>Monitor compliance in relation to process and regulatory requirements</li>
+</ul>
+<p>Factors to consider when reporting:</p>
+<ul>
+<li>Who are the stakeholders?</li>
+<li>How does what you are reporting impact the stakeholders?</li>
+<li>Reports must be easy to read and understood, thus they need to be developed with
+the stakeholder in mind.</li>
+<li>Reports need to show how the support center is contributing to the goals of each
+stakeholder and the business.</li>
+<li>Reports must identify the appropriate channels to communicate with each of the
+stakeholders.</li>
+</ul>
+<p>Source: <a href="https://www.kaggle.com/lyndonsundmark/service-request-analysis/data" class="uri">https://www.kaggle.com/lyndonsundmark/service-request-analysis/data</a></p>
+<p>Ensure all needed libraries are installed</p>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="15-service-desk.html#cb532-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb532-2"><a href="15-service-desk.html#cb532-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<pre><code>
+Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    date, intersect, setdiff, union</code></pre>
+<p>First, let’s get some data from our service desk by exporting a CSV. We can then read this CSV (or excel spreadsheet) into R for us to perform analysis.</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="15-service-desk.html#cb535-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https:///hranalytics.netlify.com/data/ServiceRequestExtract2.csv&quot;</span>)</span></code></pre></div>
+<p>Note that we can solve some things as we load the data using <code>read_csv()</code> like the column data types and handling different ways people can represent missing or unknown data.</p>
+<p>We then need to get this data analysis-ready. First of all, we need to make sure dates are filled in and/or reasonable.</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="15-service-desk.html#cb536-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb536-2"><a href="15-service-desk.html#cb536-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateStarted =</span> <span class="fu">coalesce</span>(DateStarted, DateSubmitted),</span>
+<span id="cb536-3"><a href="15-service-desk.html#cb536-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">DateCompleted=</span><span class="fu">coalesce</span>(DateCompleted, DateStarted <span class="sc">+</span> <span class="fu">hours</span>(<span class="dv">2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb536-4"><a href="15-service-desk.html#cb536-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateCompleted =</span> </span>
+<span id="cb536-5"><a href="15-service-desk.html#cb536-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">pmin</span>(DateCompleted,</span>
+<span id="cb536-6"><a href="15-service-desk.html#cb536-6" aria-hidden="true" tabindex="-1"></a>              DateStarted <span class="sc">+</span> <span class="fu">hours</span>(<span class="fu">floor</span>(<span class="fu">rnorm</span>(<span class="fu">n</span>(), <span class="at">mean =</span> <span class="dv">71</span>, <span class="at">sd=</span><span class="dv">20</span>))))) <span class="ot">-&gt;</span></span>
+<span id="cb536-7"><a href="15-service-desk.html#cb536-7" aria-hidden="true" tabindex="-1"></a>  service_requests</span></code></pre></div>
+<p>Then we can work out how long it took to complete different stages of a request.</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="15-service-desk.html#cb537-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb537-2"><a href="15-service-desk.html#cb537-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">RequestID =</span> <span class="fu">as.character</span>(RequestID)) <span class="sc">%&gt;%</span> </span>
+<span id="cb537-3"><a href="15-service-desk.html#cb537-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb537-4"><a href="15-service-desk.html#cb537-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">WaitTime =</span> <span class="fu">difftime</span>(DateStarted, </span>
+<span id="cb537-5"><a href="15-service-desk.html#cb537-5" aria-hidden="true" tabindex="-1"></a>                        DateSubmitted, </span>
+<span id="cb537-6"><a href="15-service-desk.html#cb537-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>)</span>
+<span id="cb537-7"><a href="15-service-desk.html#cb537-7" aria-hidden="true" tabindex="-1"></a>    ,<span class="at">TaskTime =</span> <span class="fu">difftime</span>(DateCompleted, </span>
+<span id="cb537-8"><a href="15-service-desk.html#cb537-8" aria-hidden="true" tabindex="-1"></a>                        DateStarted, </span>
+<span id="cb537-9"><a href="15-service-desk.html#cb537-9" aria-hidden="true" tabindex="-1"></a>                        <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>)</span>
+<span id="cb537-10"><a href="15-service-desk.html#cb537-10" aria-hidden="true" tabindex="-1"></a>    ,<span class="at">TotalTime =</span> <span class="fu">difftime</span>(DateCompleted, </span>
+<span id="cb537-11"><a href="15-service-desk.html#cb537-11" aria-hidden="true" tabindex="-1"></a>                        DateSubmitted, </span>
+<span id="cb537-12"><a href="15-service-desk.html#cb537-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">units =</span> <span class="st">&quot;hours&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb537-13"><a href="15-service-desk.html#cb537-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(<span class="fu">ends_with</span>(<span class="st">&quot;Time&quot;</span>)), as.numeric)<span class="ot">-&gt;</span></span>
+<span id="cb537-14"><a href="15-service-desk.html#cb537-14" aria-hidden="true" tabindex="-1"></a>  service_requests</span>
+<span id="cb537-15"><a href="15-service-desk.html#cb537-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb537-16"><a href="15-service-desk.html#cb537-16" aria-hidden="true" tabindex="-1"></a>service_requests</span></code></pre></div>
+<pre><code># A tibble: 1,152 x 8
+   RequestID DateSubmitted       DateStarted         DateCompleted      
+   &lt;chr&gt;     &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             
+ 1 1         2014-11-26 13:43:00 2014-12-13 06:02:00 2014-12-13 06:02:00
+ 2 2         2014-11-29 14:41:00 2014-12-20 06:47:00 2014-12-22 03:47:00
+ 3 3         2014-11-29 14:43:00 2014-12-24 08:06:00 2014-12-27 18:06:00
+ 4 4         2014-11-29 14:45:00 2015-02-09 03:31:00 2015-02-11 09:31:00
+ 5 5         2014-11-29 14:49:00 2014-12-06 06:43:00 2014-12-06 06:43:00
+ 6 6         2014-11-29 14:50:00 2014-12-21 06:00:00 2014-12-21 09:00:00
+ 7 7         2014-11-29 14:50:00 2015-01-07 00:55:00 2015-01-09 23:55:00
+ 8 8         2014-12-01 08:38:00 2015-01-14 03:29:00 2015-01-15 08:29:00
+ 9 9         2014-12-03 16:26:00 2014-12-07 01:12:00 2014-12-08 17:12:00
+10 10        2014-12-07 11:41:00 2014-12-16 00:25:00 2014-12-16 00:25:00
+# ... with 1,142 more rows, and 4 more variables: Category &lt;chr&gt;,
+#   WaitTime &lt;dbl&gt;, TaskTime &lt;dbl&gt;, TotalTime &lt;dbl&gt;</code></pre>
+<p>We should now be able to get a view as to the distribution of the times taken to start, complete, and the overall turnaround time for requests.</p>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="15-service-desk.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb539-2"><a href="15-service-desk.html#cb539-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_density</span>(service_requests, </span>
+<span id="cb539-3"><a href="15-service-desk.html#cb539-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Distribution of task times&quot;</span>,</span>
+<span id="cb539-4"><a href="15-service-desk.html#cb539-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-526-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="15-service-desk.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_bar</span>(service_requests,</span>
+<span id="cb540-2"><a href="15-service-desk.html#cb540-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">title=</span><span class="st">&quot;Distributions&quot;</span>,</span>
+<span id="cb540-3"><a href="15-service-desk.html#cb540-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
+<pre><code>4 columns ignored with more than 50 categories.
+RequestID: 1152 categories
+DateSubmitted: 1135 categories
+DateStarted: 1132 categories
+DateCompleted: 1146 categories</code></pre>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-527-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="15-service-desk.html#cb542-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb542-2"><a href="15-service-desk.html#cb542-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span> </span>
+<span id="cb542-3"><a href="15-service-desk.html#cb542-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(<span class="fu">ends_with</span>(<span class="st">&quot;Time&quot;</span>)),</span>
+<span id="cb542-4"><a href="15-service-desk.html#cb542-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">.funs =</span> <span class="fu">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;min&quot;</span>,<span class="st">&quot;max&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb542-5"><a href="15-service-desk.html#cb542-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(WaitTime_mean)</span></code></pre></div>
+<pre><code># A tibble: 5 x 10
+  Category WaitTime_mean TaskTime_mean TotalTime_mean WaitTime_min TaskTime_min
+  &lt;chr&gt;            &lt;dbl&gt;         &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1 Grievan~       11.8252      71.1333         82.9585            0           24
+2 HR Repo~       23.8362       4.76644        28.6026            0            0
+3 Trainin~       26.1803      58.8442         85.0245            0           20
+4 Recruit~       28.89        67.2125         96.1025            0           23
+5 Job Cla~       33.3248      35.1070         68.4318            0           11
+# ... with 4 more variables: TotalTime_min &lt;dbl&gt;, WaitTime_max &lt;dbl&gt;,
+#   TaskTime_max &lt;dbl&gt;, TotalTime_max &lt;dbl&gt;</code></pre>
+<p>Now that we’ve checked our data for issues and tidied it up, we can start understanding what’s happening in-depth.</p>
+<p>For instance, are the differences in category mean times significant or could it be due to the different volumes of requests? We can use the ANOVA test to check to see if each category does indeed seem to have differing response times. If the resulting P-value is small then we have more certainty that there is likely to be a difference by request category.</p>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="15-service-desk.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RcmdrMisc)</span>
+<span id="cb544-2"><a href="15-service-desk.html#cb544-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(WaitTime <span class="sc">~</span> Category, <span class="at">data=</span>service_requests) <span class="sc">%&gt;%</span> </span>
+<span id="cb544-3"><a href="15-service-desk.html#cb544-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Anova</span>()</span></code></pre></div>
+<pre><code>Anova Table (Type II tests)
+
+Response: WaitTime
+            Sum Sq   Df F value Pr(&gt;F)
+Category     29404    4    0.42   0.79
+Residuals 19942945 1147               </code></pre>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="15-service-desk.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(TaskTime <span class="sc">~</span> Category, <span class="at">data=</span>service_requests) <span class="sc">%&gt;%</span> </span>
+<span id="cb546-2"><a href="15-service-desk.html#cb546-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Anova</span>()</span></code></pre></div>
+<pre><code>Anova Table (Type II tests)
+
+Response: TaskTime
+          Sum Sq   Df F value              Pr(&gt;F)    
+Category  665056    4    1742 &lt;0.0000000000000002 ***
+Residuals 109458 1147                                
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="15-service-desk.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(TotalTime <span class="sc">~</span> Category, <span class="at">data=</span>service_requests) <span class="sc">%&gt;%</span> </span>
+<span id="cb548-2"><a href="15-service-desk.html#cb548-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Anova</span>()</span></code></pre></div>
+<pre><code>Anova Table (Type II tests)
+
+Response: TotalTime
+            Sum Sq   Df F value      Pr(&gt;F)    
+Category    731473    4    10.5 0.000000025 ***
+Residuals 20035691 1147                        
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>As well as statistical tests, we can apply quality control principles too. The <code>qcc</code> package allows us to use a number of relevant models and charts to understand what is happening.</p>
+<!-- This is outside my day to day knowledge so this is likely to be a terrible explanation! -->
+<p>Here we use the package to take a number of samples from the data and prepare a <code>qcc</code> base transformation containing information needed to make common charts. We use the <code>xbar.one</code> transformation to get the mean using one-at-time data of a continuous process variable.</p>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="15-service-desk.html#cb550-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qcc)</span>
+<span id="cb550-2"><a href="15-service-desk.html#cb550-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb550-3"><a href="15-service-desk.html#cb550-3" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb550-4"><a href="15-service-desk.html#cb550-4" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">qcc.groups</span>(.<span class="sc">$</span>WaitTime, .<span class="sc">$</span>RequestID)} <span class="sc">%&gt;%</span> </span>
+<span id="cb550-5"><a href="15-service-desk.html#cb550-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qcc</span>(<span class="at">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb550-6"><a href="15-service-desk.html#cb550-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-532-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<pre><code>
+Call:
+qcc(data = ., type = &quot;xbar.one&quot;)
+
+xbar.one chart for . 
+
+Summary of group statistics:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0       0       0      27       0    1910 
+
+Group sample size:  1152
+Number of groups:  1152
+Center of group statistics:  27.1
+Standard deviation:  42.9 
+
+Control limits:
+  LCL UCL
+ -102 156</code></pre>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="15-service-desk.html#cb552-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb552-2"><a href="15-service-desk.html#cb552-2" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">qcc.groups</span>(.<span class="sc">$</span>TaskTime, .<span class="sc">$</span>RequestID)} <span class="sc">%&gt;%</span> </span>
+<span id="cb552-3"><a href="15-service-desk.html#cb552-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qcc</span>(<span class="at">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb552-4"><a href="15-service-desk.html#cb552-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-533-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<pre><code>
+Call:
+qcc(data = ., type = &quot;xbar.one&quot;)
+
+xbar.one chart for . 
+
+Summary of group statistics:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    0.0     6.0    30.0    31.9    52.0   113.0 
+
+Group sample size:  1152
+Number of groups:  1152
+Center of group statistics:  31.9
+Standard deviation:  25.2 
+
+Control limits:
+   LCL UCL
+ -43.7 107</code></pre>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="15-service-desk.html#cb554-1" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb554-2"><a href="15-service-desk.html#cb554-2" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">qcc.groups</span>(.<span class="sc">$</span>TotalTime, .<span class="sc">$</span>RequestID)} <span class="sc">%&gt;%</span> </span>
+<span id="cb554-3"><a href="15-service-desk.html#cb554-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qcc</span>(<span class="at">type=</span><span class="st">&quot;xbar.one&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb554-4"><a href="15-service-desk.html#cb554-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-534-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<pre><code>
+Call:
+qcc(data = ., type = &quot;xbar.one&quot;)
+
+xbar.one chart for . 
+
+Summary of group statistics:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      0      11      37      59      60    1926 
+
+Group sample size:  1152
+Number of groups:  1152
+Center of group statistics:  59
+Standard deviation:  63.4 
+
+Control limits:
+  LCL UCL
+ -131 249</code></pre>
+<p>These show overall patterns. What if we wanted one per category?</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="15-service-desk.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to get categories being added as titles</span></span>
+<span id="cb556-2"><a href="15-service-desk.html#cb556-2" aria-hidden="true" tabindex="-1"></a>service_requests <span class="sc">%&gt;%</span> </span>
+<span id="cb556-3"><a href="15-service-desk.html#cb556-3" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">split</span>(., .<span class="sc">$</span>Category)} <span class="sc">%&gt;%</span> </span>
+<span id="cb556-4"><a href="15-service-desk.html#cb556-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">qcc.groups</span>(.<span class="sc">$</span>TotalTime, .<span class="sc">$</span>RequestID)) <span class="sc">%&gt;%</span> </span>
+<span id="cb556-5"><a href="15-service-desk.html#cb556-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(qcc, <span class="at">type =</span><span class="st">&quot;xbar.one&quot;</span>)</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-535-1.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-535-2.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-535-3.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-535-4.png" width="\textwidth" style="display: block; margin: auto;" /><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-535-5.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<pre><code>$`Grievance Resolution`
+List of 11
+ $ call      : language .f(data = .x[[i]], type = &quot;xbar.one&quot;)
+ $ type      : chr &quot;xbar.one&quot;
+ $ data.name : chr &quot;.x[[i]]&quot;
+ $ data      : num [1, 1:45] 93 66 84 71 64 86 76 70 113 74 ...
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ statistics: Named num [1:45] 93 66 84 71 64 86 76 70 113 74 ...
+  ..- attr(*, &quot;names&quot;)= chr [1:45] &quot;1&quot; NA NA NA ...
+ $ sizes     : int 45
+ $ center    : num 83
+ $ std.dev   : num 31.3
+ $ nsigmas   : num 3
+ $ limits    : num [1, 1:2] -11 177
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ violations:List of 2
+ - attr(*, &quot;class&quot;)= chr &quot;qcc&quot;
+
+$`HR Report`
+List of 11
+ $ call      : language .f(data = .x[[i]], type = &quot;xbar.one&quot;)
+ $ type      : chr &quot;xbar.one&quot;
+ $ data.name : chr &quot;.x[[i]]&quot;
+ $ data      : num [1, 1:441] 400 205 0 14 0 ...
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ statistics: Named num [1:441] 400 205 0 14 0 ...
+  ..- attr(*, &quot;names&quot;)= chr [1:441] &quot;1&quot; NA NA NA ...
+ $ sizes     : int 441
+ $ center    : num 28.6
+ $ std.dev   : num 40.5
+ $ nsigmas   : num 3
+ $ limits    : num [1, 1:2] -92.8 150
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ violations:List of 2
+ - attr(*, &quot;class&quot;)= chr &quot;qcc&quot;
+
+$`Job Classification`
+List of 11
+ $ call      : language .f(data = .x[[i]], type = &quot;xbar.one&quot;)
+ $ type      : chr &quot;xbar.one&quot;
+ $ data.name : chr &quot;.x[[i]]&quot;
+ $ data      : num [1, 1:355] 22 30 43 40 166 ...
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ statistics: Named num [1:355] 22 30 43 40 166 ...
+  ..- attr(*, &quot;names&quot;)= chr [1:355] &quot;1&quot; NA NA NA ...
+ $ sizes     : int 355
+ $ center    : num 68.4
+ $ std.dev   : num 59.8
+ $ nsigmas   : num 3
+ $ limits    : num [1, 1:2] -111 248
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ violations:List of 2
+ - attr(*, &quot;class&quot;)= chr &quot;qcc&quot;
+
+$Recruitment
+List of 11
+ $ call      : language .f(data = .x[[i]], type = &quot;xbar.one&quot;)
+ $ type      : chr &quot;xbar.one&quot;
+ $ data.name : chr &quot;.x[[i]]&quot;
+ $ data      : num [1, 1:80] 31 73 69 526 64 ...
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ statistics: Named num [1:80] 31 73 69 526 64 ...
+  ..- attr(*, &quot;names&quot;)= chr [1:80] &quot;1&quot; NA NA NA ...
+ $ sizes     : int 80
+ $ center    : num 96.1
+ $ std.dev   : num 64.2
+ $ nsigmas   : num 3
+ $ limits    : num [1, 1:2] -96.5 288.7
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ violations:List of 2
+ - attr(*, &quot;class&quot;)= chr &quot;qcc&quot;
+
+$`Training Delivery`
+List of 11
+ $ call      : language .f(data = .x[[i]], type = &quot;xbar.one&quot;)
+ $ type      : chr &quot;xbar.one&quot;
+ $ data.name : chr &quot;.x[[i]]&quot;
+ $ data      : num [1, 1:231] 59 59 82.8 65 57 ...
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ statistics: Named num [1:231] 59 59 82.8 65 57 ...
+  ..- attr(*, &quot;names&quot;)= chr [1:231] &quot;1&quot; NA NA NA ...
+ $ sizes     : int 231
+ $ center    : num 85
+ $ std.dev   : num 55.3
+ $ nsigmas   : num 3
+ $ limits    : num [1, 1:2] -80.9 251
+  ..- attr(*, &quot;dimnames&quot;)=List of 2
+ $ violations:List of 2
+ - attr(*, &quot;class&quot;)= chr &quot;qcc&quot;</code></pre>
+<p>5 Valuable Service Desk Metrics</p>
+<p>Source: <a href="https://www.ibm.com/communities/analytics/watson-analytics-blog/it-help-desk/" class="uri">https://www.ibm.com/communities/analytics/watson-analytics-blog/it-help-desk/</a></p>
+<p>Number of tickets processed and ticket/service agent ratio –Two simple metrics that add up the number of tickets submitted during specific times (i.e. shift, hour, day, week, etc.) and create a ratio of tickets/available service agents during those times. This is a key KPI that speaks to staffing levels and informs other Service Desk metrics.</p>
+<p>Wait times – How long after a customer submits a service request do they have to wait before Service Desk agents start working on the ticket? Your wait time metrics also speak to Service Desk staffing levels. Once you identify whether your Service Desk has excessive wait times, you can drill down to see what might be causing wait times to run long (i.e. low staff levels at certain times of the day or week; not enough service agents trained for a specific service; processing issues; etc.) and create a remedy that applies to your entire Service Desk organization or to an individual IT service.</p>
+<p>Transfer analysis (tickets solved on first-touch versus multi-touch tickets) – Number of tickets that are solved by the first agent to handle the ticket (first-touch) versus the number of tickets that are assigned to one or more groups through the ticket’s lifespan. Great for determining which tickets need special attention, particularly those tickets where automation might reduce the amount of ticket passing between technical groups.</p>
+<p>Ticket growth over time and backlog – Trending data showing the increase (or decrease) in the number of Service Desk tickets over time. It can help spot unexpected changes in user requests that may indicate a need for more Service Desk staff or more automation. Or, it may identify that a specific change resulted in increased Service Desk resources. You also want to check the trends for your backlog of tickets in progress and the number of unresolved tickets. A growth in backlogged tickets can indicate a change in service desk demand or problems with service deployment.</p>
+<p>Top IT services with the most incidents – Spotlights which services are failing, causing the most Service Desk support. Helpful for spotting problem IT services that need modification.</p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="15-service-desk.html#cb558-1" aria-hidden="true" tabindex="-1"></a>it_helpdesk <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/WA_Fn-UseC_-IT-Help-Desk.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="15-service-desk.html#cb559-1" aria-hidden="true" tabindex="-1"></a>it_helpdesk <span class="sc">%&gt;%</span> </span>
+<span id="cb559-2"><a href="15-service-desk.html#cb559-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb559-3"><a href="15-service-desk.html#cb559-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>ITOwner) <span class="sc">+</span></span>
+<span id="cb559-4"><a href="15-service-desk.html#cb559-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb559-5"><a href="15-service-desk.html#cb559-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;IT Owner&quot;</span>, </span>
+<span id="cb559-6"><a href="15-service-desk.html#cb559-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </span>
+<span id="cb559-7"><a href="15-service-desk.html#cb559-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Tickets by IT Owner&quot;</span>) <span class="sc">+</span></span>
+<span id="cb559-8"><a href="15-service-desk.html#cb559-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-537-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="15-service-desk.html#cb560-1" aria-hidden="true" tabindex="-1"></a>it_helpdesk <span class="sc">%&gt;%</span> </span>
+<span id="cb560-2"><a href="15-service-desk.html#cb560-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb560-3"><a href="15-service-desk.html#cb560-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>daysOpen) <span class="sc">+</span></span>
+<span id="cb560-4"><a href="15-service-desk.html#cb560-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb560-5"><a href="15-service-desk.html#cb560-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Number of days ticket was open for&quot;</span>, </span>
+<span id="cb560-6"><a href="15-service-desk.html#cb560-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Number of tickets&quot;</span>, </span>
+<span id="cb560-7"><a href="15-service-desk.html#cb560-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Time to resolve/close tickets&quot;</span>) <span class="sc">+</span></span>
+<span id="cb560-8"><a href="15-service-desk.html#cb560-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-538-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="15-service-desk.html#cb561-1" aria-hidden="true" tabindex="-1"></a>it_helpdesk <span class="sc">%&gt;%</span> </span>
+<span id="cb561-2"><a href="15-service-desk.html#cb561-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Requestor) <span class="sc">%&gt;%</span> </span>
+<span id="cb561-3"><a href="15-service-desk.html#cb561-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb561-4"><a href="15-service-desk.html#cb561-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>n) <span class="sc">+</span></span>
+<span id="cb561-5"><a href="15-service-desk.html#cb561-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb561-6"><a href="15-service-desk.html#cb561-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;Number of tickets raised per person&quot;</span>, </span>
+<span id="cb561-7"><a href="15-service-desk.html#cb561-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Density&quot;</span>, </span>
+<span id="cb561-8"><a href="15-service-desk.html#cb561-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">title=</span><span class="st">&quot;Distribution of tickets per person&quot;</span>) <span class="sc">+</span></span>
+<span id="cb561-9"><a href="15-service-desk.html#cb561-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div>
+<p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-539-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
+
 </div>
 <div id="disqus_thread"></div>
 <script>
@@ -785,8 +1110,8 @@ s.setAttribute('data-timestamp', +new Date());
           </div>
         </div>
       </div>
-
-<a href="1-intro.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="14-stop-appraisals.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="16-personality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -817,7 +1142,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/14-service-desk.Rmd",
 "text": "Edit"
 },
 "history": {
