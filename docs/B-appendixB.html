@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -745,9 +745,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="needed-packages-1" class="section level3 unnumbered">
 <h3>Needed packages</h3>
-<div class="sourceCode" id="cb941"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb941-1"><a href="B-appendixB.html#cb941-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb941-2"><a href="B-appendixB.html#cb941-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
-<span id="cb941-3"><a href="B-appendixB.html#cb941-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="B-appendixB.html#cb864-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb864-2"><a href="B-appendixB.html#cb864-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb864-3"><a href="B-appendixB.html#cb864-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
 </div>
 <div id="inference-mind-map" class="section level2" number="31.1">
 <h2><span class="header-section-number">B.1</span> Inference mind map</h2>
@@ -792,23 +792,23 @@ this survey is the age at first marriage. 5,534 randomly sampled US women betwee
 </div>
 <div id="exploring-the-sample-data" class="section level3" number="31.2.3">
 <h3><span class="header-section-number">B.2.3</span> Exploring the sample data</h3>
-<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb942-1"><a href="B-appendixB.html#cb942-1" aria-hidden="true" tabindex="-1"></a>age_at_marriage <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/ageAtMar.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb943"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb943-1"><a href="B-appendixB.html#cb943-1" aria-hidden="true" tabindex="-1"></a>age_summ <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
-<span id="cb943-2"><a href="B-appendixB.html#cb943-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb943-3"><a href="B-appendixB.html#cb943-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">n</span>(),</span>
-<span id="cb943-4"><a href="B-appendixB.html#cb943-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(age),</span>
-<span id="cb943-5"><a href="B-appendixB.html#cb943-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(age),</span>
-<span id="cb943-6"><a href="B-appendixB.html#cb943-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(age),</span>
-<span id="cb943-7"><a href="B-appendixB.html#cb943-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_quartile =</span> <span class="fu">quantile</span>(age, <span class="fl">0.25</span>),</span>
-<span id="cb943-8"><a href="B-appendixB.html#cb943-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(age),</span>
-<span id="cb943-9"><a href="B-appendixB.html#cb943-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_quartile =</span> <span class="fu">quantile</span>(age, <span class="fl">0.75</span>),</span>
-<span id="cb943-10"><a href="B-appendixB.html#cb943-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(age)</span>
-<span id="cb943-11"><a href="B-appendixB.html#cb943-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb943-12"><a href="B-appendixB.html#cb943-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(age_summ) <span class="sc">%&gt;%</span></span>
-<span id="cb943-13"><a href="B-appendixB.html#cb943-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
-<span id="cb943-14"><a href="B-appendixB.html#cb943-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size =</span> <span class="fu">ifelse</span>(<span class="fu">is_latex_output</span>(), <span class="dv">10</span>, <span class="dv">16</span>),</span>
-<span id="cb943-15"><a href="B-appendixB.html#cb943-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;hold_position&quot;</span>)</span>
-<span id="cb943-16"><a href="B-appendixB.html#cb943-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="B-appendixB.html#cb865-1" aria-hidden="true" tabindex="-1"></a>age_at_marriage <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/ageAtMar.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="B-appendixB.html#cb866-1" aria-hidden="true" tabindex="-1"></a>age_summ <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
+<span id="cb866-2"><a href="B-appendixB.html#cb866-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb866-3"><a href="B-appendixB.html#cb866-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">n</span>(),</span>
+<span id="cb866-4"><a href="B-appendixB.html#cb866-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(age),</span>
+<span id="cb866-5"><a href="B-appendixB.html#cb866-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(age),</span>
+<span id="cb866-6"><a href="B-appendixB.html#cb866-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(age),</span>
+<span id="cb866-7"><a href="B-appendixB.html#cb866-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_quartile =</span> <span class="fu">quantile</span>(age, <span class="fl">0.25</span>),</span>
+<span id="cb866-8"><a href="B-appendixB.html#cb866-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(age),</span>
+<span id="cb866-9"><a href="B-appendixB.html#cb866-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_quartile =</span> <span class="fu">quantile</span>(age, <span class="fl">0.75</span>),</span>
+<span id="cb866-10"><a href="B-appendixB.html#cb866-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(age)</span>
+<span id="cb866-11"><a href="B-appendixB.html#cb866-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb866-12"><a href="B-appendixB.html#cb866-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(age_summ) <span class="sc">%&gt;%</span></span>
+<span id="cb866-13"><a href="B-appendixB.html#cb866-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
+<span id="cb866-14"><a href="B-appendixB.html#cb866-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size =</span> <span class="fu">ifelse</span>(<span class="fu">is_latex_output</span>(), <span class="dv">10</span>, <span class="dv">16</span>),</span>
+<span id="cb866-15"><a href="B-appendixB.html#cb866-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;hold_position&quot;</span>)</span>
+<span id="cb866-16"><a href="B-appendixB.html#cb866-16" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -868,14 +868,14 @@ max
 </tbody>
 </table>
 <p>The histogram below also shows the distribution of <code>age</code>.</p>
-<div class="sourceCode" id="cb944"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb944-1"><a href="B-appendixB.html#cb944-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> age_at_marriage, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
-<span id="cb944-2"><a href="B-appendixB.html#cb944-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="B-appendixB.html#cb867-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> age_at_marriage, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span></span>
+<span id="cb867-2"><a href="B-appendixB.html#cb867-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/hist1b-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The observed statistic of interest here is the sample mean:</p>
-<div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb945-1"><a href="B-appendixB.html#cb945-1" aria-hidden="true" tabindex="-1"></a>x_bar <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
-<span id="cb945-2"><a href="B-appendixB.html#cb945-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
-<span id="cb945-3"><a href="B-appendixB.html#cb945-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb945-4"><a href="B-appendixB.html#cb945-4" aria-hidden="true" tabindex="-1"></a>x_bar</span></code></pre></div>
+<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="B-appendixB.html#cb868-1" aria-hidden="true" tabindex="-1"></a>x_bar <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
+<span id="cb868-2"><a href="B-appendixB.html#cb868-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
+<span id="cb868-3"><a href="B-appendixB.html#cb868-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb868-4"><a href="B-appendixB.html#cb868-4" aria-hidden="true" tabindex="-1"></a>x_bar</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
      stat
     &lt;dbl&gt;
@@ -897,23 +897,23 @@ max
 <li>combine all of these bootstrap statistics calculated in Step 2 into a <code>boot_distn</code> object, and</li>
 <li>shift the center of this distribution over to the null value of 23. (This is needed since it will be centered at 23.44 via the process of bootstrapping.)</li>
 </ol>
-<div class="sourceCode" id="cb947"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb947-1"><a href="B-appendixB.html#cb947-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
-<span id="cb947-2"><a href="B-appendixB.html#cb947-2" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
-<span id="cb947-3"><a href="B-appendixB.html#cb947-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
-<span id="cb947-4"><a href="B-appendixB.html#cb947-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">mu =</span> <span class="dv">23</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb947-5"><a href="B-appendixB.html#cb947-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb947-6"><a href="B-appendixB.html#cb947-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb948"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb948-1"><a href="B-appendixB.html#cb948-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="B-appendixB.html#cb870-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
+<span id="cb870-2"><a href="B-appendixB.html#cb870-2" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
+<span id="cb870-3"><a href="B-appendixB.html#cb870-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
+<span id="cb870-4"><a href="B-appendixB.html#cb870-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">mu =</span> <span class="dv">23</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-5"><a href="B-appendixB.html#cb870-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb870-6"><a href="B-appendixB.html#cb870-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="B-appendixB.html#cb871-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-674-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We can next use this distribution to observe our <span class="math inline">\(p\)</span>-value. Recall this is a right-tailed test so we will be looking for values that are greater than or equal to 23.44 for our <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb949-1"><a href="B-appendixB.html#cb949-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="sc">%&gt;%</span></span>
-<span id="cb949-2"><a href="B-appendixB.html#cb949-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> x_bar, <span class="at">direction =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="B-appendixB.html#cb872-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_mean <span class="sc">%&gt;%</span></span>
+<span id="cb872-2"><a href="B-appendixB.html#cb872-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> x_bar, <span class="at">direction =</span> <span class="st">&quot;greater&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-675-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="calculate-p-value" class="section level5 unnumbered">
 <h5>Calculate <span class="math inline">\(p\)</span>-value</h5>
-<div class="sourceCode" id="cb950"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb950-1"><a href="B-appendixB.html#cb950-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_one_mean <span class="sc">%&gt;%</span></span>
-<span id="cb950-2"><a href="B-appendixB.html#cb950-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> x_bar, <span class="at">direction =</span> <span class="st">&quot;greater&quot;</span>)</span>
-<span id="cb950-3"><a href="B-appendixB.html#cb950-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
+<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="B-appendixB.html#cb873-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_one_mean <span class="sc">%&gt;%</span></span>
+<span id="cb873-2"><a href="B-appendixB.html#cb873-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> x_bar, <span class="at">direction =</span> <span class="st">&quot;greater&quot;</span>)</span>
+<span id="cb873-3"><a href="B-appendixB.html#cb873-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   p_value
     &lt;dbl&gt;
@@ -924,19 +924,19 @@ max
 <div id="bootstrapping-for-confidence-interval" class="section level4 unnumbered">
 <h4>Bootstrapping for confidence interval</h4>
 <p>We can also create a confidence interval for the unknown population parameter <span class="math inline">\(\mu\)</span> using our sample data using <em>bootstrapping</em>. Note that we don’t need to shift this distribution since we want the center of our confidence interval to be our point estimate <span class="math inline">\(\bar{x}_{obs} = 23.44\)</span>.</p>
-<div class="sourceCode" id="cb952"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb952-1"><a href="B-appendixB.html#cb952-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_mean <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
-<span id="cb952-2"><a href="B-appendixB.html#cb952-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
-<span id="cb952-3"><a href="B-appendixB.html#cb952-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb952-4"><a href="B-appendixB.html#cb952-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb953"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb953-1"><a href="B-appendixB.html#cb953-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_one_mean <span class="sc">%&gt;%</span></span>
-<span id="cb953-2"><a href="B-appendixB.html#cb953-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
-<span id="cb953-3"><a href="B-appendixB.html#cb953-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb875-1"><a href="B-appendixB.html#cb875-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_mean <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
+<span id="cb875-2"><a href="B-appendixB.html#cb875-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> age) <span class="sc">%&gt;%</span></span>
+<span id="cb875-3"><a href="B-appendixB.html#cb875-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb875-4"><a href="B-appendixB.html#cb875-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="B-appendixB.html#cb876-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_one_mean <span class="sc">%&gt;%</span></span>
+<span id="cb876-2"><a href="B-appendixB.html#cb876-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
+<span id="cb876-3"><a href="B-appendixB.html#cb876-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1  23.3148  23.5669</code></pre>
-<div class="sourceCode" id="cb955"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb955-1"><a href="B-appendixB.html#cb955-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_mean <span class="sc">%&gt;%</span></span>
-<span id="cb955-2"><a href="B-appendixB.html#cb955-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="B-appendixB.html#cb878-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_mean <span class="sc">%&gt;%</span></span>
+<span id="cb878-2"><a href="B-appendixB.html#cb878-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-679-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We see that 23 is not contained in this confidence interval as a plausible value of <span class="math inline">\(\mu\)</span> (the unknown population mean) and the entire interval is larger than 23. This matches with our hypothesis test results of rejecting the null hypothesis in favor of the alternative (<span class="math inline">\(\mu &gt; 23\)</span>).</p>
 <p><strong>Interpretation</strong>: We are 95% confident the true mean age of first marriage for all US women from 2006 to 2010 is between 23.315 and 23.567.</p>
@@ -954,8 +954,8 @@ max
 <p>The histogram for the sample above does show some skew.</p></li>
 </ol>
 <p>The Q-Q plot below also shows some skew.</p>
-<div class="sourceCode" id="cb956"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb956-1"><a href="B-appendixB.html#cb956-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> age_at_marriage, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">sample =</span> age)) <span class="sc">+</span></span>
-<span id="cb956-2"><a href="B-appendixB.html#cb956-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="B-appendixB.html#cb879-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> age_at_marriage, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">sample =</span> age)) <span class="sc">+</span></span>
+<span id="cb879-2"><a href="B-appendixB.html#cb879-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/qqplotmean-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The sample size here is quite large though (<span class="math inline">\(n = 5534\)</span>) so both conditions are met.</p>
 </div>
@@ -967,13 +967,13 @@ max
 <div id="observed-test-statistic" class="section level5 unnumbered">
 <h5>Observed test statistic</h5>
 <p>While one could compute this observed test statistic by “hand,” the focus here is on the set-up of the problem and in understanding which formula for the test statistic applies. We can use the <code>t_test()</code> function to perform this analysis for us.</p>
-<div class="sourceCode" id="cb957"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb957-1"><a href="B-appendixB.html#cb957-1" aria-hidden="true" tabindex="-1"></a>t_test_results <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
-<span id="cb957-2"><a href="B-appendixB.html#cb957-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(</span>
-<span id="cb957-3"><a href="B-appendixB.html#cb957-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> age <span class="sc">~</span> <span class="cn">NULL</span>,</span>
-<span id="cb957-4"><a href="B-appendixB.html#cb957-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,</span>
-<span id="cb957-5"><a href="B-appendixB.html#cb957-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="dv">23</span></span>
-<span id="cb957-6"><a href="B-appendixB.html#cb957-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb957-7"><a href="B-appendixB.html#cb957-7" aria-hidden="true" tabindex="-1"></a>t_test_results</span></code></pre></div>
+<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb880-1"><a href="B-appendixB.html#cb880-1" aria-hidden="true" tabindex="-1"></a>t_test_results <span class="ot">&lt;-</span> age_at_marriage <span class="sc">%&gt;%</span></span>
+<span id="cb880-2"><a href="B-appendixB.html#cb880-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(</span>
+<span id="cb880-3"><a href="B-appendixB.html#cb880-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> age <span class="sc">~</span> <span class="cn">NULL</span>,</span>
+<span id="cb880-4"><a href="B-appendixB.html#cb880-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;greater&quot;</span>,</span>
+<span id="cb880-5"><a href="B-appendixB.html#cb880-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="dv">23</span></span>
+<span id="cb880-6"><a href="B-appendixB.html#cb880-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb880-7"><a href="B-appendixB.html#cb880-7" aria-hidden="true" tabindex="-1"></a>t_test_results</span></code></pre></div>
 <pre><code># A tibble: 1 x 6
   statistic  t_df     p_value alternative lower_ci upper_ci
       &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
@@ -991,11 +991,11 @@ max
 </div>
 <div id="confidence-interval-1" class="section level4 unnumbered">
 <h4>Confidence interval</h4>
-<div class="sourceCode" id="cb959"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb959-1"><a href="B-appendixB.html#cb959-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
-<span id="cb959-2"><a href="B-appendixB.html#cb959-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> age_at_marriage<span class="sc">$</span>age,</span>
-<span id="cb959-3"><a href="B-appendixB.html#cb959-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb959-4"><a href="B-appendixB.html#cb959-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="dv">23</span></span>
-<span id="cb959-5"><a href="B-appendixB.html#cb959-5" aria-hidden="true" tabindex="-1"></a>)<span class="sc">$</span>conf</span></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb882-1"><a href="B-appendixB.html#cb882-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(</span>
+<span id="cb882-2"><a href="B-appendixB.html#cb882-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> age_at_marriage<span class="sc">$</span>age,</span>
+<span id="cb882-3"><a href="B-appendixB.html#cb882-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb882-4"><a href="B-appendixB.html#cb882-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mu =</span> <span class="dv">23</span></span>
+<span id="cb882-5"><a href="B-appendixB.html#cb882-5" aria-hidden="true" tabindex="-1"></a>)<span class="sc">$</span>conf</span></code></pre></div>
 <pre><code>[1] 23.3 23.6
 attr(,&quot;conf.level&quot;)
 [1] 0.95</code></pre>
@@ -1035,18 +1035,18 @@ attr(,&quot;conf.level&quot;)
 </div>
 <div id="exploring-the-sample-data-1" class="section level3" number="31.3.3">
 <h3><span class="header-section-number">B.3.3</span> Exploring the sample data</h3>
-<div class="sourceCode" id="cb961"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb961-1"><a href="B-appendixB.html#cb961-1" aria-hidden="true" tabindex="-1"></a>elec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;satisfied&quot;</span>, <span class="dv">73</span>), <span class="fu">rep</span>(<span class="st">&quot;unsatisfied&quot;</span>, <span class="dv">27</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb961-2"><a href="B-appendixB.html#cb961-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb961-3"><a href="B-appendixB.html#cb961-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">satisfy =</span> value)</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="B-appendixB.html#cb884-1" aria-hidden="true" tabindex="-1"></a>elec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;satisfied&quot;</span>, <span class="dv">73</span>), <span class="fu">rep</span>(<span class="st">&quot;unsatisfied&quot;</span>, <span class="dv">27</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb884-2"><a href="B-appendixB.html#cb884-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb884-3"><a href="B-appendixB.html#cb884-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">satisfy =</span> value)</span></code></pre></div>
 <p>The bar graph below also shows the distribution of <code>satisfy</code>.</p>
-<div class="sourceCode" id="cb962"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb962-1"><a href="B-appendixB.html#cb962-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> elec, <span class="fu">aes</span>(<span class="at">x =</span> satisfy)) <span class="sc">+</span></span>
-<span id="cb962-2"><a href="B-appendixB.html#cb962-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="B-appendixB.html#cb885-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> elec, <span class="fu">aes</span>(<span class="at">x =</span> satisfy)) <span class="sc">+</span></span>
+<span id="cb885-2"><a href="B-appendixB.html#cb885-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/bar-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The observed statistic is computed as</p>
-<div class="sourceCode" id="cb963"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb963-1"><a href="B-appendixB.html#cb963-1" aria-hidden="true" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
-<span id="cb963-2"><a href="B-appendixB.html#cb963-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb963-3"><a href="B-appendixB.html#cb963-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
-<span id="cb963-4"><a href="B-appendixB.html#cb963-4" aria-hidden="true" tabindex="-1"></a>p_hat</span></code></pre></div>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="B-appendixB.html#cb886-1" aria-hidden="true" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
+<span id="cb886-2"><a href="B-appendixB.html#cb886-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb886-3"><a href="B-appendixB.html#cb886-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span>
+<span id="cb886-4"><a href="B-appendixB.html#cb886-4" aria-hidden="true" tabindex="-1"></a>p_hat</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
    stat
   &lt;dbl&gt;
@@ -1061,23 +1061,23 @@ attr(,&quot;conf.level&quot;)
 <div id="simulation-for-hypothesis-test" class="section level4 unnumbered">
 <h4>Simulation for hypothesis test</h4>
 <p>In order to look to see if 0.73 is statistically different from 0.8, we need to account for the sample size. We also need to determine a process that replicates how the original sample of size 100 was selected. We can use the idea of an unfair coin to <em>simulate</em> this process. We will simulate flipping an unfair coin (with probability of success 0.8 matching the null hypothesis) 100 times. Then we will keep track of how many heads come up in those 100 flips. Our simulated statistic matches with how we calculated the original statistic <span class="math inline">\(\hat{p}\)</span>: the number of heads (satisfied) out of our total sample of 100. We then repeat this process many times (say 10,000) to create the null distribution looking at the simulated proportions of successes:</p>
-<div class="sourceCode" id="cb965"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb965-1"><a href="B-appendixB.html#cb965-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
-<span id="cb965-2"><a href="B-appendixB.html#cb965-2" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
-<span id="cb965-3"><a href="B-appendixB.html#cb965-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb965-4"><a href="B-appendixB.html#cb965-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">p =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb965-5"><a href="B-appendixB.html#cb965-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb965-6"><a href="B-appendixB.html#cb965-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb966-1"><a href="B-appendixB.html#cb966-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb888-1"><a href="B-appendixB.html#cb888-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
+<span id="cb888-2"><a href="B-appendixB.html#cb888-2" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
+<span id="cb888-3"><a href="B-appendixB.html#cb888-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb888-4"><a href="B-appendixB.html#cb888-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">p =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb888-5"><a href="B-appendixB.html#cb888-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb888-6"><a href="B-appendixB.html#cb888-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="B-appendixB.html#cb889-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-682-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We can next use this distribution to observe our <span class="math inline">\(p\)</span>-value. Recall this is a two-tailed test so we will be looking for values that are 0.8 - 0.73 = 0.07 away from 0.8 in BOTH directions for our <span class="math inline">\(p\)</span>-value:</p>
-<div class="sourceCode" id="cb967"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb967-1"><a href="B-appendixB.html#cb967-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="sc">%&gt;%</span></span>
-<span id="cb967-2"><a href="B-appendixB.html#cb967-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> p_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="B-appendixB.html#cb890-1" aria-hidden="true" tabindex="-1"></a>null_distn_one_prop <span class="sc">%&gt;%</span></span>
+<span id="cb890-2"><a href="B-appendixB.html#cb890-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> p_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-683-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="calculate-p-value-1" class="section level5 unnumbered">
 <h5>Calculate <span class="math inline">\(p\)</span>-value</h5>
-<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb968-1"><a href="B-appendixB.html#cb968-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_one_prop <span class="sc">%&gt;%</span></span>
-<span id="cb968-2"><a href="B-appendixB.html#cb968-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> p_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span>
-<span id="cb968-3"><a href="B-appendixB.html#cb968-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="B-appendixB.html#cb891-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_one_prop <span class="sc">%&gt;%</span></span>
+<span id="cb891-2"><a href="B-appendixB.html#cb891-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> p_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span>
+<span id="cb891-3"><a href="B-appendixB.html#cb891-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   p_value
     &lt;dbl&gt;
@@ -1095,20 +1095,20 @@ attr(,&quot;conf.level&quot;)
 <li>identifying the 2.5th and 97.5th percentiles of this distribution (corresponding to the 5% significance level chosen) to find a 95% confidence interval for <span class="math inline">\(\pi\)</span>, and</li>
 <li>interpret this confidence interval in the context of the problem.</li>
 </ol>
-<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb970-1"><a href="B-appendixB.html#cb970-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_prop <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
-<span id="cb970-2"><a href="B-appendixB.html#cb970-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb970-3"><a href="B-appendixB.html#cb970-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb970-4"><a href="B-appendixB.html#cb970-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="B-appendixB.html#cb893-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_prop <span class="ot">&lt;-</span> elec <span class="sc">%&gt;%</span></span>
+<span id="cb893-2"><a href="B-appendixB.html#cb893-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb893-3"><a href="B-appendixB.html#cb893-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb893-4"><a href="B-appendixB.html#cb893-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;prop&quot;</span>)</span></code></pre></div>
 <p>Just as we use the <code>mean</code> function for calculating the mean over a numerical variable, we can also use it to compute the proportion of successes for a categorical variable where we specify what we are calling a “success” after the <code>==</code>. (Think about the formula for calculating a mean and how R handles logical statements such as <code>satisfy == "satisfied"</code> for why this must be true.)</p>
-<div class="sourceCode" id="cb971"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb971-1"><a href="B-appendixB.html#cb971-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_one_prop <span class="sc">%&gt;%</span></span>
-<span id="cb971-2"><a href="B-appendixB.html#cb971-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
-<span id="cb971-3"><a href="B-appendixB.html#cb971-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="B-appendixB.html#cb894-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_one_prop <span class="sc">%&gt;%</span></span>
+<span id="cb894-2"><a href="B-appendixB.html#cb894-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
+<span id="cb894-3"><a href="B-appendixB.html#cb894-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1     0.64     0.81</code></pre>
-<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb973-1"><a href="B-appendixB.html#cb973-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_prop <span class="sc">%&gt;%</span></span>
-<span id="cb973-2"><a href="B-appendixB.html#cb973-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb896-1"><a href="B-appendixB.html#cb896-1" aria-hidden="true" tabindex="-1"></a>boot_distn_one_prop <span class="sc">%&gt;%</span></span>
+<span id="cb896-2"><a href="B-appendixB.html#cb896-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-687-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We see that 0.80 is contained in this confidence interval as a plausible value of <span class="math inline">\(\pi\)</span> (the unknown population proportion). This matches with our hypothesis test results of failing to reject the null hypothesis.</p>
 <p><strong>Interpretation</strong>: We are 95% confident the true proportion of customers who are satisfied with the service they receive is between 0.64 and 0.81.</p>
@@ -1133,33 +1133,33 @@ attr(,&quot;conf.level&quot;)
 <div id="observed-test-statistic-1" class="section level5 unnumbered">
 <h5>Observed test statistic</h5>
 <p>While one could compute this observed test statistic by “hand” by plugging the observed values into the formula, the focus here is on the set-up of the problem and in understanding which formula for the test statistic applies. The calculation has been done in R below for completeness though:</p>
-<div class="sourceCode" id="cb974"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb974-1"><a href="B-appendixB.html#cb974-1" aria-hidden="true" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> <span class="fl">0.73</span></span>
-<span id="cb974-2"><a href="B-appendixB.html#cb974-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb974-3"><a href="B-appendixB.html#cb974-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb974-4"><a href="B-appendixB.html#cb974-4" aria-hidden="true" tabindex="-1"></a>(z_obs <span class="ot">&lt;-</span> (p_hat <span class="sc">-</span> p0) <span class="sc">/</span> <span class="fu">sqrt</span>((p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)) <span class="sc">/</span> n))</span></code></pre></div>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb897-1"><a href="B-appendixB.html#cb897-1" aria-hidden="true" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> <span class="fl">0.73</span></span>
+<span id="cb897-2"><a href="B-appendixB.html#cb897-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb897-3"><a href="B-appendixB.html#cb897-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb897-4"><a href="B-appendixB.html#cb897-4" aria-hidden="true" tabindex="-1"></a>(z_obs <span class="ot">&lt;-</span> (p_hat <span class="sc">-</span> p0) <span class="sc">/</span> <span class="fu">sqrt</span>((p0 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> p0)) <span class="sc">/</span> n))</span></code></pre></div>
 <pre><code>[1] -1.75</code></pre>
 <p>We see here that the <span class="math inline">\(z_{obs}\)</span> value is around -1.75. Our observed sample proportion of 0.73 is 1.75 standard errors below the hypothesized parameter value of 0.8.</p>
 </div>
 </div>
 <div id="visualize-and-compute-p-value" class="section level4 unnumbered">
 <h4>Visualize and compute <span class="math inline">\(p\)</span>-value</h4>
-<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb976-1"><a href="B-appendixB.html#cb976-1" aria-hidden="true" tabindex="-1"></a>elec <span class="sc">%&gt;%</span></span>
-<span id="cb976-2"><a href="B-appendixB.html#cb976-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb976-3"><a href="B-appendixB.html#cb976-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">p =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb976-4"><a href="B-appendixB.html#cb976-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;z&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb976-5"><a href="B-appendixB.html#cb976-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">method =</span> <span class="st">&quot;theoretical&quot;</span>, <span class="at">obs_stat =</span> z_obs, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb899-1"><a href="B-appendixB.html#cb899-1" aria-hidden="true" tabindex="-1"></a>elec <span class="sc">%&gt;%</span></span>
+<span id="cb899-2"><a href="B-appendixB.html#cb899-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> satisfy, <span class="at">success =</span> <span class="st">&quot;satisfied&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb899-3"><a href="B-appendixB.html#cb899-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">p =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb899-4"><a href="B-appendixB.html#cb899-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;z&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb899-5"><a href="B-appendixB.html#cb899-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">method =</span> <span class="st">&quot;theoretical&quot;</span>, <span class="at">obs_stat =</span> z_obs, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/pvaloneprop-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb977-1"><a href="B-appendixB.html#cb977-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(z_obs)</span></code></pre></div>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb900-1"><a href="B-appendixB.html#cb900-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(z_obs)</span></code></pre></div>
 <pre><code>[1] 0.0801</code></pre>
 <p>The <span class="math inline">\(p\)</span>-value—the probability of observing an <span class="math inline">\(z_{obs}\)</span> value of -1.75 or more extreme (in both directions) in our null distribution—is around 8%.</p>
 <p>Note that we could also do this test directly using the <code>prop.test</code> function.</p>
-<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb979-1"><a href="B-appendixB.html#cb979-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(</span>
-<span id="cb979-2"><a href="B-appendixB.html#cb979-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">table</span>(elec<span class="sc">$</span>satisfy),</span>
-<span id="cb979-3"><a href="B-appendixB.html#cb979-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">length</span>(elec<span class="sc">$</span>satisfy),</span>
-<span id="cb979-4"><a href="B-appendixB.html#cb979-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
-<span id="cb979-5"><a href="B-appendixB.html#cb979-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.8</span>,</span>
-<span id="cb979-6"><a href="B-appendixB.html#cb979-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">correct =</span> <span class="cn">FALSE</span></span>
-<span id="cb979-7"><a href="B-appendixB.html#cb979-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb902-1"><a href="B-appendixB.html#cb902-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.test</span>(</span>
+<span id="cb902-2"><a href="B-appendixB.html#cb902-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">table</span>(elec<span class="sc">$</span>satisfy),</span>
+<span id="cb902-3"><a href="B-appendixB.html#cb902-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="fu">length</span>(elec<span class="sc">$</span>satisfy),</span>
+<span id="cb902-4"><a href="B-appendixB.html#cb902-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">alternative =</span> <span class="st">&quot;two.sided&quot;</span>,</span>
+<span id="cb902-5"><a href="B-appendixB.html#cb902-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="fl">0.8</span>,</span>
+<span id="cb902-6"><a href="B-appendixB.html#cb902-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">correct =</span> <span class="cn">FALSE</span></span>
+<span id="cb902-7"><a href="B-appendixB.html#cb902-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>
     1-sample proportions test without continuity correction
 
@@ -1225,21 +1225,21 @@ different than that of non-college graduates. <span class="citation">Tweaked a b
 </div>
 <div id="exploring-the-sample-data-2" class="section level3" number="31.4.3">
 <h3><span class="header-section-number">B.4.3</span> Exploring the sample data</h3>
-<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb981-1"><a href="B-appendixB.html#cb981-1" aria-hidden="true" tabindex="-1"></a>offshore <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/offshore.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb982"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb982-1"><a href="B-appendixB.html#cb982-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span> <span class="fu">tabyl</span>(college_grad, response)</span>
-<span id="cb982-2"><a href="B-appendixB.html#cb982-2" aria-hidden="true" tabindex="-1"></a>counts</span></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb904-1"><a href="B-appendixB.html#cb904-1" aria-hidden="true" tabindex="-1"></a>offshore <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/offshore.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb905-1"><a href="B-appendixB.html#cb905-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span> <span class="fu">tabyl</span>(college_grad, response)</span>
+<span id="cb905-2"><a href="B-appendixB.html#cb905-2" aria-hidden="true" tabindex="-1"></a>counts</span></code></pre></div>
 <pre><code> college_grad no opinion opinion
            no        131     258
           yes        104     334</code></pre>
 <p>Observe that of the college graduates, a proportion of 104/(104 + 334) = 0.237 have no opinion on drilling. On the other hand, of the non-college graduates, a proportion of 131/(131 + 258) = 0.337 have no opinion on drilling, whereas . The difference in these proportions is 0.237 - 0.337 = -0.099.</p>
 <p>Let’s visualize these in a barchart. However, we first reverse the order of the levels in the categorical variable <code>response</code> using the <code>fct_rev()</code> function from the <code>forcats</code> package. We do this because the default ordering of levels in a factor is alphanumeric. However, we are interested in proportions that have <code>no opinion</code> and not <code>opinion</code>. Thus we need to reverse the default alphanumeric order.</p>
-<div class="sourceCode" id="cb984"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb984-1"><a href="B-appendixB.html#cb984-1" aria-hidden="true" tabindex="-1"></a>offshore <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
-<span id="cb984-2"><a href="B-appendixB.html#cb984-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">fct_rev</span>(response))</span>
-<span id="cb984-3"><a href="B-appendixB.html#cb984-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb984-4"><a href="B-appendixB.html#cb984-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(offshore, <span class="fu">aes</span>(<span class="at">x =</span> college_grad, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
-<span id="cb984-5"><a href="B-appendixB.html#cb984-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
-<span id="cb984-6"><a href="B-appendixB.html#cb984-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;College grad?&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Proportion with no opinion on drilling&quot;</span>) <span class="sc">+</span></span>
-<span id="cb984-7"><a href="B-appendixB.html#cb984-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb907-1"><a href="B-appendixB.html#cb907-1" aria-hidden="true" tabindex="-1"></a>offshore <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
+<span id="cb907-2"><a href="B-appendixB.html#cb907-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">response =</span> <span class="fu">fct_rev</span>(response))</span>
+<span id="cb907-3"><a href="B-appendixB.html#cb907-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb907-4"><a href="B-appendixB.html#cb907-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(offshore, <span class="fu">aes</span>(<span class="at">x =</span> college_grad, <span class="at">fill =</span> response)) <span class="sc">+</span></span>
+<span id="cb907-5"><a href="B-appendixB.html#cb907-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="sc">+</span></span>
+<span id="cb907-6"><a href="B-appendixB.html#cb907-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;College grad?&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Proportion with no opinion on drilling&quot;</span>) <span class="sc">+</span></span>
+<span id="cb907-7"><a href="B-appendixB.html#cb907-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/stacked_bar-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="guess-about-statistical-significance-2" class="section level4 unnumbered">
 <h4>Guess about statistical significance</h4>
@@ -1251,10 +1251,10 @@ different than that of non-college graduates. <span class="citation">Tweaked a b
 <div id="collecting-summary-info" class="section level4 unnumbered">
 <h4>Collecting summary info</h4>
 <p>The observed statistic is</p>
-<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb985-1"><a href="B-appendixB.html#cb985-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
-<span id="cb985-2"><a href="B-appendixB.html#cb985-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb985-3"><a href="B-appendixB.html#cb985-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span>
-<span id="cb985-4"><a href="B-appendixB.html#cb985-4" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
+<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="B-appendixB.html#cb908-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
+<span id="cb908-2"><a href="B-appendixB.html#cb908-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb908-3"><a href="B-appendixB.html#cb908-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span>
+<span id="cb908-4"><a href="B-appendixB.html#cb908-4" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
         stat
        &lt;dbl&gt;
@@ -1264,23 +1264,23 @@ different than that of non-college graduates. <span class="citation">Tweaked a b
 <h4>Randomization for hypothesis test</h4>
 <p>In order to ascertain if the observed sample proportion with no opinion for college graduates of 0.237 is statistically different than the observed sample proportion with no opinion for non-college graduates of 0.337, we need to account for the sample sizes. Note that this is the same as ascertaining if the observed difference in sample proportions -0.099 is statistically different than 0. We also need to determine a process that replicates how the original group sizes of 389 and 438 were selected.</p>
 <p>We can use the idea of <em>randomization testing</em> (also known as <em>permutation testing</em>) to simulate the population from which the sample came (with two groups of different sizes) and then generate samples using <em>shuffling</em> from that simulated population to account for sampling variability.</p>
-<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb987-1"><a href="B-appendixB.html#cb987-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
-<span id="cb987-2"><a href="B-appendixB.html#cb987-2" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
-<span id="cb987-3"><a href="B-appendixB.html#cb987-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb987-4"><a href="B-appendixB.html#cb987-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb987-5"><a href="B-appendixB.html#cb987-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb987-6"><a href="B-appendixB.html#cb987-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb988"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb988-1"><a href="B-appendixB.html#cb988-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb910"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb910-1"><a href="B-appendixB.html#cb910-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
+<span id="cb910-2"><a href="B-appendixB.html#cb910-2" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
+<span id="cb910-3"><a href="B-appendixB.html#cb910-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb910-4"><a href="B-appendixB.html#cb910-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb910-5"><a href="B-appendixB.html#cb910-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb910-6"><a href="B-appendixB.html#cb910-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb911-1"><a href="B-appendixB.html#cb911-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-692-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We can next use this distribution to observe our <span class="math inline">\(p\)</span>-value. Recall this is a two-tailed test so we will be looking for values that are greater than or equal to -0.099 or less than or equal to 0.099 for our <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb989-1"><a href="B-appendixB.html#cb989-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="sc">%&gt;%</span></span>
-<span id="cb989-2"><a href="B-appendixB.html#cb989-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;two_sided&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb912"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb912-1"><a href="B-appendixB.html#cb912-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_props <span class="sc">%&gt;%</span></span>
+<span id="cb912-2"><a href="B-appendixB.html#cb912-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;two_sided&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-693-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="calculate-p-value-2" class="section level5 unnumbered">
 <h5>Calculate <span class="math inline">\(p\)</span>-value</h5>
-<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb990-1"><a href="B-appendixB.html#cb990-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_two_props <span class="sc">%&gt;%</span></span>
-<span id="cb990-2"><a href="B-appendixB.html#cb990-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;two_sided&quot;</span>)</span>
-<span id="cb990-3"><a href="B-appendixB.html#cb990-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb913-1"><a href="B-appendixB.html#cb913-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_two_props <span class="sc">%&gt;%</span></span>
+<span id="cb913-2"><a href="B-appendixB.html#cb913-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;two_sided&quot;</span>)</span>
+<span id="cb913-3"><a href="B-appendixB.html#cb913-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
      p_value
        &lt;dbl&gt;
@@ -1291,19 +1291,19 @@ different than that of non-college graduates. <span class="citation">Tweaked a b
 <div id="bootstrapping-for-confidence-interval-2" class="section level4 unnumbered">
 <h4>Bootstrapping for confidence interval</h4>
 <p>We can also create a confidence interval for the unknown population parameter <span class="math inline">\(\pi_{college} - \pi_{no\_college}\)</span> using our sample data with <em>bootstrapping</em>.</p>
-<div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb992-1"><a href="B-appendixB.html#cb992-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_props <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
-<span id="cb992-2"><a href="B-appendixB.html#cb992-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb992-3"><a href="B-appendixB.html#cb992-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb992-4"><a href="B-appendixB.html#cb992-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb993-1"><a href="B-appendixB.html#cb993-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_two_props <span class="sc">%&gt;%</span></span>
-<span id="cb993-2"><a href="B-appendixB.html#cb993-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
-<span id="cb993-3"><a href="B-appendixB.html#cb993-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb915-1"><a href="B-appendixB.html#cb915-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_props <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
+<span id="cb915-2"><a href="B-appendixB.html#cb915-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb915-3"><a href="B-appendixB.html#cb915-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb915-4"><a href="B-appendixB.html#cb915-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;diff in props&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="B-appendixB.html#cb916-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_two_props <span class="sc">%&gt;%</span></span>
+<span id="cb916-2"><a href="B-appendixB.html#cb916-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
+<span id="cb916-3"><a href="B-appendixB.html#cb916-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
    lower_ci   upper_ci
       &lt;dbl&gt;      &lt;dbl&gt;
 1 -0.160030 -0.0379112</code></pre>
-<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="B-appendixB.html#cb995-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_props <span class="sc">%&gt;%</span></span>
-<span id="cb995-2"><a href="B-appendixB.html#cb995-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb918-1"><a href="B-appendixB.html#cb918-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_props <span class="sc">%&gt;%</span></span>
+<span id="cb918-2"><a href="B-appendixB.html#cb918-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-697-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We see that 0 is not contained in this confidence interval as a plausible value of <span class="math inline">\(\pi_{college} - \pi_{no\_college}\)</span> (the unknown population parameter). This matches with our hypothesis test results of rejecting the null hypothesis. Since zero is not a plausible value of the population parameter, we have evidence that the proportion of college graduates in California with no opinion on drilling is different than that of non-college graduates.</p>
 <p><strong>Interpretation</strong>: We are 95% confident the true proportion of non-college graduates with no opinion on offshore drilling in California is between 0.16 dollars smaller to 0.04 dollars smaller than for college graduates.</p>
@@ -1333,17 +1333,17 @@ different than that of non-college graduates. <span class="citation">Tweaked a b
 <div id="observed-test-statistic-2" class="section level4 unnumbered">
 <h4>Observed test statistic</h4>
 <p>While one could compute this observed test statistic by “hand,” the focus here is on the set-up of the problem and in understanding which formula for the test statistic applies. We can use the <code>prop.test</code> function to perform this analysis for us.</p>
-<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb996-1"><a href="B-appendixB.html#cb996-1" aria-hidden="true" tabindex="-1"></a>z_hat <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
-<span id="cb996-2"><a href="B-appendixB.html#cb996-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb996-3"><a href="B-appendixB.html#cb996-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;z&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span>
-<span id="cb996-4"><a href="B-appendixB.html#cb996-4" aria-hidden="true" tabindex="-1"></a>z_hat</span></code></pre></div>
+<div class="sourceCode" id="cb919"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb919-1"><a href="B-appendixB.html#cb919-1" aria-hidden="true" tabindex="-1"></a>z_hat <span class="ot">&lt;-</span> offshore <span class="sc">%&gt;%</span></span>
+<span id="cb919-2"><a href="B-appendixB.html#cb919-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(response <span class="sc">~</span> college_grad, <span class="at">success =</span> <span class="st">&quot;no opinion&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb919-3"><a href="B-appendixB.html#cb919-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;z&quot;</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;no&quot;</span>))</span>
+<span id="cb919-4"><a href="B-appendixB.html#cb919-4" aria-hidden="true" tabindex="-1"></a>z_hat</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
       stat
      &lt;dbl&gt;
 1 -3.16081</code></pre>
 <p>The observed difference in sample proportions is 3.16 standard deviations smaller than 0.</p>
 <p>The <span class="math inline">\(p\)</span>-value—the probability of observing a <span class="math inline">\(Z\)</span> value of -3.16 or more extreme in our null distribution—is 0.0016. This can also be calculated in R directly:</p>
-<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb998-1"><a href="B-appendixB.html#cb998-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">3.16</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb921"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb921-1"><a href="B-appendixB.html#cb921-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">3.16</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>[1] 0.00158</code></pre>
 </div>
 </div>
@@ -1396,29 +1396,29 @@ a hypothesis test based on two randomly selected samples from the 2000 Census. <
 </div>
 <div id="exploring-the-sample-data-3" class="section level3" number="31.5.3">
 <h3><span class="header-section-number">B.5.3</span> Exploring the sample data</h3>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1000-1"><a href="B-appendixB.html#cb1000-1" aria-hidden="true" tabindex="-1"></a>cle_sac <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://moderndive.com/data/cleSac.txt&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1000-2"><a href="B-appendixB.html#cb1000-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb1000-3"><a href="B-appendixB.html#cb1000-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">metro_area =</span> Metropolitan_area_Detailed,</span>
-<span id="cb1000-4"><a href="B-appendixB.html#cb1000-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">income =</span> Total_personal_income</span>
-<span id="cb1000-5"><a href="B-appendixB.html#cb1000-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb1000-6"><a href="B-appendixB.html#cb1000-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
-<div class="sourceCode" id="cb1001"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1001-1"><a href="B-appendixB.html#cb1001-1" aria-hidden="true" tabindex="-1"></a>inc_summ <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
-<span id="cb1001-2"><a href="B-appendixB.html#cb1001-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(metro_area) <span class="sc">%&gt;%</span></span>
-<span id="cb1001-3"><a href="B-appendixB.html#cb1001-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb1001-4"><a href="B-appendixB.html#cb1001-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">n</span>(),</span>
-<span id="cb1001-5"><a href="B-appendixB.html#cb1001-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(income),</span>
-<span id="cb1001-6"><a href="B-appendixB.html#cb1001-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(income),</span>
-<span id="cb1001-7"><a href="B-appendixB.html#cb1001-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(income),</span>
-<span id="cb1001-8"><a href="B-appendixB.html#cb1001-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_quartile =</span> <span class="fu">quantile</span>(income, <span class="fl">0.25</span>),</span>
-<span id="cb1001-9"><a href="B-appendixB.html#cb1001-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(income),</span>
-<span id="cb1001-10"><a href="B-appendixB.html#cb1001-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_quartile =</span> <span class="fu">quantile</span>(income, <span class="fl">0.75</span>),</span>
-<span id="cb1001-11"><a href="B-appendixB.html#cb1001-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(income)</span>
-<span id="cb1001-12"><a href="B-appendixB.html#cb1001-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1001-13"><a href="B-appendixB.html#cb1001-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(inc_summ) <span class="sc">%&gt;%</span></span>
-<span id="cb1001-14"><a href="B-appendixB.html#cb1001-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
-<span id="cb1001-15"><a href="B-appendixB.html#cb1001-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size =</span> <span class="fu">ifelse</span>(<span class="fu">is_latex_output</span>(), <span class="dv">10</span>, <span class="dv">16</span>),</span>
-<span id="cb1001-16"><a href="B-appendixB.html#cb1001-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;hold_position&quot;</span>)</span>
-<span id="cb1001-17"><a href="B-appendixB.html#cb1001-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb923"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb923-1"><a href="B-appendixB.html#cb923-1" aria-hidden="true" tabindex="-1"></a>cle_sac <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">&quot;https://moderndive.com/data/cleSac.txt&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb923-2"><a href="B-appendixB.html#cb923-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb923-3"><a href="B-appendixB.html#cb923-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">metro_area =</span> Metropolitan_area_Detailed,</span>
+<span id="cb923-4"><a href="B-appendixB.html#cb923-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">income =</span> Total_personal_income</span>
+<span id="cb923-5"><a href="B-appendixB.html#cb923-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb923-6"><a href="B-appendixB.html#cb923-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb924-1"><a href="B-appendixB.html#cb924-1" aria-hidden="true" tabindex="-1"></a>inc_summ <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
+<span id="cb924-2"><a href="B-appendixB.html#cb924-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(metro_area) <span class="sc">%&gt;%</span></span>
+<span id="cb924-3"><a href="B-appendixB.html#cb924-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb924-4"><a href="B-appendixB.html#cb924-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">sample_size =</span> <span class="fu">n</span>(),</span>
+<span id="cb924-5"><a href="B-appendixB.html#cb924-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(income),</span>
+<span id="cb924-6"><a href="B-appendixB.html#cb924-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(income),</span>
+<span id="cb924-7"><a href="B-appendixB.html#cb924-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(income),</span>
+<span id="cb924-8"><a href="B-appendixB.html#cb924-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">lower_quartile =</span> <span class="fu">quantile</span>(income, <span class="fl">0.25</span>),</span>
+<span id="cb924-9"><a href="B-appendixB.html#cb924-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">median =</span> <span class="fu">median</span>(income),</span>
+<span id="cb924-10"><a href="B-appendixB.html#cb924-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">upper_quartile =</span> <span class="fu">quantile</span>(income, <span class="fl">0.75</span>),</span>
+<span id="cb924-11"><a href="B-appendixB.html#cb924-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">max =</span> <span class="fu">max</span>(income)</span>
+<span id="cb924-12"><a href="B-appendixB.html#cb924-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb924-13"><a href="B-appendixB.html#cb924-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(inc_summ) <span class="sc">%&gt;%</span></span>
+<span id="cb924-14"><a href="B-appendixB.html#cb924-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
+<span id="cb924-15"><a href="B-appendixB.html#cb924-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size =</span> <span class="fu">ifelse</span>(<span class="fu">is_latex_output</span>(), <span class="dv">10</span>, <span class="dv">16</span>),</span>
+<span id="cb924-16"><a href="B-appendixB.html#cb924-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;hold_position&quot;</span>)</span>
+<span id="cb924-17"><a href="B-appendixB.html#cb924-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <table class="table" style="font-size: 16px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1513,9 +1513,9 @@ Sacramento_ CA
 </tbody>
 </table>
 <p>The boxplot below also shows the mean for each group highlighted by the red dots.</p>
-<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1002-1"><a href="B-appendixB.html#cb1002-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cle_sac, <span class="fu">aes</span>(<span class="at">x =</span> metro_area, <span class="at">y =</span> income)) <span class="sc">+</span></span>
-<span id="cb1002-2"><a href="B-appendixB.html#cb1002-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1002-3"><a href="B-appendixB.html#cb1002-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb925"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb925-1"><a href="B-appendixB.html#cb925-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cle_sac, <span class="fu">aes</span>(<span class="at">x =</span> metro_area, <span class="at">y =</span> income)) <span class="sc">+</span></span>
+<span id="cb925-2"><a href="B-appendixB.html#cb925-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb925-3"><a href="B-appendixB.html#cb925-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.y =</span> <span class="st">&quot;mean&quot;</span>, <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/boxplot-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="guess-about-statistical-significance-3" class="section level4 unnumbered">
 <h4>Guess about statistical significance</h4>
@@ -1527,13 +1527,13 @@ Sacramento_ CA
 <div id="collecting-summary-info-1" class="section level4 unnumbered">
 <h4>Collecting summary info</h4>
 <p>We now compute the observed statistic:</p>
-<div class="sourceCode" id="cb1003"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1003-1"><a href="B-appendixB.html#cb1003-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
-<span id="cb1003-2"><a href="B-appendixB.html#cb1003-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
-<span id="cb1003-3"><a href="B-appendixB.html#cb1003-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
-<span id="cb1003-4"><a href="B-appendixB.html#cb1003-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
-<span id="cb1003-5"><a href="B-appendixB.html#cb1003-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
-<span id="cb1003-6"><a href="B-appendixB.html#cb1003-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1003-7"><a href="B-appendixB.html#cb1003-7" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb926-1"><a href="B-appendixB.html#cb926-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
+<span id="cb926-2"><a href="B-appendixB.html#cb926-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
+<span id="cb926-3"><a href="B-appendixB.html#cb926-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
+<span id="cb926-4"><a href="B-appendixB.html#cb926-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
+<span id="cb926-5"><a href="B-appendixB.html#cb926-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
+<span id="cb926-6"><a href="B-appendixB.html#cb926-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb926-7"><a href="B-appendixB.html#cb926-7" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
      stat
     &lt;dbl&gt;
@@ -1543,26 +1543,26 @@ Sacramento_ CA
 <h4>Randomization for hypothesis test</h4>
 <p>In order to look to see if the observed sample mean for Sacramento of 27467.066 is statistically different than that for Cleveland of 32427.543, we need to account for the sample sizes. Note that this is the same as looking to see if <span class="math inline">\(\bar{x}_{sac} - \bar{x}_{cle}\)</span> is statistically different than 0. We also need to determine a process that replicates how the original group sizes of 212 and 175 were selected.</p>
 <p>We can use the idea of <em>randomization testing</em> (also known as <em>permutation testing</em>) to simulate the population from which the sample came (with two groups of different sizes) and then generate samples using <em>shuffling</em> from that simulated population to account for sampling variability.</p>
-<div class="sourceCode" id="cb1005"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1005-1"><a href="B-appendixB.html#cb1005-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
-<span id="cb1005-2"><a href="B-appendixB.html#cb1005-2" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
-<span id="cb1005-3"><a href="B-appendixB.html#cb1005-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
-<span id="cb1005-4"><a href="B-appendixB.html#cb1005-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1005-5"><a href="B-appendixB.html#cb1005-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1005-6"><a href="B-appendixB.html#cb1005-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
-<span id="cb1005-7"><a href="B-appendixB.html#cb1005-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
-<span id="cb1005-8"><a href="B-appendixB.html#cb1005-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
-<span id="cb1005-9"><a href="B-appendixB.html#cb1005-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1006-1"><a href="B-appendixB.html#cb1006-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb928-1"><a href="B-appendixB.html#cb928-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
+<span id="cb928-2"><a href="B-appendixB.html#cb928-2" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
+<span id="cb928-3"><a href="B-appendixB.html#cb928-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
+<span id="cb928-4"><a href="B-appendixB.html#cb928-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;independence&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb928-5"><a href="B-appendixB.html#cb928-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb928-6"><a href="B-appendixB.html#cb928-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
+<span id="cb928-7"><a href="B-appendixB.html#cb928-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
+<span id="cb928-8"><a href="B-appendixB.html#cb928-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
+<span id="cb928-9"><a href="B-appendixB.html#cb928-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb929"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb929-1"><a href="B-appendixB.html#cb929-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-701-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We can next use this distribution to observe our <span class="math inline">\(p\)</span>-value. Recall this is a two-tailed test so we will be looking for values that are greater than or equal to 4960.477 or less than or equal to -4960.477 for our <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb1007"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1007-1"><a href="B-appendixB.html#cb1007-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="sc">%&gt;%</span></span>
-<span id="cb1007-2"><a href="B-appendixB.html#cb1007-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb930-1"><a href="B-appendixB.html#cb930-1" aria-hidden="true" tabindex="-1"></a>null_distn_two_means <span class="sc">%&gt;%</span></span>
+<span id="cb930-2"><a href="B-appendixB.html#cb930-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-702-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="calculate-p-value-3" class="section level5 unnumbered">
 <h5>Calculate <span class="math inline">\(p\)</span>-value</h5>
-<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1008-1"><a href="B-appendixB.html#cb1008-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_two_means <span class="sc">%&gt;%</span></span>
-<span id="cb1008-2"><a href="B-appendixB.html#cb1008-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span>
-<span id="cb1008-3"><a href="B-appendixB.html#cb1008-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
+<div class="sourceCode" id="cb931"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb931-1"><a href="B-appendixB.html#cb931-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_two_means <span class="sc">%&gt;%</span></span>
+<span id="cb931-2"><a href="B-appendixB.html#cb931-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;both&quot;</span>)</span>
+<span id="cb931-3"><a href="B-appendixB.html#cb931-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   p_value
     &lt;dbl&gt;
@@ -1575,22 +1575,22 @@ Sacramento_ CA
 <p>We can also create a confidence interval for the unknown population parameter <span class="math inline">\(\mu_{sac} - \mu_{cle}\)</span> using our sample data with <em>bootstrapping</em>. Here we will bootstrap each of the groups with replacement instead of shuffling. This is done using the <code>groups</code>
 argument in the <code>resample</code> function to fix the size of each group to
 be the same as the original group sizes of 175 for Sacramento and 212 for Cleveland.</p>
-<div class="sourceCode" id="cb1010"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1010-1"><a href="B-appendixB.html#cb1010-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_means <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
-<span id="cb1010-2"><a href="B-appendixB.html#cb1010-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
-<span id="cb1010-3"><a href="B-appendixB.html#cb1010-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1010-4"><a href="B-appendixB.html#cb1010-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
-<span id="cb1010-5"><a href="B-appendixB.html#cb1010-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
-<span id="cb1010-6"><a href="B-appendixB.html#cb1010-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
-<span id="cb1010-7"><a href="B-appendixB.html#cb1010-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<div class="sourceCode" id="cb1011"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1011-1"><a href="B-appendixB.html#cb1011-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_two_means <span class="sc">%&gt;%</span></span>
-<span id="cb1011-2"><a href="B-appendixB.html#cb1011-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
-<span id="cb1011-3"><a href="B-appendixB.html#cb1011-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb933-1"><a href="B-appendixB.html#cb933-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_means <span class="ot">&lt;-</span> cle_sac <span class="sc">%&gt;%</span></span>
+<span id="cb933-2"><a href="B-appendixB.html#cb933-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
+<span id="cb933-3"><a href="B-appendixB.html#cb933-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb933-4"><a href="B-appendixB.html#cb933-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
+<span id="cb933-5"><a href="B-appendixB.html#cb933-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;diff in means&quot;</span>,</span>
+<span id="cb933-6"><a href="B-appendixB.html#cb933-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Sacramento_ CA&quot;</span>, <span class="st">&quot;Cleveland_ OH&quot;</span>)</span>
+<span id="cb933-7"><a href="B-appendixB.html#cb933-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb934"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb934-1"><a href="B-appendixB.html#cb934-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_two_means <span class="sc">%&gt;%</span></span>
+<span id="cb934-2"><a href="B-appendixB.html#cb934-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
+<span id="cb934-3"><a href="B-appendixB.html#cb934-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1 -1359.50  11499.7</code></pre>
-<div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1013-1"><a href="B-appendixB.html#cb1013-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_means <span class="sc">%&gt;%</span></span>
-<span id="cb1013-2"><a href="B-appendixB.html#cb1013-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb936"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb936-1"><a href="B-appendixB.html#cb936-1" aria-hidden="true" tabindex="-1"></a>boot_distn_two_means <span class="sc">%&gt;%</span></span>
+<span id="cb936-2"><a href="B-appendixB.html#cb936-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-706-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We see that 0 is contained in this confidence interval as a plausible value of <span class="math inline">\(\mu_{sac} - \mu_{cle}\)</span> (the unknown population parameter). This matches with our hypothesis test results of failing to reject the null hypothesis. Since zero is a plausible value of the population parameter, we do not have evidence that Sacramento incomes are different than Cleveland incomes.</p>
 <p><strong>Interpretation</strong>: We are 95% confident the true mean yearly income for those living in Sacramento is between 1359.5 dollars smaller to 11499.69 dollars higher than for Cleveland.</p>
@@ -1607,9 +1607,9 @@ be the same as the original group sizes of 175 for Sacramento and 212 for Clevel
 <p>This <code>metro_area</code> variable is met since the cases are randomly selected from each city.</p></li>
 <li><p><em>Approximately normal</em>: The distribution of the response for each group should be normal or the sample sizes should be at least 30.</p></li>
 </ol>
-<div class="sourceCode" id="cb1014"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1014-1"><a href="B-appendixB.html#cb1014-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cle_sac, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
-<span id="cb1014-2"><a href="B-appendixB.html#cb1014-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">binwidth =</span> <span class="dv">20000</span>) <span class="sc">+</span></span>
-<span id="cb1014-3"><a href="B-appendixB.html#cb1014-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metro_area)</span></code></pre></div>
+<div class="sourceCode" id="cb937"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb937-1"><a href="B-appendixB.html#cb937-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cle_sac, <span class="fu">aes</span>(<span class="at">x =</span> income)) <span class="sc">+</span></span>
+<span id="cb937-2"><a href="B-appendixB.html#cb937-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">binwidth =</span> <span class="dv">20000</span>) <span class="sc">+</span></span>
+<span id="cb937-3"><a href="B-appendixB.html#cb937-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>metro_area)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/hist-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We have some reason to doubt the normality assumption here since both the histograms show deviation from a normal model fitting the data well for each group. The sample sizes for each group are greater than 100 though so the assumptions should still apply.</p>
 <ol start="3" style="list-style-type: decimal">
@@ -1625,12 +1625,12 @@ be the same as the original group sizes of 175 for Sacramento and 212 for Clevel
 <div id="observed-test-statistic-3" class="section level4 unnumbered">
 <h4>Observed test statistic</h4>
 <p>Note that we could also do (ALMOST) this test directly using the <code>t.test</code> function. The <code>x</code> and <code>y</code> arguments are expected to both be numeric vectors here so we’ll need to appropriately filter our datasets.</p>
-<div class="sourceCode" id="cb1015"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1015-1"><a href="B-appendixB.html#cb1015-1" aria-hidden="true" tabindex="-1"></a>cle_sac <span class="sc">%&gt;%</span></span>
-<span id="cb1015-2"><a href="B-appendixB.html#cb1015-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
-<span id="cb1015-3"><a href="B-appendixB.html#cb1015-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
-<span id="cb1015-4"><a href="B-appendixB.html#cb1015-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;t&quot;</span>,</span>
-<span id="cb1015-5"><a href="B-appendixB.html#cb1015-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Cleveland_ OH&quot;</span>, <span class="st">&quot;Sacramento_ CA&quot;</span>)</span>
-<span id="cb1015-6"><a href="B-appendixB.html#cb1015-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb938"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb938-1"><a href="B-appendixB.html#cb938-1" aria-hidden="true" tabindex="-1"></a>cle_sac <span class="sc">%&gt;%</span></span>
+<span id="cb938-2"><a href="B-appendixB.html#cb938-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(income <span class="sc">~</span> metro_area) <span class="sc">%&gt;%</span></span>
+<span id="cb938-3"><a href="B-appendixB.html#cb938-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(</span>
+<span id="cb938-4"><a href="B-appendixB.html#cb938-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">&quot;t&quot;</span>,</span>
+<span id="cb938-5"><a href="B-appendixB.html#cb938-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">order =</span> <span class="fu">c</span>(<span class="st">&quot;Cleveland_ OH&quot;</span>, <span class="st">&quot;Sacramento_ CA&quot;</span>)</span>
+<span id="cb938-6"><a href="B-appendixB.html#cb938-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
       stat
      &lt;dbl&gt;
@@ -1649,10 +1649,10 @@ We can use the `inference` function in the `oilabs` package to perform this anal
 <div id="compute-p-value-1" class="section level3" number="31.5.7">
 <h3><span class="header-section-number">B.5.7</span> Compute <span class="math inline">\(p\)</span>-value</h3>
 <p>The <span class="math inline">\(p\)</span>-value—the probability of observing an <span class="math inline">\(t_{174}\)</span> value of -1.501 or more extreme (in both directions) in our null distribution—is 0.13. This can also be calculated in R directly:</p>
-<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1017-1"><a href="B-appendixB.html#cb1017-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fl">1.501</span>, <span class="at">df =</span> <span class="fu">min</span>(<span class="dv">212</span> <span class="sc">-</span> <span class="dv">1</span>, <span class="dv">175</span> <span class="sc">-</span> <span class="dv">1</span>), <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb940-1"><a href="B-appendixB.html#cb940-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="sc">-</span><span class="fl">1.501</span>, <span class="at">df =</span> <span class="fu">min</span>(<span class="dv">212</span> <span class="sc">-</span> <span class="dv">1</span>, <span class="dv">175</span> <span class="sc">-</span> <span class="dv">1</span>), <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>[1] 0.135</code></pre>
 <p>We can also approximate by using the standard normal curve:</p>
-<div class="sourceCode" id="cb1019"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1019-1"><a href="B-appendixB.html#cb1019-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.501</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb942-1"><a href="B-appendixB.html#cb942-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.501</span>)</span></code></pre></div>
 <pre><code>[1] 0.133</code></pre>
 <p>Note that the 95 percent confidence interval given above matches well with the one calculated using bootstrapping.</p>
 </div>
@@ -1694,24 +1694,24 @@ We can use the `inference` function in the `oilabs` package to perform this anal
 </div>
 <div id="exploring-the-sample-data-4" class="section level3" number="31.6.2">
 <h3><span class="header-section-number">B.6.2</span> Exploring the sample data</h3>
-<div class="sourceCode" id="cb1021"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1021-1"><a href="B-appendixB.html#cb1021-1" aria-hidden="true" tabindex="-1"></a>zinc_tidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/zinc_tidy.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb944"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb944-1"><a href="B-appendixB.html#cb944-1" aria-hidden="true" tabindex="-1"></a>zinc_tidy <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/zinc_tidy.csv&quot;</span>)</span></code></pre></div>
 <p>We want to look at the differences in <code>surface - bottom</code> for each location:</p>
-<div class="sourceCode" id="cb1022"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1022-1"><a href="B-appendixB.html#cb1022-1" aria-hidden="true" tabindex="-1"></a>zinc_diff <span class="ot">&lt;-</span> zinc_tidy <span class="sc">%&gt;%</span></span>
-<span id="cb1022-2"><a href="B-appendixB.html#cb1022-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(loc_id) <span class="sc">%&gt;%</span></span>
-<span id="cb1022-3"><a href="B-appendixB.html#cb1022-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">pair_diff =</span> <span class="fu">diff</span>(concentration)) <span class="sc">%&gt;%</span></span>
-<span id="cb1022-4"><a href="B-appendixB.html#cb1022-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb945-1"><a href="B-appendixB.html#cb945-1" aria-hidden="true" tabindex="-1"></a>zinc_diff <span class="ot">&lt;-</span> zinc_tidy <span class="sc">%&gt;%</span></span>
+<span id="cb945-2"><a href="B-appendixB.html#cb945-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(loc_id) <span class="sc">%&gt;%</span></span>
+<span id="cb945-3"><a href="B-appendixB.html#cb945-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">pair_diff =</span> <span class="fu">diff</span>(concentration)) <span class="sc">%&gt;%</span></span>
+<span id="cb945-4"><a href="B-appendixB.html#cb945-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>Next we calculate the mean difference as our observed statistic:</p>
-<div class="sourceCode" id="cb1023"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1023-1"><a href="B-appendixB.html#cb1023-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
-<span id="cb1023-2"><a href="B-appendixB.html#cb1023-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
-<span id="cb1023-3"><a href="B-appendixB.html#cb1023-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb1023-4"><a href="B-appendixB.html#cb1023-4" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
+<div class="sourceCode" id="cb946"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb946-1"><a href="B-appendixB.html#cb946-1" aria-hidden="true" tabindex="-1"></a>d_hat <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
+<span id="cb946-2"><a href="B-appendixB.html#cb946-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
+<span id="cb946-3"><a href="B-appendixB.html#cb946-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb946-4"><a href="B-appendixB.html#cb946-4" aria-hidden="true" tabindex="-1"></a>d_hat</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
      stat
     &lt;dbl&gt;
 1 -0.0804</code></pre>
 <p>The histogram below also shows the distribution of <code>pair_diff</code>.</p>
-<div class="sourceCode" id="cb1025"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1025-1"><a href="B-appendixB.html#cb1025-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(zinc_diff, <span class="fu">aes</span>(<span class="at">x =</span> pair_diff)) <span class="sc">+</span></span>
-<span id="cb1025-2"><a href="B-appendixB.html#cb1025-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb948"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb948-1"><a href="B-appendixB.html#cb948-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(zinc_diff, <span class="fu">aes</span>(<span class="at">x =</span> pair_diff)) <span class="sc">+</span></span>
+<span id="cb948-2"><a href="B-appendixB.html#cb948-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.04</span>, <span class="at">color =</span> <span class="st">&quot;white&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/hist1a-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="guess-about-statistical-significance-4" class="section level4 unnumbered">
 <h4>Guess about statistical significance</h4>
@@ -1725,23 +1725,23 @@ We can use the `inference` function in the `oilabs` package to perform this anal
 <p>In order to look to see if the observed sample mean difference <span class="math inline">\(\bar{x}_{diff} = -0.08\)</span> is statistically less than 0, we need to account for the number of pairs. We also need to determine a process that replicates how the paired data was selected in a way similar to how we calculated our original difference in sample means.</p>
 <p>Treating the differences as our data of interest, we next use the process of <strong>bootstrapping</strong> to build other simulated samples and then calculate the mean of the bootstrap samples. We hypothesize that the mean difference is zero.</p>
 <p>This process is similar to comparing the One Mean example seen above, but using the differences between the two groups as a single sample with a hypothesized mean difference of 0.</p>
-<div class="sourceCode" id="cb1026"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1026-1"><a href="B-appendixB.html#cb1026-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
-<span id="cb1026-2"><a href="B-appendixB.html#cb1026-2" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
-<span id="cb1026-3"><a href="B-appendixB.html#cb1026-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
-<span id="cb1026-4"><a href="B-appendixB.html#cb1026-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">mu =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1026-5"><a href="B-appendixB.html#cb1026-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1026-6"><a href="B-appendixB.html#cb1026-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1027-1"><a href="B-appendixB.html#cb1027-1" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb949-1"><a href="B-appendixB.html#cb949-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2018</span>)</span>
+<span id="cb949-2"><a href="B-appendixB.html#cb949-2" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
+<span id="cb949-3"><a href="B-appendixB.html#cb949-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
+<span id="cb949-4"><a href="B-appendixB.html#cb949-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">&quot;point&quot;</span>, <span class="at">mu =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb949-5"><a href="B-appendixB.html#cb949-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb949-6"><a href="B-appendixB.html#cb949-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb950"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb950-1"><a href="B-appendixB.html#cb950-1" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="sc">%&gt;%</span> <span class="fu">visualize</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-710-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We can next use this distribution to observe our <span class="math inline">\(p\)</span>-value. Recall this is a left-tailed test so we will be looking for values that are less than or equal to 4960.477 for our <span class="math inline">\(p\)</span>-value.</p>
-<div class="sourceCode" id="cb1028"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="B-appendixB.html#cb1028-1" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="sc">%&gt;%</span></span>
-<span id="cb1028-2"><a href="B-appendixB.html#cb1028-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb951"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb951-1"><a href="B-appendixB.html#cb951-1" aria-hidden="true" tabindex="-1"></a>null_distn_paired_means <span class="sc">%&gt;%</span></span>
+<span id="cb951-2"><a href="B-appendixB.html#cb951-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;less&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-711-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <div id="calculate-p-value-4" class="section level5 unnumbered">
 <h5>Calculate <span class="math inline">\(p\)</span>-value</h5>
-<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1029-1"><a href="B-appendixB.html#cb1029-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_paired_means <span class="sc">%&gt;%</span></span>
-<span id="cb1029-2"><a href="B-appendixB.html#cb1029-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;less&quot;</span>)</span>
-<span id="cb1029-3"><a href="B-appendixB.html#cb1029-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
+<div class="sourceCode" id="cb952"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb952-1"><a href="B-appendixB.html#cb952-1" aria-hidden="true" tabindex="-1"></a>pvalue <span class="ot">&lt;-</span> null_distn_paired_means <span class="sc">%&gt;%</span></span>
+<span id="cb952-2"><a href="B-appendixB.html#cb952-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_pvalue</span>(<span class="at">obs_stat =</span> d_hat, <span class="at">direction =</span> <span class="st">&quot;less&quot;</span>)</span>
+<span id="cb952-3"><a href="B-appendixB.html#cb952-3" aria-hidden="true" tabindex="-1"></a>pvalue</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   p_value
     &lt;dbl&gt;
@@ -1753,19 +1753,19 @@ We can use the `inference` function in the `oilabs` package to perform this anal
 <h4>Bootstrapping for confidence interval</h4>
 <p>We can also create a confidence interval for the unknown population parameter <span class="math inline">\(\mu_{diff}\)</span> using our sample data (the calculated differences) with <em>bootstrapping</em>. This is similar to the bootstrapping done in a one sample mean case, except now our data is differences instead of raw numerical data.
 Note that this code is identical to the pipeline shown in the hypothesis test above except the <code>hypothesize()</code> function is not called.</p>
-<div class="sourceCode" id="cb1031"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1031-1"><a href="B-appendixB.html#cb1031-1" aria-hidden="true" tabindex="-1"></a>boot_distn_paired_means <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
-<span id="cb1031-2"><a href="B-appendixB.html#cb1031-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
-<span id="cb1031-3"><a href="B-appendixB.html#cb1031-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1031-4"><a href="B-appendixB.html#cb1031-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb1032"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1032-1"><a href="B-appendixB.html#cb1032-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_paired_means <span class="sc">%&gt;%</span></span>
-<span id="cb1032-2"><a href="B-appendixB.html#cb1032-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
-<span id="cb1032-3"><a href="B-appendixB.html#cb1032-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
+<div class="sourceCode" id="cb954"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb954-1"><a href="B-appendixB.html#cb954-1" aria-hidden="true" tabindex="-1"></a>boot_distn_paired_means <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
+<span id="cb954-2"><a href="B-appendixB.html#cb954-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> pair_diff) <span class="sc">%&gt;%</span></span>
+<span id="cb954-3"><a href="B-appendixB.html#cb954-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb954-4"><a href="B-appendixB.html#cb954-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">&quot;mean&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb955"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb955-1"><a href="B-appendixB.html#cb955-1" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span> boot_distn_paired_means <span class="sc">%&gt;%</span></span>
+<span id="cb955-2"><a href="B-appendixB.html#cb955-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_ci</span>()</span>
+<span id="cb955-3"><a href="B-appendixB.html#cb955-3" aria-hidden="true" tabindex="-1"></a>ci</span></code></pre></div>
 <pre><code># A tibble: 1 x 2
    lower_ci   upper_ci
       &lt;dbl&gt;      &lt;dbl&gt;
 1 -0.111600 -0.0501975</code></pre>
-<div class="sourceCode" id="cb1034"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1034-1"><a href="B-appendixB.html#cb1034-1" aria-hidden="true" tabindex="-1"></a>boot_distn_paired_means <span class="sc">%&gt;%</span></span>
-<span id="cb1034-2"><a href="B-appendixB.html#cb1034-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb957"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb957-1"><a href="B-appendixB.html#cb957-1" aria-hidden="true" tabindex="-1"></a>boot_distn_paired_means <span class="sc">%&gt;%</span></span>
+<span id="cb957-2"><a href="B-appendixB.html#cb957-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>(<span class="at">endpoints =</span> ci, <span class="at">direction =</span> <span class="st">&quot;between&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-715-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>We see that 0 is not contained in this confidence interval as a plausible value of <span class="math inline">\(\mu_{diff}\)</span> (the unknown population parameter). This matches with our hypothesis test results of rejecting the null hypothesis. Since zero is not a plausible value of the population parameter and since the entire confidence interval falls below zero, we have evidence that surface zinc concentration levels are lower, on average, than bottom level zinc concentrations.</p>
 <p><strong>Interpretation</strong>: We are 95% confident the true mean zinc concentration on the surface is between 0.11 units smaller to 0.05 units smaller than on the bottom.</p>
@@ -1791,13 +1791,13 @@ Note that this code is identical to the pipeline shown in the hypothesis test ab
 <div id="observed-test-statistic-4" class="section level5 unnumbered">
 <h5>Observed test statistic</h5>
 <p>While one could compute this observed test statistic by “hand,” the focus here is on the set-up of the problem and in understanding which formula for the test statistic applies. We can use the <code>t_test</code> function on the differences to perform this analysis for us.</p>
-<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1035-1"><a href="B-appendixB.html#cb1035-1" aria-hidden="true" tabindex="-1"></a>t_test_results <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
-<span id="cb1035-2"><a href="B-appendixB.html#cb1035-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(</span>
-<span id="cb1035-3"><a href="B-appendixB.html#cb1035-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> pair_diff <span class="sc">~</span> <span class="cn">NULL</span>,</span>
-<span id="cb1035-4"><a href="B-appendixB.html#cb1035-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>,</span>
-<span id="cb1035-5"><a href="B-appendixB.html#cb1035-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="dv">0</span></span>
-<span id="cb1035-6"><a href="B-appendixB.html#cb1035-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1035-7"><a href="B-appendixB.html#cb1035-7" aria-hidden="true" tabindex="-1"></a>t_test_results</span></code></pre></div>
+<div class="sourceCode" id="cb958"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb958-1"><a href="B-appendixB.html#cb958-1" aria-hidden="true" tabindex="-1"></a>t_test_results <span class="ot">&lt;-</span> zinc_diff <span class="sc">%&gt;%</span></span>
+<span id="cb958-2"><a href="B-appendixB.html#cb958-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(</span>
+<span id="cb958-3"><a href="B-appendixB.html#cb958-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> pair_diff <span class="sc">~</span> <span class="cn">NULL</span>,</span>
+<span id="cb958-4"><a href="B-appendixB.html#cb958-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">alternative =</span> <span class="st">&quot;less&quot;</span>,</span>
+<span id="cb958-5"><a href="B-appendixB.html#cb958-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu =</span> <span class="dv">0</span></span>
+<span id="cb958-6"><a href="B-appendixB.html#cb958-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb958-7"><a href="B-appendixB.html#cb958-7" aria-hidden="true" tabindex="-1"></a>t_test_results</span></code></pre></div>
 <pre><code># A tibble: 1 x 6
   statistic  t_df     p_value alternative lower_ci   upper_ci
       &lt;dbl&gt; &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
@@ -1808,7 +1808,7 @@ Note that this code is identical to the pipeline shown in the hypothesis test ab
 <div id="compute-p-value-2" class="section level4 unnumbered">
 <h4>Compute <span class="math inline">\(p\)</span>-value</h4>
 <p>The <span class="math inline">\(p\)</span>-value—the probability of observing a <span class="math inline">\(t_{obs}\)</span> value of -4.864 or less in our null distribution of a <span class="math inline">\(t\)</span> with 9 degrees of freedom—is 0. This can also be calculated in R directly:</p>
-<div class="sourceCode" id="cb1037"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1037-1"><a href="B-appendixB.html#cb1037-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="sc">-</span><span class="fl">4.8638</span>, <span class="at">df =</span> <span class="fu">nrow</span>(zinc_diff) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb960"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb960-1"><a href="B-appendixB.html#cb960-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="sc">-</span><span class="fl">4.8638</span>, <span class="at">df =</span> <span class="fu">nrow</span>(zinc_diff) <span class="sc">-</span> <span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>[1] 0.000446</code></pre>
 </div>
 <div id="state-conclusion-4" class="section level4 unnumbered">
@@ -1872,7 +1872,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1880,8 +1881,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/92-appendixB.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/92-appendixB.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1891,10 +1892,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

@@ -8,17 +8,10 @@
 
 # bookdown output files
 *_bookdown_files
-ismaykim.Rmd
-ismaykim.pdf
-ModernDive.Rmd
-ModernDive.pdf
-ModernDive.tex
-ModernDive.auc
-ModernDive.aux
-ModernDive.idx
-ModernDive.log
-ModernDive.out
-ModernDive.toc
+plotshirin.pdf
+plotshiringroup.pdf
+HR_Analytics.live.log
+commands.txt
 purl.Rout
 hranalytics_in_r.Rproj
 

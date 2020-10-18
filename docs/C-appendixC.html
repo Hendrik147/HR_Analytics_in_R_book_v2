@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -748,11 +748,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>As well as the more advanced <code>purrr</code>, <code>tibble</code>, <code>stringr</code>, and <code>forcats</code> packages</li>
 </ul>
 <p>If needed, read Section <a href="2-getting-started.html#packages">2.3</a> for information on how to install and load R packages.</p>
-<div class="sourceCode" id="cb1039"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1039-1"><a href="C-appendixC.html#cb1039-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1039-2"><a href="C-appendixC.html#cb1039-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1039-3"><a href="C-appendixC.html#cb1039-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb1039-4"><a href="C-appendixC.html#cb1039-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span>
-<span id="cb1039-5"><a href="C-appendixC.html#cb1039-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
+<div class="sourceCode" id="cb962"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb962-1"><a href="C-appendixC.html#cb962-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb962-2"><a href="C-appendixC.html#cb962-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb962-3"><a href="C-appendixC.html#cb962-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb962-4"><a href="C-appendixC.html#cb962-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span>
+<span id="cb962-5"><a href="C-appendixC.html#cb962-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span></code></pre></div>
 </div>
 <div id="data-wrangling" class="section level2" number="32.1">
 <h2><span class="header-section-number">C.1</span> Data wrangling</h2>
@@ -768,12 +768,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><img src="images/data_ninja1.png" style="width:30.0%" /></p>
 <p>Let’s load an example movies dataset, pare down the rows and columns a bit, and then show the first 10 rows using <code>slice()</code>.</p>
-<div class="sourceCode" id="cb1040"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1040-1"><a href="C-appendixC.html#cb1040-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/movies.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1040-2"><a href="C-appendixC.html#cb1040-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;action&quot;</span>, <span class="st">&quot;comedy&quot;</span>, <span class="st">&quot;drama&quot;</span>, <span class="st">&quot;animated&quot;</span>, <span class="st">&quot;fantasy&quot;</span>, <span class="st">&quot;rom comedy&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1040-3"><a href="C-appendixC.html#cb1040-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>over200)</span>
-<span id="cb1040-4"><a href="C-appendixC.html#cb1040-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1040-5"><a href="C-appendixC.html#cb1040-5" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1040-6"><a href="C-appendixC.html#cb1040-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb963"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb963-1"><a href="C-appendixC.html#cb963-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/movies.csv&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb963-2"><a href="C-appendixC.html#cb963-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;action&quot;</span>, <span class="st">&quot;comedy&quot;</span>, <span class="st">&quot;drama&quot;</span>, <span class="st">&quot;animated&quot;</span>, <span class="st">&quot;fantasy&quot;</span>, <span class="st">&quot;rom comedy&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb963-3"><a href="C-appendixC.html#cb963-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>over200)</span>
+<span id="cb963-4"><a href="C-appendixC.html#cb963-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb963-5"><a href="C-appendixC.html#cb963-5" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb963-6"><a href="C-appendixC.html#cb963-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 5
    name               score rating type        millions
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
@@ -790,8 +790,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="appendix-missing-values" class="section level3" number="32.1.1">
 <h3><span class="header-section-number">C.1.1</span> Dealing with missing values</h3>
 <p>You see the revenue in <code>million</code>s value for the movie “2 Fast 2 Furious” is <code>NA</code> (missing). So the following occurs when computing the median revenue:</p>
-<div class="sourceCode" id="cb1042"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1042-1"><a href="C-appendixC.html#cb1042-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1042-2"><a href="C-appendixC.html#cb1042-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_profit =</span> <span class="fu">median</span>(millions))</span></code></pre></div>
+<div class="sourceCode" id="cb965"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb965-1"><a href="C-appendixC.html#cb965-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb965-2"><a href="C-appendixC.html#cb965-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_profit =</span> <span class="fu">median</span>(millions))</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   mean_profit
         &lt;dbl&gt;
@@ -799,18 +799,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You should always think about why a data value might be missing and what that missingness may mean. For example, imagine you are conducting a study on the effects of smoking on lung cancer and a lot of your patients’ data is missing because they died of lung cancer. If you just “sweep these patients under the rug” and ignore them, you are clearly biasing the results.</p>
 <p>While there are statistical methods to deal with missing data they are beyond the reach of this class. The easiest thing to do is to remove all missing cases, but <strong>you should always at the very least report to the reader if you do so, as by removing the missing values you may be biasing your results.</strong></p>
 <p>You can do this with a <code>na.rm = TRUE</code> argument like so:</p>
-<div class="sourceCode" id="cb1044"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1044-1"><a href="C-appendixC.html#cb1044-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1044-2"><a href="C-appendixC.html#cb1044-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_profit =</span> <span class="fu">median</span>(millions, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb967"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb967-1"><a href="C-appendixC.html#cb967-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb967-2"><a href="C-appendixC.html#cb967-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_profit =</span> <span class="fu">median</span>(millions, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
   mean_profit
         &lt;dbl&gt;
 1     43.4270</code></pre>
 <p>If you decide you want to remove the row with the missing data, you can use the filter function like so:</p>
-<div class="sourceCode" id="cb1046"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1046-1"><a href="C-appendixC.html#cb1046-1" aria-hidden="true" tabindex="-1"></a>movies_no_missing <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1046-2"><a href="C-appendixC.html#cb1046-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(millions))</span>
-<span id="cb1046-3"><a href="C-appendixC.html#cb1046-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1046-4"><a href="C-appendixC.html#cb1046-4" aria-hidden="true" tabindex="-1"></a>movies_no_missing <span class="sc">%&gt;%</span></span>
-<span id="cb1046-5"><a href="C-appendixC.html#cb1046-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb969-1"><a href="C-appendixC.html#cb969-1" aria-hidden="true" tabindex="-1"></a>movies_no_missing <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb969-2"><a href="C-appendixC.html#cb969-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(millions))</span>
+<span id="cb969-3"><a href="C-appendixC.html#cb969-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb969-4"><a href="C-appendixC.html#cb969-4" aria-hidden="true" tabindex="-1"></a>movies_no_missing <span class="sc">%&gt;%</span></span>
+<span id="cb969-5"><a href="C-appendixC.html#cb969-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 5
    name               score rating type        millions
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
@@ -829,10 +829,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="appendix-reordering-bars" class="section level3" number="32.1.2">
 <h3><span class="header-section-number">C.1.2</span> Reordering bars in a barplot</h3>
 <p>Let’s compute the total revenue for each movie type and plot a barplot.</p>
-<div class="sourceCode" id="cb1048"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1048-1"><a href="C-appendixC.html#cb1048-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1048-2"><a href="C-appendixC.html#cb1048-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span></span>
-<span id="cb1048-3"><a href="C-appendixC.html#cb1048-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(millions))</span>
-<span id="cb1048-4"><a href="C-appendixC.html#cb1048-4" aria-hidden="true" tabindex="-1"></a>revenue_by_type</span></code></pre></div>
+<div class="sourceCode" id="cb971"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb971-1"><a href="C-appendixC.html#cb971-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb971-2"><a href="C-appendixC.html#cb971-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(type) <span class="sc">%&gt;%</span></span>
+<span id="cb971-3"><a href="C-appendixC.html#cb971-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(millions))</span>
+<span id="cb971-4"><a href="C-appendixC.html#cb971-4" aria-hidden="true" tabindex="-1"></a>revenue_by_type</span></code></pre></div>
 <pre><code># A tibble: 6 x 2
   type       total_revenue
   &lt;chr&gt;              &lt;dbl&gt;
@@ -842,40 +842,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4 drama            840.038
 5 fantasy          508.580
 6 rom comedy       492.282</code></pre>
-<div class="sourceCode" id="cb1050"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1050-1"><a href="C-appendixC.html#cb1050-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb1050-2"><a href="C-appendixC.html#cb1050-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb1050-3"><a href="C-appendixC.html#cb1050-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total box office revenue (in millions of $)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb973-1"><a href="C-appendixC.html#cb973-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb973-2"><a href="C-appendixC.html#cb973-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb973-3"><a href="C-appendixC.html#cb973-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total box office revenue (in millions of $)&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-722-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Say we want to reorder the categorical variable <code>type</code> so that the bars show in a different order. We can reorder the bars by manually defining the order of the <code>levels</code> in the <code>factor()</code> command:</p>
-<div class="sourceCode" id="cb1051"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1051-1"><a href="C-appendixC.html#cb1051-1" aria-hidden="true" tabindex="-1"></a>type_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;action&quot;</span>, <span class="st">&quot;drama&quot;</span>, <span class="st">&quot;animated&quot;</span>, <span class="st">&quot;comedy&quot;</span>, <span class="st">&quot;fantasy&quot;</span>)</span>
-<span id="cb1051-2"><a href="C-appendixC.html#cb1051-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1051-3"><a href="C-appendixC.html#cb1051-3" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
-<span id="cb1051-4"><a href="C-appendixC.html#cb1051-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">factor</span>(type, <span class="at">levels =</span> type_levels))</span>
-<span id="cb1051-5"><a href="C-appendixC.html#cb1051-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1051-6"><a href="C-appendixC.html#cb1051-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb1051-7"><a href="C-appendixC.html#cb1051-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb1051-8"><a href="C-appendixC.html#cb1051-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb974"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb974-1"><a href="C-appendixC.html#cb974-1" aria-hidden="true" tabindex="-1"></a>type_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;action&quot;</span>, <span class="st">&quot;drama&quot;</span>, <span class="st">&quot;animated&quot;</span>, <span class="st">&quot;comedy&quot;</span>, <span class="st">&quot;fantasy&quot;</span>)</span>
+<span id="cb974-2"><a href="C-appendixC.html#cb974-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb974-3"><a href="C-appendixC.html#cb974-3" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
+<span id="cb974-4"><a href="C-appendixC.html#cb974-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">factor</span>(type, <span class="at">levels =</span> type_levels))</span>
+<span id="cb974-5"><a href="C-appendixC.html#cb974-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb974-6"><a href="C-appendixC.html#cb974-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb974-7"><a href="C-appendixC.html#cb974-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb974-8"><a href="C-appendixC.html#cb974-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-723-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Or if you want to reorder <code>type</code> in ascending order of <code>total_revenue</code>, we use <code>reorder()</code></p>
-<div class="sourceCode" id="cb1052"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1052-1"><a href="C-appendixC.html#cb1052-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
-<span id="cb1052-2"><a href="C-appendixC.html#cb1052-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">reorder</span>(type, total_revenue))</span>
-<span id="cb1052-3"><a href="C-appendixC.html#cb1052-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1052-4"><a href="C-appendixC.html#cb1052-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb1052-5"><a href="C-appendixC.html#cb1052-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb1052-6"><a href="C-appendixC.html#cb1052-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1052-7"><a href="C-appendixC.html#cb1052-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span></span>
-<span id="cb1052-8"><a href="C-appendixC.html#cb1052-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb975-1"><a href="C-appendixC.html#cb975-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
+<span id="cb975-2"><a href="C-appendixC.html#cb975-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">reorder</span>(type, total_revenue))</span>
+<span id="cb975-3"><a href="C-appendixC.html#cb975-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb975-4"><a href="C-appendixC.html#cb975-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb975-5"><a href="C-appendixC.html#cb975-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb975-6"><a href="C-appendixC.html#cb975-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb975-7"><a href="C-appendixC.html#cb975-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span></span>
+<span id="cb975-8"><a href="C-appendixC.html#cb975-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-724-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Or if you want to reorder <code>type</code> in descending order of <code>total_revenue</code>, just put
 a <code>-</code> sign in front of <code>-total_revenue</code> in <code>reorder()</code>:</p>
-<div class="sourceCode" id="cb1053"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1053-1"><a href="C-appendixC.html#cb1053-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
-<span id="cb1053-2"><a href="C-appendixC.html#cb1053-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">reorder</span>(type, <span class="sc">-</span>total_revenue))</span>
-<span id="cb1053-3"><a href="C-appendixC.html#cb1053-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1053-4"><a href="C-appendixC.html#cb1053-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb1053-5"><a href="C-appendixC.html#cb1053-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb1053-6"><a href="C-appendixC.html#cb1053-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb1053-7"><a href="C-appendixC.html#cb1053-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span></span>
-<span id="cb1053-8"><a href="C-appendixC.html#cb1053-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb976-1"><a href="C-appendixC.html#cb976-1" aria-hidden="true" tabindex="-1"></a>revenue_by_type <span class="ot">&lt;-</span> revenue_by_type <span class="sc">%&gt;%</span></span>
+<span id="cb976-2"><a href="C-appendixC.html#cb976-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">reorder</span>(type, <span class="sc">-</span>total_revenue))</span>
+<span id="cb976-3"><a href="C-appendixC.html#cb976-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb976-4"><a href="C-appendixC.html#cb976-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(revenue_by_type, <span class="fu">aes</span>(<span class="at">x =</span> type, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb976-5"><a href="C-appendixC.html#cb976-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb976-6"><a href="C-appendixC.html#cb976-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb976-7"><a href="C-appendixC.html#cb976-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Movie genre&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Total boxoffice revenue (in millions of $)&quot;</span></span>
+<span id="cb976-8"><a href="C-appendixC.html#cb976-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-725-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>For more advanced categorical variable (i.e. factor) manipulations, check out
 the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code> package</a>. Note: <code>forcats</code> is an anagram of <code>factors</code></p>
@@ -883,21 +883,21 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 </div>
 <div id="appendix-money-on-axis" class="section level3" number="32.1.3">
 <h3><span class="header-section-number">C.1.3</span> Showing money on an axis</h3>
-<div class="sourceCode" id="cb1054"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1054-1"><a href="C-appendixC.html#cb1054-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1054-2"><a href="C-appendixC.html#cb1054-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">revenue =</span> millions <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>)</span>
-<span id="cb1054-3"><a href="C-appendixC.html#cb1054-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1054-4"><a href="C-appendixC.html#cb1054-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_ex, <span class="fu">aes</span>(<span class="at">x =</span> rating, <span class="at">y =</span> revenue)) <span class="sc">+</span></span>
-<span id="cb1054-5"><a href="C-appendixC.html#cb1054-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1054-6"><a href="C-appendixC.html#cb1054-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Revenue in $&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Profits for different movie ratings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb977-1"><a href="C-appendixC.html#cb977-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb977-2"><a href="C-appendixC.html#cb977-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">revenue =</span> millions <span class="sc">*</span> <span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>)</span>
+<span id="cb977-3"><a href="C-appendixC.html#cb977-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb977-4"><a href="C-appendixC.html#cb977-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_ex, <span class="fu">aes</span>(<span class="at">x =</span> rating, <span class="at">y =</span> revenue)) <span class="sc">+</span></span>
+<span id="cb977-5"><a href="C-appendixC.html#cb977-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb977-6"><a href="C-appendixC.html#cb977-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Revenue in $&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Profits for different movie ratings&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-726-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Google “ggplot2 axis scale dollars” and click on the <a href="http://www.sthda.com/english/wiki/ggplot2-axis-scales-and-transformations">first link</a> and search for the word “dollars.” You’ll find:</p>
-<div class="sourceCode" id="cb1055"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1055-1"><a href="C-appendixC.html#cb1055-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Don&#39;t forget to load the scales package first!</span></span>
-<span id="cb1055-2"><a href="C-appendixC.html#cb1055-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1055-3"><a href="C-appendixC.html#cb1055-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1055-4"><a href="C-appendixC.html#cb1055-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_ex, <span class="fu">aes</span>(<span class="at">x =</span> rating, <span class="at">y =</span> revenue)) <span class="sc">+</span></span>
-<span id="cb1055-5"><a href="C-appendixC.html#cb1055-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb1055-6"><a href="C-appendixC.html#cb1055-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Revenue in $&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Profits for different movie ratings&quot;</span>) <span class="sc">+</span></span>
-<span id="cb1055-7"><a href="C-appendixC.html#cb1055-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> dollar)</span></code></pre></div>
+<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb978-1"><a href="C-appendixC.html#cb978-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Don&#39;t forget to load the scales package first!</span></span>
+<span id="cb978-2"><a href="C-appendixC.html#cb978-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb978-3"><a href="C-appendixC.html#cb978-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb978-4"><a href="C-appendixC.html#cb978-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> movies_ex, <span class="fu">aes</span>(<span class="at">x =</span> rating, <span class="at">y =</span> revenue)) <span class="sc">+</span></span>
+<span id="cb978-5"><a href="C-appendixC.html#cb978-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb978-6"><a href="C-appendixC.html#cb978-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Revenue in $&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Profits for different movie ratings&quot;</span>) <span class="sc">+</span></span>
+<span id="cb978-7"><a href="C-appendixC.html#cb978-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> dollar)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-727-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 </div>
 <div id="appendix-changing-values" class="section level3" number="32.1.4">
@@ -911,9 +911,9 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 <div id="if_else" class="section level4 unnumbered">
 <h4><code>if_else()</code></h4>
 <p>Switch all instances of <code>rom comedy</code> with <code>romantic comedy</code> using <code>if_else()</code> from the <code>dplyr</code> package. If a particular row has <code>type == "rom comedy"</code>, then return <code>"romantic comedy"</code>, else return whatever was originally in <code>type</code>. Save everything in a new variable <code>type_new</code>:</p>
-<div class="sourceCode" id="cb1056"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1056-1"><a href="C-appendixC.html#cb1056-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1056-2"><a href="C-appendixC.html#cb1056-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_new =</span> <span class="fu">if_else</span>(type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;romantic comedy&quot;</span>, type)) <span class="sc">%&gt;%</span></span>
-<span id="cb1056-3"><a href="C-appendixC.html#cb1056-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb979-1"><a href="C-appendixC.html#cb979-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb979-2"><a href="C-appendixC.html#cb979-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_new =</span> <span class="fu">if_else</span>(type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;romantic comedy&quot;</span>, type)) <span class="sc">%&gt;%</span></span>
+<span id="cb979-3"><a href="C-appendixC.html#cb979-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 7
    name               score rating type       millions    revenue type_new      
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;         
@@ -928,9 +928,9 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
  9 Anything Else    63.3000 R      rom come~   3.21200   3212000. romantic come~
 10 Bad Boys II      38.1000 R      action    138.397   138397000  action        </code></pre>
 <p>Do the same here, but return <code>"not romantic comedy"</code> if <code>type</code> is not <code>"rom comedy"</code> and this time overwrite the original <code>type</code> variable</p>
-<div class="sourceCode" id="cb1058"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1058-1"><a href="C-appendixC.html#cb1058-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1058-2"><a href="C-appendixC.html#cb1058-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">if_else</span>(type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;romantic comedy&quot;</span>, <span class="st">&quot;not romantic comedy&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb1058-3"><a href="C-appendixC.html#cb1058-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb981-1"><a href="C-appendixC.html#cb981-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb981-2"><a href="C-appendixC.html#cb981-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">if_else</span>(type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span>, <span class="st">&quot;romantic comedy&quot;</span>, <span class="st">&quot;not romantic comedy&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb981-3"><a href="C-appendixC.html#cb981-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 6
    name               score rating type                 millions    revenue
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;      &lt;dbl&gt;
@@ -948,16 +948,16 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 <div id="recode" class="section level4 unnumbered">
 <h4><code>recode()</code></h4>
 <p><code>if_else()</code> is rather limited however. What if we want to “rename” all <code>type</code> so that they start with uppercase? Use <code>recode()</code>:</p>
-<div class="sourceCode" id="cb1060"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1060-1"><a href="C-appendixC.html#cb1060-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1060-2"><a href="C-appendixC.html#cb1060-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_new =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(type,</span>
-<span id="cb1060-3"><a href="C-appendixC.html#cb1060-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;action&quot;</span> <span class="ot">=</span> <span class="st">&quot;Action&quot;</span>,</span>
-<span id="cb1060-4"><a href="C-appendixC.html#cb1060-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;animated&quot;</span> <span class="ot">=</span> <span class="st">&quot;Animated&quot;</span>,</span>
-<span id="cb1060-5"><a href="C-appendixC.html#cb1060-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;comedy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Comedy&quot;</span>,</span>
-<span id="cb1060-6"><a href="C-appendixC.html#cb1060-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;drama&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drama&quot;</span>,</span>
-<span id="cb1060-7"><a href="C-appendixC.html#cb1060-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;fantasy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Fantasy&quot;</span>,</span>
-<span id="cb1060-8"><a href="C-appendixC.html#cb1060-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;rom comedy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Romantic Comedy&quot;</span></span>
-<span id="cb1060-9"><a href="C-appendixC.html#cb1060-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb1060-10"><a href="C-appendixC.html#cb1060-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb983-1"><a href="C-appendixC.html#cb983-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb983-2"><a href="C-appendixC.html#cb983-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type_new =</span> dplyr<span class="sc">::</span><span class="fu">recode</span>(type,</span>
+<span id="cb983-3"><a href="C-appendixC.html#cb983-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;action&quot;</span> <span class="ot">=</span> <span class="st">&quot;Action&quot;</span>,</span>
+<span id="cb983-4"><a href="C-appendixC.html#cb983-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;animated&quot;</span> <span class="ot">=</span> <span class="st">&quot;Animated&quot;</span>,</span>
+<span id="cb983-5"><a href="C-appendixC.html#cb983-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;comedy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Comedy&quot;</span>,</span>
+<span id="cb983-6"><a href="C-appendixC.html#cb983-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;drama&quot;</span> <span class="ot">=</span> <span class="st">&quot;Drama&quot;</span>,</span>
+<span id="cb983-7"><a href="C-appendixC.html#cb983-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;fantasy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Fantasy&quot;</span>,</span>
+<span id="cb983-8"><a href="C-appendixC.html#cb983-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;rom comedy&quot;</span> <span class="ot">=</span> <span class="st">&quot;Romantic Comedy&quot;</span></span>
+<span id="cb983-9"><a href="C-appendixC.html#cb983-9" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb983-10"><a href="C-appendixC.html#cb983-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 7
    name               score rating type       millions    revenue type_new      
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;         
@@ -975,16 +975,16 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 <div id="case_when" class="section level4 unnumbered">
 <h4><code>case_when()</code></h4>
 <p><code>case_when()</code> is a little trickier, but allows you to evaluate boolean operations using <code>==</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>&amp;</code>, <code>|</code>, etc:</p>
-<div class="sourceCode" id="cb1062"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1062-1"><a href="C-appendixC.html#cb1062-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1062-2"><a href="C-appendixC.html#cb1062-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1062-3"><a href="C-appendixC.html#cb1062-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_new =</span></span>
-<span id="cb1062-4"><a href="C-appendixC.html#cb1062-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">case_when</span>(</span>
-<span id="cb1062-5"><a href="C-appendixC.html#cb1062-5" aria-hidden="true" tabindex="-1"></a>        type <span class="sc">==</span> <span class="st">&quot;action&quot;</span> <span class="sc">&amp;</span> millions <span class="sc">&gt;</span> <span class="dv">40</span> <span class="sc">~</span> <span class="st">&quot;Big budget action&quot;</span>,</span>
-<span id="cb1062-6"><a href="C-appendixC.html#cb1062-6" aria-hidden="true" tabindex="-1"></a>        type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span> <span class="sc">&amp;</span> millions <span class="sc">&lt;</span> <span class="dv">40</span> <span class="sc">~</span> <span class="st">&quot;Small budget romcom&quot;</span>,</span>
-<span id="cb1062-7"><a href="C-appendixC.html#cb1062-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Need this for everything else that aren&#39;t the two cases above:</span></span>
-<span id="cb1062-8"><a href="C-appendixC.html#cb1062-8" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;Rest&quot;</span></span>
-<span id="cb1062-9"><a href="C-appendixC.html#cb1062-9" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb1062-10"><a href="C-appendixC.html#cb1062-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb985-1"><a href="C-appendixC.html#cb985-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb985-2"><a href="C-appendixC.html#cb985-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb985-3"><a href="C-appendixC.html#cb985-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">type_new =</span></span>
+<span id="cb985-4"><a href="C-appendixC.html#cb985-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">case_when</span>(</span>
+<span id="cb985-5"><a href="C-appendixC.html#cb985-5" aria-hidden="true" tabindex="-1"></a>        type <span class="sc">==</span> <span class="st">&quot;action&quot;</span> <span class="sc">&amp;</span> millions <span class="sc">&gt;</span> <span class="dv">40</span> <span class="sc">~</span> <span class="st">&quot;Big budget action&quot;</span>,</span>
+<span id="cb985-6"><a href="C-appendixC.html#cb985-6" aria-hidden="true" tabindex="-1"></a>        type <span class="sc">==</span> <span class="st">&quot;rom comedy&quot;</span> <span class="sc">&amp;</span> millions <span class="sc">&lt;</span> <span class="dv">40</span> <span class="sc">~</span> <span class="st">&quot;Small budget romcom&quot;</span>,</span>
+<span id="cb985-7"><a href="C-appendixC.html#cb985-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Need this for everything else that aren&#39;t the two cases above:</span></span>
+<span id="cb985-8"><a href="C-appendixC.html#cb985-8" aria-hidden="true" tabindex="-1"></a>        <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;Rest&quot;</span></span>
+<span id="cb985-9"><a href="C-appendixC.html#cb985-9" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb985-10"><a href="C-appendixC.html#cb985-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code># A tibble: 108 x 7
    name             score rating type       millions    revenue type_new        
    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;           
@@ -1004,9 +1004,9 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 <div id="appendix-convert-numerical-categorical" class="section level3" number="32.1.5">
 <h3><span class="header-section-number">C.1.5</span> Converting a numerical variable to a categorical one</h3>
 <p>Sometimes we want to turn a numerical, continuous variable into a categorical variable. For instance, what if we wanted to have a variable that tells us if a movie made one hundred million dollars or more. That is to say, we can create a binary variable, which is the same thing as a categorical variable with 2 levels. We can again use the <code>mutate()</code> function:</p>
-<div class="sourceCode" id="cb1064"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1064-1"><a href="C-appendixC.html#cb1064-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1064-2"><a href="C-appendixC.html#cb1064-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">big_budget =</span> millions <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1064-3"><a href="C-appendixC.html#cb1064-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb987-1"><a href="C-appendixC.html#cb987-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb987-2"><a href="C-appendixC.html#cb987-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">big_budget =</span> millions <span class="sc">&gt;</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb987-3"><a href="C-appendixC.html#cb987-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 7
    name               score rating type        millions    revenue big_budget
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt; &lt;lgl&gt;     
@@ -1028,12 +1028,12 @@ the <a href="https://forcats.tidyverse.org/" target="_blank"><code>forcats</code
 <li>80.1+ = great</li>
 </ol>
 <p>We set the breaking points for cutting the numerical variable with the <code>c(0, 40, 60, 80, 100)</code> part, and set the labels for each of these bins with the <code>labels = c("bad", "so-so", "good", "great")</code> part. All this action happens inside the <code>mutate()</code> command, so the new categorical variable <code>score_categ</code> is added to the data frame.</p>
-<div class="sourceCode" id="cb1066"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1066-1"><a href="C-appendixC.html#cb1066-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1066-2"><a href="C-appendixC.html#cb1066-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score_categ =</span> <span class="fu">cut</span>(score,</span>
-<span id="cb1066-3"><a href="C-appendixC.html#cb1066-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>),</span>
-<span id="cb1066-4"><a href="C-appendixC.html#cb1066-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;so-so&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;great&quot;</span>)</span>
-<span id="cb1066-5"><a href="C-appendixC.html#cb1066-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
-<span id="cb1066-6"><a href="C-appendixC.html#cb1066-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb989-1"><a href="C-appendixC.html#cb989-1" aria-hidden="true" tabindex="-1"></a>movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb989-2"><a href="C-appendixC.html#cb989-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score_categ =</span> <span class="fu">cut</span>(score,</span>
+<span id="cb989-3"><a href="C-appendixC.html#cb989-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>),</span>
+<span id="cb989-4"><a href="C-appendixC.html#cb989-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;bad&quot;</span>, <span class="st">&quot;so-so&quot;</span>, <span class="st">&quot;good&quot;</span>, <span class="st">&quot;great&quot;</span>)</span>
+<span id="cb989-5"><a href="C-appendixC.html#cb989-5" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb989-6"><a href="C-appendixC.html#cb989-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code># A tibble: 10 x 7
    name               score rating type        millions    revenue score_categ
    &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt; &lt;fct&gt;      
@@ -1060,12 +1060,12 @@ approximately the same number of values in each group.</li>
 <div id="appendix-prop" class="section level3" number="32.1.6">
 <h3><span class="header-section-number">C.1.6</span> Computing proportions</h3>
 <p>By using a <code>group_by()</code> followed not by a <code>summarize()</code> as is often the case, but rather a <code>mutate()</code>. So say we compute the total revenue millions for each movie rating and type:</p>
-<div class="sourceCode" id="cb1068"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1068-1"><a href="C-appendixC.html#cb1068-1" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
-<span id="cb1068-2"><a href="C-appendixC.html#cb1068-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rating, type) <span class="sc">%&gt;%</span></span>
-<span id="cb1068-3"><a href="C-appendixC.html#cb1068-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">millions =</span> <span class="fu">sum</span>(millions)) <span class="sc">%&gt;%</span></span>
-<span id="cb1068-4"><a href="C-appendixC.html#cb1068-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(rating, type)</span>
-<span id="cb1068-5"><a href="C-appendixC.html#cb1068-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1068-6"><a href="C-appendixC.html#cb1068-6" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions</span></code></pre></div>
+<div class="sourceCode" id="cb991"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb991-1"><a href="C-appendixC.html#cb991-1" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions <span class="ot">&lt;-</span> movies_ex <span class="sc">%&gt;%</span></span>
+<span id="cb991-2"><a href="C-appendixC.html#cb991-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rating, type) <span class="sc">%&gt;%</span></span>
+<span id="cb991-3"><a href="C-appendixC.html#cb991-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">millions =</span> <span class="fu">sum</span>(millions)) <span class="sc">%&gt;%</span></span>
+<span id="cb991-4"><a href="C-appendixC.html#cb991-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(rating, type)</span>
+<span id="cb991-5"><a href="C-appendixC.html#cb991-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb991-6"><a href="C-appendixC.html#cb991-6" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions</span></code></pre></div>
 <pre><code># A tibble: 15 x 3
 # Groups:   rating [4]
    rating type        millions
@@ -1086,14 +1086,14 @@ approximately the same number of values in each group.</li>
 14 R      drama       372.905 
 15 R      rom comedy   86.0310</code></pre>
 <p>Say within each movie rating (G, PG, PG-13, R), we want to know the proportion of <code>total_millions</code> that made by each movie type (animated, action, comedy, etc). We can:</p>
-<div class="sourceCode" id="cb1070"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1070-1"><a href="C-appendixC.html#cb1070-1" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions <span class="sc">%&gt;%</span></span>
-<span id="cb1070-2"><a href="C-appendixC.html#cb1070-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rating) <span class="sc">%&gt;%</span></span>
-<span id="cb1070-3"><a href="C-appendixC.html#cb1070-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1070-4"><a href="C-appendixC.html#cb1070-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute a new column of the sum of millions split by rating:</span></span>
-<span id="cb1070-5"><a href="C-appendixC.html#cb1070-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_millions =</span> <span class="fu">sum</span>(millions),</span>
-<span id="cb1070-6"><a href="C-appendixC.html#cb1070-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the proportion within each rating:</span></span>
-<span id="cb1070-7"><a href="C-appendixC.html#cb1070-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop =</span> millions <span class="sc">/</span> total_millions</span>
-<span id="cb1070-8"><a href="C-appendixC.html#cb1070-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb993-1"><a href="C-appendixC.html#cb993-1" aria-hidden="true" tabindex="-1"></a>rating_by_type_millions <span class="sc">%&gt;%</span></span>
+<span id="cb993-2"><a href="C-appendixC.html#cb993-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(rating) <span class="sc">%&gt;%</span></span>
+<span id="cb993-3"><a href="C-appendixC.html#cb993-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb993-4"><a href="C-appendixC.html#cb993-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute a new column of the sum of millions split by rating:</span></span>
+<span id="cb993-5"><a href="C-appendixC.html#cb993-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_millions =</span> <span class="fu">sum</span>(millions),</span>
+<span id="cb993-6"><a href="C-appendixC.html#cb993-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute the proportion within each rating:</span></span>
+<span id="cb993-7"><a href="C-appendixC.html#cb993-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop =</span> millions <span class="sc">/</span> total_millions</span>
+<span id="cb993-8"><a href="C-appendixC.html#cb993-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <pre><code># A tibble: 15 x 5
 # Groups:   rating [4]
    rating type        millions total_millions       prop
@@ -1118,20 +1118,20 @@ approximately the same number of values in each group.</li>
 <div id="appendix-commas" class="section level3" number="32.1.7">
 <h3><span class="header-section-number">C.1.7</span> Dealing with %, commas, and $</h3>
 <p>Say you have numerical data that are recorded as percentages, have commas, or are in dollar form and hence are character strings. How do you convert these to numerical values? Using the <code>parse_number()</code> function from the <code>readr</code> package inside a <code>mutate()</code>! Shout out to <a href="https://stackoverflow.com/a/52965808/3674500" target="_blank">Stack Overflow</a></p>
-<div class="sourceCode" id="cb1072"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1072-1"><a href="C-appendixC.html#cb1072-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb1072-2"><a href="C-appendixC.html#cb1072-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;10.5%&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb995-1"><a href="C-appendixC.html#cb995-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb995-2"><a href="C-appendixC.html#cb995-2" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;10.5%&quot;</span>)</span></code></pre></div>
 <pre><code>[1] 10.5</code></pre>
-<div class="sourceCode" id="cb1074"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1074-1"><a href="C-appendixC.html#cb1074-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;145,897&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb997-1"><a href="C-appendixC.html#cb997-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;145,897&quot;</span>)</span></code></pre></div>
 <pre><code>[1] 145897</code></pre>
-<div class="sourceCode" id="cb1076"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1076-1"><a href="C-appendixC.html#cb1076-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;$1,234.5&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb999"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb999-1"><a href="C-appendixC.html#cb999-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(<span class="st">&quot;$1,234.5&quot;</span>)</span></code></pre></div>
 <pre><code>[1] 1234</code></pre>
 <p>What about the other way around? Use the <code>scales</code> package!</p>
-<div class="sourceCode" id="cb1078"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1078-1"><a href="C-appendixC.html#cb1078-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1078-2"><a href="C-appendixC.html#cb1078-2" aria-hidden="true" tabindex="-1"></a><span class="fu">percent</span>(<span class="fl">0.105</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1001"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1001-1"><a href="C-appendixC.html#cb1001-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1001-2"><a href="C-appendixC.html#cb1001-2" aria-hidden="true" tabindex="-1"></a><span class="fu">percent</span>(<span class="fl">0.105</span>)</span></code></pre></div>
 <pre><code>[1] &quot;10%&quot;</code></pre>
-<div class="sourceCode" id="cb1080"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1080-1"><a href="C-appendixC.html#cb1080-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comma</span>(<span class="dv">145897</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1003"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1003-1"><a href="C-appendixC.html#cb1003-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comma</span>(<span class="dv">145897</span>)</span></code></pre></div>
 <pre><code>[1] &quot;145,897&quot;</code></pre>
-<div class="sourceCode" id="cb1082"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1082-1"><a href="C-appendixC.html#cb1082-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dollar</span>(<span class="fl">1234.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1005"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1005-1"><a href="C-appendixC.html#cb1005-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dollar</span>(<span class="fl">1234.5</span>)</span></code></pre></div>
 <pre><code>[1] &quot;$1,234.50&quot;</code></pre>
 <hr />
 <p><strong>Congratulations. You are now an R Ninja!</strong></p>
@@ -1144,15 +1144,15 @@ approximately the same number of values in each group.</li>
 <div id="interactive-linegraphs" class="section level3" number="32.2.1">
 <h3><span class="header-section-number">C.2.1</span> Interactive linegraphs</h3>
 <p>Another useful tool for viewing linegraphs such as this is the <code>dygraph</code> function in the <code>dygraphs</code> package in combination with the <code>dyRangeSelector</code> function. This allows us to zoom in on a selected range and get an interactive plot for us to work with:</p>
-<div class="sourceCode" id="cb1084"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1084-1"><a href="C-appendixC.html#cb1084-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span>
-<span id="cb1084-2"><a href="C-appendixC.html#cb1084-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
-<span id="cb1084-3"><a href="C-appendixC.html#cb1084-3" aria-hidden="true" tabindex="-1"></a>flights_day <span class="ot">&lt;-</span> <span class="fu">mutate</span>(flights, <span class="at">date =</span> <span class="fu">as.Date</span>(time_hour))</span>
-<span id="cb1084-4"><a href="C-appendixC.html#cb1084-4" aria-hidden="true" tabindex="-1"></a>flights_summarized <span class="ot">&lt;-</span> flights_day <span class="sc">%&gt;%</span></span>
-<span id="cb1084-5"><a href="C-appendixC.html#cb1084-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span></span>
-<span id="cb1084-6"><a href="C-appendixC.html#cb1084-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median_arr_delay =</span> <span class="fu">median</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1084-7"><a href="C-appendixC.html#cb1084-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(flights_summarized) <span class="ot">&lt;-</span> flights_summarized<span class="sc">$</span>date</span>
-<span id="cb1084-8"><a href="C-appendixC.html#cb1084-8" aria-hidden="true" tabindex="-1"></a>flights_summarized <span class="ot">&lt;-</span> <span class="fu">select</span>(flights_summarized, <span class="sc">-</span>date)</span>
-<span id="cb1084-9"><a href="C-appendixC.html#cb1084-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dyRangeSelector</span>(<span class="fu">dygraph</span>(flights_summarized))</span></code></pre></div>
+<div class="sourceCode" id="cb1007"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1007-1"><a href="C-appendixC.html#cb1007-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dygraphs)</span>
+<span id="cb1007-2"><a href="C-appendixC.html#cb1007-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nycflights13)</span>
+<span id="cb1007-3"><a href="C-appendixC.html#cb1007-3" aria-hidden="true" tabindex="-1"></a>flights_day <span class="ot">&lt;-</span> <span class="fu">mutate</span>(flights, <span class="at">date =</span> <span class="fu">as.Date</span>(time_hour))</span>
+<span id="cb1007-4"><a href="C-appendixC.html#cb1007-4" aria-hidden="true" tabindex="-1"></a>flights_summarized <span class="ot">&lt;-</span> flights_day <span class="sc">%&gt;%</span></span>
+<span id="cb1007-5"><a href="C-appendixC.html#cb1007-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(date) <span class="sc">%&gt;%</span></span>
+<span id="cb1007-6"><a href="C-appendixC.html#cb1007-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">median_arr_delay =</span> <span class="fu">median</span>(arr_delay, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb1007-7"><a href="C-appendixC.html#cb1007-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(flights_summarized) <span class="ot">&lt;-</span> flights_summarized<span class="sc">$</span>date</span>
+<span id="cb1007-8"><a href="C-appendixC.html#cb1007-8" aria-hidden="true" tabindex="-1"></a>flights_summarized <span class="ot">&lt;-</span> <span class="fu">select</span>(flights_summarized, <span class="sc">-</span>date)</span>
+<span id="cb1007-9"><a href="C-appendixC.html#cb1007-9" aria-hidden="true" tabindex="-1"></a><span class="fu">dyRangeSelector</span>(<span class="fu">dygraph</span>(flights_summarized))</span></code></pre></div>
 <div id="htmlwidget-1abee195cf786eb1e5af" style="width:100%;height:432px;" class="dygraphs html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1abee195cf786eb1e5af">{"x":{"attrs":{"labels":["day","median_arr_delay"],"legend":"auto","retainDateWindow":false,"axes":{"x":{"pixelsPerLabel":60}},"showRangeSelector":true,"rangeSelectorHeight":40,"rangeSelectorPlotFillColor":" #A7B1C4","rangeSelectorPlotStrokeColor":"#808FAB","interactionModel":"Dygraph.Interaction.defaultModel"},"scale":"daily","annotations":[],"shadings":[],"events":[],"format":"date","data":[["2013-01-01T00:00:00.000Z","2013-01-02T00:00:00.000Z","2013-01-03T00:00:00.000Z","2013-01-04T00:00:00.000Z","2013-01-05T00:00:00.000Z","2013-01-06T00:00:00.000Z","2013-01-07T00:00:00.000Z","2013-01-08T00:00:00.000Z","2013-01-09T00:00:00.000Z","2013-01-10T00:00:00.000Z","2013-01-11T00:00:00.000Z","2013-01-12T00:00:00.000Z","2013-01-13T00:00:00.000Z","2013-01-14T00:00:00.000Z","2013-01-15T00:00:00.000Z","2013-01-16T00:00:00.000Z","2013-01-17T00:00:00.000Z","2013-01-18T00:00:00.000Z","2013-01-19T00:00:00.000Z","2013-01-20T00:00:00.000Z","2013-01-21T00:00:00.000Z","2013-01-22T00:00:00.000Z","2013-01-23T00:00:00.000Z","2013-01-24T00:00:00.000Z","2013-01-25T00:00:00.000Z","2013-01-26T00:00:00.000Z","2013-01-27T00:00:00.000Z","2013-01-28T00:00:00.000Z","2013-01-29T00:00:00.000Z","2013-01-30T00:00:00.000Z","2013-01-31T00:00:00.000Z","2013-02-01T00:00:00.000Z","2013-02-02T00:00:00.000Z","2013-02-03T00:00:00.000Z","2013-02-04T00:00:00.000Z","2013-02-05T00:00:00.000Z","2013-02-06T00:00:00.000Z","2013-02-07T00:00:00.000Z","2013-02-08T00:00:00.000Z","2013-02-09T00:00:00.000Z","2013-02-10T00:00:00.000Z","2013-02-11T00:00:00.000Z","2013-02-12T00:00:00.000Z","2013-02-13T00:00:00.000Z","2013-02-14T00:00:00.000Z","2013-02-15T00:00:00.000Z","2013-02-16T00:00:00.000Z","2013-02-17T00:00:00.000Z","2013-02-18T00:00:00.000Z","2013-02-19T00:00:00.000Z","2013-02-20T00:00:00.000Z","2013-02-21T00:00:00.000Z","2013-02-22T00:00:00.000Z","2013-02-23T00:00:00.000Z","2013-02-24T00:00:00.000Z","2013-02-25T00:00:00.000Z","2013-02-26T00:00:00.000Z","2013-02-27T00:00:00.000Z","2013-02-28T00:00:00.000Z","2013-03-01T00:00:00.000Z","2013-03-02T00:00:00.000Z","2013-03-03T00:00:00.000Z","2013-03-04T00:00:00.000Z","2013-03-05T00:00:00.000Z","2013-03-06T00:00:00.000Z","2013-03-07T00:00:00.000Z","2013-03-08T00:00:00.000Z","2013-03-09T00:00:00.000Z","2013-03-10T00:00:00.000Z","2013-03-11T00:00:00.000Z","2013-03-12T00:00:00.000Z","2013-03-13T00:00:00.000Z","2013-03-14T00:00:00.000Z","2013-03-15T00:00:00.000Z","2013-03-16T00:00:00.000Z","2013-03-17T00:00:00.000Z","2013-03-18T00:00:00.000Z","2013-03-19T00:00:00.000Z","2013-03-20T00:00:00.000Z","2013-03-21T00:00:00.000Z","2013-03-22T00:00:00.000Z","2013-03-23T00:00:00.000Z","2013-03-24T00:00:00.000Z","2013-03-25T00:00:00.000Z","2013-03-26T00:00:00.000Z","2013-03-27T00:00:00.000Z","2013-03-28T00:00:00.000Z","2013-03-29T00:00:00.000Z","2013-03-30T00:00:00.000Z","2013-03-31T00:00:00.000Z","2013-03-31T23:00:00.000Z","2013-04-01T23:00:00.000Z","2013-04-02T23:00:00.000Z","2013-04-03T23:00:00.000Z","2013-04-04T23:00:00.000Z","2013-04-05T23:00:00.000Z","2013-04-06T23:00:00.000Z","2013-04-07T23:00:00.000Z","2013-04-08T23:00:00.000Z","2013-04-09T23:00:00.000Z","2013-04-10T23:00:00.000Z","2013-04-11T23:00:00.000Z","2013-04-12T23:00:00.000Z","2013-04-13T23:00:00.000Z","2013-04-14T23:00:00.000Z","2013-04-15T23:00:00.000Z","2013-04-16T23:00:00.000Z","2013-04-17T23:00:00.000Z","2013-04-18T23:00:00.000Z","2013-04-19T23:00:00.000Z","2013-04-20T23:00:00.000Z","2013-04-21T23:00:00.000Z","2013-04-22T23:00:00.000Z","2013-04-23T23:00:00.000Z","2013-04-24T23:00:00.000Z","2013-04-25T23:00:00.000Z","2013-04-26T23:00:00.000Z","2013-04-27T23:00:00.000Z","2013-04-28T23:00:00.000Z","2013-04-29T23:00:00.000Z","2013-04-30T23:00:00.000Z","2013-05-01T23:00:00.000Z","2013-05-02T23:00:00.000Z","2013-05-03T23:00:00.000Z","2013-05-04T23:00:00.000Z","2013-05-05T23:00:00.000Z","2013-05-06T23:00:00.000Z","2013-05-07T23:00:00.000Z","2013-05-08T23:00:00.000Z","2013-05-09T23:00:00.000Z","2013-05-10T23:00:00.000Z","2013-05-11T23:00:00.000Z","2013-05-12T23:00:00.000Z","2013-05-13T23:00:00.000Z","2013-05-14T23:00:00.000Z","2013-05-15T23:00:00.000Z","2013-05-16T23:00:00.000Z","2013-05-17T23:00:00.000Z","2013-05-18T23:00:00.000Z","2013-05-19T23:00:00.000Z","2013-05-20T23:00:00.000Z","2013-05-21T23:00:00.000Z","2013-05-22T23:00:00.000Z","2013-05-23T23:00:00.000Z","2013-05-24T23:00:00.000Z","2013-05-25T23:00:00.000Z","2013-05-26T23:00:00.000Z","2013-05-27T23:00:00.000Z","2013-05-28T23:00:00.000Z","2013-05-29T23:00:00.000Z","2013-05-30T23:00:00.000Z","2013-05-31T23:00:00.000Z","2013-06-01T23:00:00.000Z","2013-06-02T23:00:00.000Z","2013-06-03T23:00:00.000Z","2013-06-04T23:00:00.000Z","2013-06-05T23:00:00.000Z","2013-06-06T23:00:00.000Z","2013-06-07T23:00:00.000Z","2013-06-08T23:00:00.000Z","2013-06-09T23:00:00.000Z","2013-06-10T23:00:00.000Z","2013-06-11T23:00:00.000Z","2013-06-12T23:00:00.000Z","2013-06-13T23:00:00.000Z","2013-06-14T23:00:00.000Z","2013-06-15T23:00:00.000Z","2013-06-16T23:00:00.000Z","2013-06-17T23:00:00.000Z","2013-06-18T23:00:00.000Z","2013-06-19T23:00:00.000Z","2013-06-20T23:00:00.000Z","2013-06-21T23:00:00.000Z","2013-06-22T23:00:00.000Z","2013-06-23T23:00:00.000Z","2013-06-24T23:00:00.000Z","2013-06-25T23:00:00.000Z","2013-06-26T23:00:00.000Z","2013-06-27T23:00:00.000Z","2013-06-28T23:00:00.000Z","2013-06-29T23:00:00.000Z","2013-06-30T23:00:00.000Z","2013-07-01T23:00:00.000Z","2013-07-02T23:00:00.000Z","2013-07-03T23:00:00.000Z","2013-07-04T23:00:00.000Z","2013-07-05T23:00:00.000Z","2013-07-06T23:00:00.000Z","2013-07-07T23:00:00.000Z","2013-07-08T23:00:00.000Z","2013-07-09T23:00:00.000Z","2013-07-10T23:00:00.000Z","2013-07-11T23:00:00.000Z","2013-07-12T23:00:00.000Z","2013-07-13T23:00:00.000Z","2013-07-14T23:00:00.000Z","2013-07-15T23:00:00.000Z","2013-07-16T23:00:00.000Z","2013-07-17T23:00:00.000Z","2013-07-18T23:00:00.000Z","2013-07-19T23:00:00.000Z","2013-07-20T23:00:00.000Z","2013-07-21T23:00:00.000Z","2013-07-22T23:00:00.000Z","2013-07-23T23:00:00.000Z","2013-07-24T23:00:00.000Z","2013-07-25T23:00:00.000Z","2013-07-26T23:00:00.000Z","2013-07-27T23:00:00.000Z","2013-07-28T23:00:00.000Z","2013-07-29T23:00:00.000Z","2013-07-30T23:00:00.000Z","2013-07-31T23:00:00.000Z","2013-08-01T23:00:00.000Z","2013-08-02T23:00:00.000Z","2013-08-03T23:00:00.000Z","2013-08-04T23:00:00.000Z","2013-08-05T23:00:00.000Z","2013-08-06T23:00:00.000Z","2013-08-07T23:00:00.000Z","2013-08-08T23:00:00.000Z","2013-08-09T23:00:00.000Z","2013-08-10T23:00:00.000Z","2013-08-11T23:00:00.000Z","2013-08-12T23:00:00.000Z","2013-08-13T23:00:00.000Z","2013-08-14T23:00:00.000Z","2013-08-15T23:00:00.000Z","2013-08-16T23:00:00.000Z","2013-08-17T23:00:00.000Z","2013-08-18T23:00:00.000Z","2013-08-19T23:00:00.000Z","2013-08-20T23:00:00.000Z","2013-08-21T23:00:00.000Z","2013-08-22T23:00:00.000Z","2013-08-23T23:00:00.000Z","2013-08-24T23:00:00.000Z","2013-08-25T23:00:00.000Z","2013-08-26T23:00:00.000Z","2013-08-27T23:00:00.000Z","2013-08-28T23:00:00.000Z","2013-08-29T23:00:00.000Z","2013-08-30T23:00:00.000Z","2013-08-31T23:00:00.000Z","2013-09-01T23:00:00.000Z","2013-09-02T23:00:00.000Z","2013-09-03T23:00:00.000Z","2013-09-04T23:00:00.000Z","2013-09-05T23:00:00.000Z","2013-09-06T23:00:00.000Z","2013-09-07T23:00:00.000Z","2013-09-08T23:00:00.000Z","2013-09-09T23:00:00.000Z","2013-09-10T23:00:00.000Z","2013-09-11T23:00:00.000Z","2013-09-12T23:00:00.000Z","2013-09-13T23:00:00.000Z","2013-09-14T23:00:00.000Z","2013-09-15T23:00:00.000Z","2013-09-16T23:00:00.000Z","2013-09-17T23:00:00.000Z","2013-09-18T23:00:00.000Z","2013-09-19T23:00:00.000Z","2013-09-20T23:00:00.000Z","2013-09-21T23:00:00.000Z","2013-09-22T23:00:00.000Z","2013-09-23T23:00:00.000Z","2013-09-24T23:00:00.000Z","2013-09-25T23:00:00.000Z","2013-09-26T23:00:00.000Z","2013-09-27T23:00:00.000Z","2013-09-28T23:00:00.000Z","2013-09-29T23:00:00.000Z","2013-09-30T23:00:00.000Z","2013-10-01T23:00:00.000Z","2013-10-02T23:00:00.000Z","2013-10-03T23:00:00.000Z","2013-10-04T23:00:00.000Z","2013-10-05T23:00:00.000Z","2013-10-06T23:00:00.000Z","2013-10-07T23:00:00.000Z","2013-10-08T23:00:00.000Z","2013-10-09T23:00:00.000Z","2013-10-10T23:00:00.000Z","2013-10-11T23:00:00.000Z","2013-10-12T23:00:00.000Z","2013-10-13T23:00:00.000Z","2013-10-14T23:00:00.000Z","2013-10-15T23:00:00.000Z","2013-10-16T23:00:00.000Z","2013-10-17T23:00:00.000Z","2013-10-18T23:00:00.000Z","2013-10-19T23:00:00.000Z","2013-10-20T23:00:00.000Z","2013-10-21T23:00:00.000Z","2013-10-22T23:00:00.000Z","2013-10-23T23:00:00.000Z","2013-10-24T23:00:00.000Z","2013-10-25T23:00:00.000Z","2013-10-26T23:00:00.000Z","2013-10-28T00:00:00.000Z","2013-10-29T00:00:00.000Z","2013-10-30T00:00:00.000Z","2013-10-31T00:00:00.000Z","2013-11-01T00:00:00.000Z","2013-11-02T00:00:00.000Z","2013-11-03T00:00:00.000Z","2013-11-04T00:00:00.000Z","2013-11-05T00:00:00.000Z","2013-11-06T00:00:00.000Z","2013-11-07T00:00:00.000Z","2013-11-08T00:00:00.000Z","2013-11-09T00:00:00.000Z","2013-11-10T00:00:00.000Z","2013-11-11T00:00:00.000Z","2013-11-12T00:00:00.000Z","2013-11-13T00:00:00.000Z","2013-11-14T00:00:00.000Z","2013-11-15T00:00:00.000Z","2013-11-16T00:00:00.000Z","2013-11-17T00:00:00.000Z","2013-11-18T00:00:00.000Z","2013-11-19T00:00:00.000Z","2013-11-20T00:00:00.000Z","2013-11-21T00:00:00.000Z","2013-11-22T00:00:00.000Z","2013-11-23T00:00:00.000Z","2013-11-24T00:00:00.000Z","2013-11-25T00:00:00.000Z","2013-11-26T00:00:00.000Z","2013-11-27T00:00:00.000Z","2013-11-28T00:00:00.000Z","2013-11-29T00:00:00.000Z","2013-11-30T00:00:00.000Z","2013-12-01T00:00:00.000Z","2013-12-02T00:00:00.000Z","2013-12-03T00:00:00.000Z","2013-12-04T00:00:00.000Z","2013-12-05T00:00:00.000Z","2013-12-06T00:00:00.000Z","2013-12-07T00:00:00.000Z","2013-12-08T00:00:00.000Z","2013-12-09T00:00:00.000Z","2013-12-10T00:00:00.000Z","2013-12-11T00:00:00.000Z","2013-12-12T00:00:00.000Z","2013-12-13T00:00:00.000Z","2013-12-14T00:00:00.000Z","2013-12-15T00:00:00.000Z","2013-12-16T00:00:00.000Z","2013-12-17T00:00:00.000Z","2013-12-18T00:00:00.000Z","2013-12-19T00:00:00.000Z","2013-12-20T00:00:00.000Z","2013-12-21T00:00:00.000Z","2013-12-22T00:00:00.000Z","2013-12-23T00:00:00.000Z","2013-12-24T00:00:00.000Z","2013-12-25T00:00:00.000Z","2013-12-26T00:00:00.000Z","2013-12-27T00:00:00.000Z","2013-12-28T00:00:00.000Z","2013-12-29T00:00:00.000Z","2013-12-30T00:00:00.000Z","2013-12-31T00:00:00.000Z","2014-01-01T00:00:00.000Z"],[3,4,1,-7,-7,-2,-8,-8,-6,-11,-11,-14,-9,3,-3,16,1,-3,-12,-7,-3,2,-1,-1,3,-1,-9.5,-3,-12,-1,12,0,-9,-6,-3,1,-6,-5,10,-3,-5,7,-3,-6,-2,-3,-4,-12,-9.5,-3,-5,0,3,3,-8,-5,-5,11,-10,-8,-9,-13,-8,-10,-7.5,0,58,-9,-12,-7,3,-7,-7,-7,2.5,0,9,15,-3,-5,-6,3,-1,-1,-11,-11,-13,-14,-17,-10,0,-5,-4,-1,-2,-11,-9,-10,-9,-4,6,19,0,-3,-5,-8,-4,10,14,1,-3,19,13,4,23,11,-14,-11,-10,-13,-14,-13,-7,-15,-15,-12,-16,10,4,-3,2,-10,-12,-15,-12,-5,-6,-15,-3,-3,-6,5,30.5,10,-7,-14,-15,-9,-6,-10,-11,-16,-5,10,-5,-10,-6,5,-8,-9,3,-7,-5,30,4,-11,-9,3,13,4,-11,-11,-12,-8,14.5,15,5,8,14,0,11,44.5,1,2,-13.5,-15,-15,0,9,7,13,4,4,2,-16,-14,-6,-5.5,-6,-3,-1,-1,12,25,5,2,3,-7,7,3,-7,-8,11,2,-2,-4,-5,-8,-2,20,27,-1,-2,2,16,6,-2,-8,-12,-9,-9,-13,-14,10,-6,-16.5,-20,-18,-16,1,-6,-18,-15,-16,-2,-8,-18,-18,-19,-22,-16,-15,-15,-10,16,4,-17,-15,-7,-13,-16,-11,-13,-11,-8,-10,-12,-9,-9,-11,-19,-14,-15,-21,-16,-5,-10,-13,-10,5,-8,-11,-2,2,-13,-9,-7,-10,-7,-4,-2,-4,-5,-5,-4,-1,-4,-3,-5,-13,-7,-7,-9,-5,0,-4,-11,-1,-8,-8,-1,-3,-10,-9,-9,4,-12,-13,-8,-11,-2.5,-4,-6,-9,-5,-1,-1,-6,-8,-3,8,-5,-14,-17,-11.5,-7,-3,-7.5,12,9,1,10,29,35,7,0,-4,16,5.5,1,27,8,0,2,3,5,15,-1,-9,-2,-5,-8,-1,2,1,3]]},"evals":["attrs.interactionModel"],"jsHooks":[]}</script>
 <p><br></p>
@@ -1210,7 +1210,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1218,8 +1219,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/93-appendixC.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/93-appendixC.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1229,10 +1230,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

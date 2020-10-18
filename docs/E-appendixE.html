@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -738,7 +738,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="appendixE" class="section level1" number="34">
 <h1><span class="header-section-number">E</span> Versions of R Packages Used</h1>
 <p>If you are seeing different results than what is in the book, we recommend installing the exact version of the packages we used. This can be done by first installing the <code>remotes</code> package via <code>install.packages("remotes")</code>. Then, use <code>install_version()</code> replacing the <code>package</code> argument with the package name in quotes and the <code>version</code> argument with the particular version number to install.</p>
-<div class="sourceCode" id="cb1196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1196-1"><a href="E-appendixE.html#cb1196-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_version</span>(<span class="at">package =</span> <span class="st">&quot;skimr&quot;</span>, <span class="at">version =</span> <span class="st">&quot;1.0.6&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1119-1"><a href="E-appendixE.html#cb1119-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_version</span>(<span class="at">package =</span> <span class="st">&quot;skimr&quot;</span>, <span class="at">version =</span> <span class="st">&quot;1.0.6&quot;</span>)</span></code></pre></div>
 <!--
 \begin{multicols}{2}
 \setbox\ltmcbox\vbox{
@@ -1330,7 +1330,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1338,8 +1339,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/95-appendixE.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/95-appendixE.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1349,10 +1350,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

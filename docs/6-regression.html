@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -758,7 +758,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Needed packages</h3>
 <p>Let’s now load all the packages needed for this chapter (this assumes you’ve already installed them). In this chapter, we introduce some new packages:</p>
 <ol style="list-style-type: decimal">
-<li>The <code>tidyverse</code> “umbrella” <span class="citation"><a href="#ref-R-tidyverse" role="doc-biblioref"><strong>R-tidyverse?</strong></a></span> package. Recall from our discussion in Section <a href="5-tidy.html#tidyverse-package">5.4</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:
+<li>The <code>tidyverse</code> “umbrella” <span class="citation"><a href="references.html#ref-R-tidyverse" role="doc-biblioref">[21]</a></span> package. Recall from our discussion in Section <a href="5-tidy.html#tidyverse-package">5.4</a> that loading the <code>tidyverse</code> package by running <code>library(tidyverse)</code> loads the following commonly used data science packages all at once:
 <ul>
 <li><code>ggplot2</code> for data visualization</li>
 <li><code>dplyr</code> for data wrangling</li>
@@ -767,7 +767,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>As well as the more advanced <code>purrr</code>, <code>tibble</code>, <code>stringr</code>, and <code>forcats</code> packages</li>
 </ul></li>
 <li>The <code>moderndive</code>  package of datasets and functions for tidyverse-friendly introductory linear regression.</li>
-<li>The <code>skimr</code> <span class="citation"><a href="references.html#ref-R-skimr" role="doc-biblioref">[17]</a></span> package, which provides a simple-to-use function to quickly compute a wide array of commonly used summary statistics. </li>
+<li>The <code>skimr</code> <span class="citation"><a href="references.html#ref-R-skimr" role="doc-biblioref">[19]</a></span> package, which provides a simple-to-use function to quickly compute a wide array of commonly used summary statistics. </li>
 </ol>
 <p>If needed, read Section <a href="2-getting-started.html#packages">2.3</a> for information on how to install and load R packages.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="6-regression.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -915,7 +915,7 @@ age
 <pre><code># A tibble: 1 x 4
   mean_bty_avg mean_score median_bty_avg median_score
          &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
-1         4.42       4.17           4.33          4.3</code></pre>
+1      4.41784    4.17473          4.333          4.3</code></pre>
 <p>However, what if we want other summary statistics as well, such as the standard deviation (a measure of spread), the minimum and maximum values, and various percentiles?</p>
 <p>Typing out all these summary statistic functions in <code>summarize()</code> would be long and tedious. Instead, let’s use the convenient <code>skim()</code> function from the <code>skimr</code>  package. This function takes in a data frame, “skims” it, and returns commonly used summary statistics. Let’s take our <code>evals_ch5</code> data frame, <code>select()</code> only the outcome and explanatory variables teaching <code>score</code> and <code>bty_avg</code>, and pipe them into the <code>skim()</code> function:</p>
 <div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="6-regression.html#cb152-1" aria-hidden="true" tabindex="-1"></a>evals_ch5 <span class="sc">%&gt;%</span> <span class="fu">select</span>(score, bty_avg) <span class="sc">%&gt;%</span> <span class="fu">skim</span>()</span></code></pre></div>
@@ -970,9 +970,9 @@ FIGURE 6.1: Nine different correlation coefficients.
 <div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="6-regression.html#cb154-1" aria-hidden="true" tabindex="-1"></a>evals_ch5 <span class="sc">%&gt;%</span> </span>
 <span id="cb154-2"><a href="6-regression.html#cb154-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> score <span class="sc">~</span> bty_avg)</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
-    cor
-  &lt;dbl&gt;
-1 0.187</code></pre>
+       cor
+     &lt;dbl&gt;
+1 0.187142</code></pre>
 <p>An alternative way to compute correlation is to use the <code>cor()</code> summary function within a <code>summarize()</code>:</p>
 <div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="6-regression.html#cb156-1" aria-hidden="true" tabindex="-1"></a>evals_ch5 <span class="sc">%&gt;%</span> </span>
 <span id="cb156-2"><a href="6-regression.html#cb156-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(score, bty_avg))</span></code></pre></div>
@@ -2245,16 +2245,16 @@ FIGURE 6.12: Example of observed value, fitted value, and residual.
 <pre><code># A tibble: 463 x 5
       ID score bty_avg score_hat residual
    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
- 1     1   4.7    5         4.21    0.486
- 2     2   4.1    5         4.21   -0.114
- 3     3   3.9    5         4.21   -0.314
- 4     4   4.8    5         4.21    0.586
- 5     5   4.6    3         4.08    0.52 
- 6     6   4.3    3         4.08    0.22 
- 7     7   2.8    3         4.08   -1.28 
- 8     8   4.1    3.33      4.10   -0.002
- 9     9   3.4    3.33      4.10   -0.702
-10    10   4.5    3.17      4.09    0.409
+ 1     1 4.7   5           4.214  0.486  
+ 2     2 4.100 5           4.214 -0.114  
+ 3     3 3.9   5           4.214 -0.314  
+ 4     4 4.8   5           4.214  0.586  
+ 5     5 4.600 3           4.08   0.52   
+ 6     6 4.3   3           4.08   0.22   
+ 7     7 2.8   3           4.08  -1.28   
+ 8     8 4.100 3.333       4.102 -0.002  
+ 9     9 3.4   3.333       4.102 -0.702  
+10    10 4.5   3.16700     4.091  0.40900
 # ... with 453 more rows</code></pre>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="6-regression.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute sum of squared residuals</span></span>
 <span id="cb177-2"><a href="6-regression.html#cb177-2" aria-hidden="true" tabindex="-1"></a>regression_points <span class="sc">%&gt;%</span></span>
@@ -2263,7 +2263,7 @@ FIGURE 6.12: Example of observed value, fitted value, and residual.
 <pre><code># A tibble: 1 x 1
   sum_of_squared_residuals
                      &lt;dbl&gt;
-1                     132.</code></pre>
+1                  131.879</code></pre>
 <p>Any other straight line drawn in the figure would yield a sum of squared residuals greater than 132. This is a mathematically guaranteed fact that you can prove using calculus and linear algebra. That’s why alternative names for the linear regression line are the <em>best-fitting line</em> and the <em>least-squares line</em>. Why do we square the residuals (i.e., the arrow lengths)? So that both positive and negative deviations of the same amount are treated equally.</p>
 <div class="learncheck">
 <p>
@@ -2380,8 +2380,8 @@ bty_avg
 </table>
 <p>The <code>get_regression_table()</code> wrapper function takes two pre-existing functions in other R packages:</p>
 <ul>
-<li><code>tidy()</code>  from the <a href="https://broom.tidyverse.org/"><code>broom</code> package</a> <span class="citation"><a href="#ref-R-broom" role="doc-biblioref"><strong>R-broom?</strong></a></span> and</li>
-<li><code>clean_names()</code>  from the <a href="https://github.com/sfirke/janitor"><code>janitor</code> package</a> <span class="citation"><a href="references.html#ref-R-janitor" role="doc-biblioref">[14]</a></span></li>
+<li><code>tidy()</code>  from the <a href="https://broom.tidyverse.org/"><code>broom</code> package</a> <span class="citation"><a href="references.html#ref-R-broom" role="doc-biblioref">[10]</a></span> and</li>
+<li><code>clean_names()</code>  from the <a href="https://github.com/sfirke/janitor"><code>janitor</code> package</a> <span class="citation"><a href="references.html#ref-R-janitor" role="doc-biblioref">[15]</a></span></li>
 </ul>
 <p>and “wraps” them into a single function that takes in a saved <code>lm()</code> linear model, here <code>score_model</code>, and returns a regression table saved as a “tidy” data frame. Here is how we used the <code>tidy()</code> and <code>clean_names()</code> functions to produce Table <a href="6-regression.html#tab:regtable-broom">6.11</a>:</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="6-regression.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
@@ -2715,7 +2715,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -2723,8 +2724,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/05-regression.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/05-regression.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -2734,10 +2735,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

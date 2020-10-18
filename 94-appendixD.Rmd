@@ -827,7 +827,7 @@ skim_with(numeric = list(hist = NULL), integer = list(hist = NULL))
 ```{r}
 evals_ch5 %>%
   select(score, age) %>%
-  skim()
+  skimr::skim()
 ```
 
 (Note that for formatting purposes, the inline histogram that is usually printed with skim() has been removed. This can be done by running `skim_with(numeric = list(hist = NULL), integer = list(hist = NULL))` prior to using the `skim()` function as well.)

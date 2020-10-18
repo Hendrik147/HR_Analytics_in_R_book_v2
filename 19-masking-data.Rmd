@@ -130,7 +130,7 @@ whitehouse.bottom <- whitehouse_masked %>%
 Let us explore deeper anonymisation option of generating synthetic data. We will do on the basis of the fertility dataset available from UCI website: 
 https://archive.ics.uci.edu/ml/datasets/Fertility
 
-![UCI logo](images/UCI_logo.png)
+![UCI logo](images/UCI_logo.jpg)
 
 It needs to be loaded first and let us preview it.
 
@@ -281,7 +281,7 @@ library(smoothmest)
 
 The double exponential distribution is also commonly referred to as the Laplace distribution. The following is the plot of the double exponential probability density function.
 
-![plot of double exponential probability density function](images/dexpdf.png)
+![plot of double exponential probability density function](images/dexpdf.jpg)
 
 ```{r}
 set.seed(42)

@@ -7,8 +7,23 @@ bookdown::gitbook:
     toc:
       collapse: section
       scroll_highlight: true
+    sharing:
+      facebook: yes
+      twitter: yes
+      github: no
+      google: no
+      linkedin: no
+      weibo: no
+      instapaper: no
+      vk: no
+      all: ['facebook', 'google', 'twitter', 'linkedin']
+    toolbar:
+      position: fixed
+      download: 'docs/_HR_Analytics.live.pdf'
+      search: yes
     edit:
-      link: https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/%s
+      link: https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/%s
+      text: "Editing"
   includes:
     in_header: _includes/analytics.html
     before_body: _includes/logo.html

@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -752,8 +752,8 @@ TOTAL_HOURS - The total amount of absent hours for the given type of absence, de
 TOTAL EMPLOYEE - The total number of employees that worked in the given department and pay period
 TOTAL AVAL HOURS - The total number of hours scheduled for work for all employees in the given department and pay period
 LOST WORKTIME RATE - The total amount of absent hours for the given type of absence, department, and pay period divided by The total number of hours scheduled for work for all employees in the given department and pay period (metric defined by the Bureau of Labor Statistics)</p>
-<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="23-accidents-work.html#cb883-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div>
-<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="23-accidents-work.html#cb884-1" aria-hidden="true" tabindex="-1"></a>LTI_Analysis <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">col =</span> <span class="fu">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/LTI Analysis Data.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb835"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb835-1"><a href="23-accidents-work.html#cb835-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="23-accidents-work.html#cb836-1" aria-hidden="true" tabindex="-1"></a>LTI_Analysis <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">na =</span> <span class="st">&quot;NA&quot;</span>, <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">col =</span> <span class="fu">col_character</span>()), <span class="st">&quot;https://hranalytics.netlify.com/data/LTI Analysis Data.csv&quot;</span>)</span></code></pre></div>
 <p>Your incident and DART (Days Away, Restrictions and Transfers) rates are OSHA safety metrics that help you understand the effectiveness of your safety and risk management programs:
 * Your incident rate shows the total number of OSHA-recordable injuries and illness per 200,000 hours. The rate is viewed as a percentage of injuries per 100 employees per year.
 * Your DART rate calculates the rate of days away, restrictions and transfers per 200,000 worked.</p>
@@ -822,7 +822,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -830,8 +831,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/22-accidents-work.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/22-accidents-work.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -841,10 +842,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

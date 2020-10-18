@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -779,81 +779,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>At the end of this effort you will have something that looks like the data found at the following link:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6435&amp;authkey=!AL37Wt0sVLrsUYA&amp;ithint=file%2ctxt" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6435&amp;authkey=!AL37Wt0sVLrsUYA&amp;ithint=file%2ctxt</a></p>
 <p>Ensure all needed libraries are installed</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="19-job-classification.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb616-2"><a href="19-job-classification.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span></code></pre></div>
-<pre><code>Loading required package: lattice</code></pre>
-<pre><code>
-Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:httr&#39;:
-
-    progress</code></pre>
-<pre><code>The following objects are masked from &#39;package:yardstick&#39;:
-
-    precision, recall, sensitivity, specificity</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    lift</code></pre>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="19-job-classification.html#cb622-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span></code></pre></div>
-<pre><code>Loading required package: bitops</code></pre>
-<pre><code>Rattle: A free graphical interface for data science with R.
-Version 5.4.0 Copyright (c) 2006-2020 Togaware Pty Ltd.
-Type &#39;rattle()&#39; to shake, rattle, and roll your data.</code></pre>
-<pre><code>
-Attaching package: &#39;rattle&#39;</code></pre>
-<pre><code>The following object is masked _by_ &#39;.GlobalEnv&#39;:
-
-    weather</code></pre>
-<pre><code>The following object is masked from &#39;package:nycflights13&#39;:
-
-    weather</code></pre>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="19-job-classification.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span></code></pre></div>
-<pre><code>
-Attaching package: &#39;rpart&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:dials&#39;:
-
-    prune</code></pre>
-<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="19-job-classification.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span></code></pre></div>
-<pre><code>randomForest 4.6-14</code></pre>
-<pre><code>Type rfNews() to see new features/changes/bug fixes.</code></pre>
-<pre><code>
-Attaching package: &#39;randomForest&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:rattle&#39;:
-
-    importance</code></pre>
-<pre><code>The following object is masked from &#39;package:dplyr&#39;:
-
-    combine</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
-
-    margin</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="19-job-classification.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span></code></pre></div>
-<pre><code>
-Attaching package: &#39;kernlab&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:purrr&#39;:
-
-    cross</code></pre>
-<pre><code>The following object is masked from &#39;package:scales&#39;:
-
-    alpha</code></pre>
-<pre><code>The following object is masked from &#39;package:ggplot2&#39;:
-
-    alpha</code></pre>
-<div class="sourceCode" id="cb643"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb643-1"><a href="19-job-classification.html#cb643-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
-<span id="cb643-2"><a href="19-job-classification.html#cb643-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb643-3"><a href="19-job-classification.html#cb643-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb643-4"><a href="19-job-classification.html#cb643-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span></code></pre></div>
-<pre><code>Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
-<pre><code>
-Attaching package: &#39;pROC&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    cov, smooth, var</code></pre>
-<div class="sourceCode" id="cb647"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb647-1"><a href="19-job-classification.html#cb647-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ada)</span></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="19-job-classification.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb599-2"><a href="19-job-classification.html#cb599-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb599-3"><a href="19-job-classification.html#cb599-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
+<span id="cb599-4"><a href="19-job-classification.html#cb599-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
+<span id="cb599-5"><a href="19-job-classification.html#cb599-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest)</span>
+<span id="cb599-6"><a href="19-job-classification.html#cb599-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab)</span>
+<span id="cb599-7"><a href="19-job-classification.html#cb599-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb599-8"><a href="19-job-classification.html#cb599-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb599-9"><a href="19-job-classification.html#cb599-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
+<span id="cb599-10"><a href="19-job-classification.html#cb599-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pROC)</span>
+<span id="cb599-11"><a href="19-job-classification.html#cb599-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ada)</span></code></pre></div>
 <p>###Manage The Data</p>
 <p>In this step we check the data for errors, organize the data for model building, and take an initial look at what the data is telling us.</p>
 <p>####Check the data for errors</p>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="19-job-classification.html#cb648-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/jobclassinfo2.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb649"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb649-1"><a href="19-job-classification.html#cb649-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(MYdataset)</span></code></pre></div>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="19-job-classification.html#cb600-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://https://hranalytics.netlify.com/data/jobclassinfo2.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="19-job-classification.html#cb601-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(MYdataset)</span></code></pre></div>
 <pre><code>tibble [66 x 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ ID                  : num [1:66] 1 2 3 4 5 6 7 8 9 10 ...
  $ JobFamily           : num [1:66] 1 1 1 1 2 2 2 2 2 3 ...
@@ -886,7 +827,7 @@ Attaching package: &#39;pROC&#39;</code></pre>
   ..   FinancialBudget = col_double(),
   ..   PG = col_character()
   .. )</code></pre>
-<div class="sourceCode" id="cb651"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb651-1"><a href="19-job-classification.html#cb651-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MYdataset)</span></code></pre></div>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="19-job-classification.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(MYdataset)</span></code></pre></div>
 <pre><code>       ID         JobFamily     JobFamilyDescription    JobClass   
  Min.   : 1.0   Min.   : 1.00   Length:66            Min.   : 1.0  
  1st Qu.:17.2   1st Qu.: 4.00   Class :character     1st Qu.:17.2  
@@ -918,97 +859,97 @@ Attaching package: &#39;pROC&#39;</code></pre>
 <p>On the surface there doesn’t seem to be any issues with data. This gives a summary of the layout of the data and the likely values we can expect. PG is the category we will predict. It’s a categorical representation of the numeric paygrade. Education level through Financial Budgeting Responsibility will be the independent variables/measures we will use to predict. The other columns in file will be ignored.</p>
 <p>####Organize the data</p>
 <p>Let’s narrow down the information to just the data used in the model.</p>
-<div class="sourceCode" id="cb653"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb653-1"><a href="19-job-classification.html#cb653-1" aria-hidden="true" tabindex="-1"></a>MYnobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(MYdataset) <span class="co"># The data set is made of 66 observations</span></span>
-<span id="cb653-2"><a href="19-job-classification.html#cb653-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-3"><a href="19-job-classification.html#cb653-3" aria-hidden="true" tabindex="-1"></a>MYsample <span class="ot">&lt;-</span> MYtrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(MYdataset), <span class="fl">0.7</span><span class="sc">*</span>MYnobs) <span class="co"># 70% of those 66 observations (i.e. 46 observations) will form our training dataset.</span></span>
-<span id="cb653-4"><a href="19-job-classification.html#cb653-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-5"><a href="19-job-classification.html#cb653-5" aria-hidden="true" tabindex="-1"></a>MYvalidate <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">setdiff</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(MYdataset)), MYtrain), <span class="fl">0.14</span><span class="sc">*</span>MYnobs) <span class="co"># 14% of those 66 observations (i.e. 9 observations) will form our validation dataset.</span></span>
-<span id="cb653-6"><a href="19-job-classification.html#cb653-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-7"><a href="19-job-classification.html#cb653-7" aria-hidden="true" tabindex="-1"></a>MYtest <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">setdiff</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(MYdataset)), MYtrain), MYvalidate) <span class="co"># # The remaining observations (i.e. 11 observations) will form our test dataset.</span></span>
-<span id="cb653-8"><a href="19-job-classification.html#cb653-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-9"><a href="19-job-classification.html#cb653-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-10"><a href="19-job-classification.html#cb653-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The following variable selections have been noted.</span></span>
-<span id="cb653-11"><a href="19-job-classification.html#cb653-11" aria-hidden="true" tabindex="-1"></a>MYinput <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</span>
-<span id="cb653-12"><a href="19-job-classification.html#cb653-12" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</span>
-<span id="cb653-13"><a href="19-job-classification.html#cb653-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-14"><a href="19-job-classification.html#cb653-14" aria-hidden="true" tabindex="-1"></a>MYnumeric <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</span>
-<span id="cb653-15"><a href="19-job-classification.html#cb653-15" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</span>
-<span id="cb653-16"><a href="19-job-classification.html#cb653-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-17"><a href="19-job-classification.html#cb653-17" aria-hidden="true" tabindex="-1"></a>MYcategoric <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb653-18"><a href="19-job-classification.html#cb653-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb653-19"><a href="19-job-classification.html#cb653-19" aria-hidden="true" tabindex="-1"></a>MYtarget  <span class="ot">&lt;-</span> <span class="st">&quot;PG&quot;</span></span>
-<span id="cb653-20"><a href="19-job-classification.html#cb653-20" aria-hidden="true" tabindex="-1"></a>MYrisk    <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb653-21"><a href="19-job-classification.html#cb653-21" aria-hidden="true" tabindex="-1"></a>MYident   <span class="ot">&lt;-</span> <span class="st">&quot;ID&quot;</span></span>
-<span id="cb653-22"><a href="19-job-classification.html#cb653-22" aria-hidden="true" tabindex="-1"></a>MYignore  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JobFamily&quot;</span>, <span class="st">&quot;JobFamilyDescription&quot;</span>, <span class="st">&quot;JobClass&quot;</span>, <span class="st">&quot;JobClassDescription&quot;</span>, <span class="st">&quot;PayGrade&quot;</span>)</span>
-<span id="cb653-23"><a href="19-job-classification.html#cb653-23" aria-hidden="true" tabindex="-1"></a>MYweights <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="19-job-classification.html#cb605-1" aria-hidden="true" tabindex="-1"></a>MYnobs <span class="ot">&lt;-</span> <span class="fu">nrow</span>(MYdataset) <span class="co"># The data set is made of 66 observations</span></span>
+<span id="cb605-2"><a href="19-job-classification.html#cb605-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-3"><a href="19-job-classification.html#cb605-3" aria-hidden="true" tabindex="-1"></a>MYsample <span class="ot">&lt;-</span> MYtrain <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(MYdataset), <span class="fl">0.7</span><span class="sc">*</span>MYnobs) <span class="co"># 70% of those 66 observations (i.e. 46 observations) will form our training dataset.</span></span>
+<span id="cb605-4"><a href="19-job-classification.html#cb605-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-5"><a href="19-job-classification.html#cb605-5" aria-hidden="true" tabindex="-1"></a>MYvalidate <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">setdiff</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(MYdataset)), MYtrain), <span class="fl">0.14</span><span class="sc">*</span>MYnobs) <span class="co"># 14% of those 66 observations (i.e. 9 observations) will form our validation dataset.</span></span>
+<span id="cb605-6"><a href="19-job-classification.html#cb605-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-7"><a href="19-job-classification.html#cb605-7" aria-hidden="true" tabindex="-1"></a>MYtest <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">setdiff</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(MYdataset)), MYtrain), MYvalidate) <span class="co"># # The remaining observations (i.e. 11 observations) will form our test dataset.</span></span>
+<span id="cb605-8"><a href="19-job-classification.html#cb605-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-9"><a href="19-job-classification.html#cb605-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-10"><a href="19-job-classification.html#cb605-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The following variable selections have been noted.</span></span>
+<span id="cb605-11"><a href="19-job-classification.html#cb605-11" aria-hidden="true" tabindex="-1"></a>MYinput <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</span>
+<span id="cb605-12"><a href="19-job-classification.html#cb605-12" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</span>
+<span id="cb605-13"><a href="19-job-classification.html#cb605-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-14"><a href="19-job-classification.html#cb605-14" aria-hidden="true" tabindex="-1"></a>MYnumeric <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;EducationLevel&quot;</span>, <span class="st">&quot;Experience&quot;</span>, <span class="st">&quot;OrgImpact&quot;</span>, <span class="st">&quot;ProblemSolving&quot;</span>,</span>
+<span id="cb605-15"><a href="19-job-classification.html#cb605-15" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Supervision&quot;</span>, <span class="st">&quot;ContactLevel&quot;</span>, <span class="st">&quot;FinancialBudget&quot;</span>)</span>
+<span id="cb605-16"><a href="19-job-classification.html#cb605-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-17"><a href="19-job-classification.html#cb605-17" aria-hidden="true" tabindex="-1"></a>MYcategoric <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb605-18"><a href="19-job-classification.html#cb605-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb605-19"><a href="19-job-classification.html#cb605-19" aria-hidden="true" tabindex="-1"></a>MYtarget  <span class="ot">&lt;-</span> <span class="st">&quot;PG&quot;</span></span>
+<span id="cb605-20"><a href="19-job-classification.html#cb605-20" aria-hidden="true" tabindex="-1"></a>MYrisk    <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb605-21"><a href="19-job-classification.html#cb605-21" aria-hidden="true" tabindex="-1"></a>MYident   <span class="ot">&lt;-</span> <span class="st">&quot;ID&quot;</span></span>
+<span id="cb605-22"><a href="19-job-classification.html#cb605-22" aria-hidden="true" tabindex="-1"></a>MYignore  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;JobFamily&quot;</span>, <span class="st">&quot;JobFamilyDescription&quot;</span>, <span class="st">&quot;JobClass&quot;</span>, <span class="st">&quot;JobClassDescription&quot;</span>, <span class="st">&quot;PayGrade&quot;</span>)</span>
+<span id="cb605-23"><a href="19-job-classification.html#cb605-23" aria-hidden="true" tabindex="-1"></a>MYweights <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 <p>We are predominantly interested in MYinput and MYtarget because they represent the predictors and what needs to be predicted respectively. You will notice for the time being that we are not partitioning the data. This will be elaborated upon in model building.</p>
 <p>###What the data is initially telling us</p>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="19-job-classification.html#cb654-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb654-2"><a href="19-job-classification.html#cb654-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb654-3"><a href="19-job-classification.html#cb654-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(PG)) <span class="sc">+</span></span>
-<span id="cb654-4"><a href="19-job-classification.html#cb654-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb654-5"><a href="19-job-classification.html#cb654-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb654-6"><a href="19-job-classification.html#cb654-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb654-7"><a href="19-job-classification.html#cb654-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per PG category&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="19-job-classification.html#cb606-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb606-2"><a href="19-job-classification.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb606-3"><a href="19-job-classification.html#cb606-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(PG)) <span class="sc">+</span></span>
+<span id="cb606-4"><a href="19-job-classification.html#cb606-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb606-5"><a href="19-job-classification.html#cb606-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb606-6"><a href="19-job-classification.html#cb606-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb606-7"><a href="19-job-classification.html#cb606-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per PG category&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb655"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb655-1"><a href="19-job-classification.html#cb655-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb655-2"><a href="19-job-classification.html#cb655-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb655-3"><a href="19-job-classification.html#cb655-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(JobFamilyDescription)) <span class="sc">+</span></span>
-<span id="cb655-4"><a href="19-job-classification.html#cb655-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb655-5"><a href="19-job-classification.html#cb655-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb655-6"><a href="19-job-classification.html#cb655-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb655-7"><a href="19-job-classification.html#cb655-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per job family&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="19-job-classification.html#cb607-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb607-2"><a href="19-job-classification.html#cb607-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb607-3"><a href="19-job-classification.html#cb607-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(JobFamilyDescription)) <span class="sc">+</span></span>
+<span id="cb607-4"><a href="19-job-classification.html#cb607-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb607-5"><a href="19-job-classification.html#cb607-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb607-6"><a href="19-job-classification.html#cb607-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb607-7"><a href="19-job-classification.html#cb607-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per job family&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="19-job-classification.html#cb656-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb656-2"><a href="19-job-classification.html#cb656-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb656-3"><a href="19-job-classification.html#cb656-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(EducationLevel) <span class="sc">+</span> </span>
-<span id="cb656-4"><a href="19-job-classification.html#cb656-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb656-5"><a href="19-job-classification.html#cb656-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per Education level&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="19-job-classification.html#cb608-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb608-2"><a href="19-job-classification.html#cb608-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb608-3"><a href="19-job-classification.html#cb608-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(EducationLevel) <span class="sc">+</span> </span>
+<span id="cb608-4"><a href="19-job-classification.html#cb608-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb608-5"><a href="19-job-classification.html#cb608-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per Education level&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-3.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="19-job-classification.html#cb657-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb657-2"><a href="19-job-classification.html#cb657-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb657-3"><a href="19-job-classification.html#cb657-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(Experience) <span class="sc">+</span> </span>
-<span id="cb657-4"><a href="19-job-classification.html#cb657-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb657-5"><a href="19-job-classification.html#cb657-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per experience&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="19-job-classification.html#cb609-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb609-2"><a href="19-job-classification.html#cb609-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb609-3"><a href="19-job-classification.html#cb609-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(Experience) <span class="sc">+</span> </span>
+<span id="cb609-4"><a href="19-job-classification.html#cb609-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb609-5"><a href="19-job-classification.html#cb609-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per experience&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-4.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="19-job-classification.html#cb658-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb658-2"><a href="19-job-classification.html#cb658-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb658-3"><a href="19-job-classification.html#cb658-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(OrgImpact) <span class="sc">+</span> </span>
-<span id="cb658-4"><a href="19-job-classification.html#cb658-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb658-5"><a href="19-job-classification.html#cb658-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per organisational impact&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="19-job-classification.html#cb610-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb610-2"><a href="19-job-classification.html#cb610-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb610-3"><a href="19-job-classification.html#cb610-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(OrgImpact) <span class="sc">+</span> </span>
+<span id="cb610-4"><a href="19-job-classification.html#cb610-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb610-5"><a href="19-job-classification.html#cb610-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per organisational impact&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-5.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="19-job-classification.html#cb659-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb659-2"><a href="19-job-classification.html#cb659-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb659-3"><a href="19-job-classification.html#cb659-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(ProblemSolving) <span class="sc">+</span> </span>
-<span id="cb659-4"><a href="19-job-classification.html#cb659-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb659-5"><a href="19-job-classification.html#cb659-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per problem solving&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="19-job-classification.html#cb611-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb611-2"><a href="19-job-classification.html#cb611-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb611-3"><a href="19-job-classification.html#cb611-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(ProblemSolving) <span class="sc">+</span> </span>
+<span id="cb611-4"><a href="19-job-classification.html#cb611-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb611-5"><a href="19-job-classification.html#cb611-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per problem solving&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-6.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="19-job-classification.html#cb660-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb660-2"><a href="19-job-classification.html#cb660-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb660-3"><a href="19-job-classification.html#cb660-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(Supervision) <span class="sc">+</span> </span>
-<span id="cb660-4"><a href="19-job-classification.html#cb660-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb660-5"><a href="19-job-classification.html#cb660-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per supervision&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="19-job-classification.html#cb612-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb612-2"><a href="19-job-classification.html#cb612-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb612-3"><a href="19-job-classification.html#cb612-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(Supervision) <span class="sc">+</span> </span>
+<span id="cb612-4"><a href="19-job-classification.html#cb612-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb612-5"><a href="19-job-classification.html#cb612-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per supervision&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-7.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="19-job-classification.html#cb661-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
-<span id="cb661-2"><a href="19-job-classification.html#cb661-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb661-3"><a href="19-job-classification.html#cb661-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(ContactLevel) <span class="sc">+</span> </span>
-<span id="cb661-4"><a href="19-job-classification.html#cb661-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
-<span id="cb661-5"><a href="19-job-classification.html#cb661-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per contact level&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="19-job-classification.html#cb613-1" aria-hidden="true" tabindex="-1"></a>MYdataset <span class="sc">%&gt;%</span></span>
+<span id="cb613-2"><a href="19-job-classification.html#cb613-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb613-3"><a href="19-job-classification.html#cb613-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(ContactLevel) <span class="sc">+</span> </span>
+<span id="cb613-4"><a href="19-job-classification.html#cb613-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">fill =</span> <span class="st">&quot;steelblue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb613-5"><a href="19-job-classification.html#cb613-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of job classifications per contact level&quot;</span>) </span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-575-8.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>Let’s use the caret library again for some graphical representations of this data.</p>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="19-job-classification.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
-<span id="cb662-2"><a href="19-job-classification.html#cb662-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-3"><a href="19-job-classification.html#cb662-3" aria-hidden="true" tabindex="-1"></a>MYdataset<span class="sc">$</span>PG <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(MYdataset<span class="sc">$</span>PG)</span>
-<span id="cb662-4"><a href="19-job-classification.html#cb662-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb662-5"><a href="19-job-classification.html#cb662-5" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x =</span> MYdataset[,<span class="dv">7</span><span class="sc">:</span><span class="dv">13</span>], </span>
-<span id="cb662-6"><a href="19-job-classification.html#cb662-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> MYdataset<span class="sc">$</span>PG, </span>
-<span id="cb662-7"><a href="19-job-classification.html#cb662-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot =</span> <span class="st">&quot;density&quot;</span>, </span>
-<span id="cb662-8"><a href="19-job-classification.html#cb662-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="19-job-classification.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret)</span>
+<span id="cb614-2"><a href="19-job-classification.html#cb614-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb614-3"><a href="19-job-classification.html#cb614-3" aria-hidden="true" tabindex="-1"></a>MYdataset<span class="sc">$</span>PG <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(MYdataset<span class="sc">$</span>PG)</span>
+<span id="cb614-4"><a href="19-job-classification.html#cb614-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb614-5"><a href="19-job-classification.html#cb614-5" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x =</span> MYdataset[,<span class="dv">7</span><span class="sc">:</span><span class="dv">13</span>], </span>
+<span id="cb614-6"><a href="19-job-classification.html#cb614-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> MYdataset<span class="sc">$</span>PG, </span>
+<span id="cb614-7"><a href="19-job-classification.html#cb614-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot =</span> <span class="st">&quot;density&quot;</span>, </span>
+<span id="cb614-8"><a href="19-job-classification.html#cb614-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-576-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="19-job-classification.html#cb663-1" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x =</span> MYdataset[,<span class="dv">7</span><span class="sc">:</span><span class="dv">13</span>], </span>
-<span id="cb663-2"><a href="19-job-classification.html#cb663-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> MYdataset<span class="sc">$</span>PG, </span>
-<span id="cb663-3"><a href="19-job-classification.html#cb663-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot =</span> <span class="st">&quot;box&quot;</span>, </span>
-<span id="cb663-4"><a href="19-job-classification.html#cb663-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="19-job-classification.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">featurePlot</span>(<span class="at">x =</span> MYdataset[,<span class="dv">7</span><span class="sc">:</span><span class="dv">13</span>], </span>
+<span id="cb615-2"><a href="19-job-classification.html#cb615-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> MYdataset<span class="sc">$</span>PG, </span>
+<span id="cb615-3"><a href="19-job-classification.html#cb615-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">plot =</span> <span class="st">&quot;box&quot;</span>, </span>
+<span id="cb615-4"><a href="19-job-classification.html#cb615-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="dv">2</span>))</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-576-2.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 <p>The first set of charts shows the distribution of the independent variable values (predictors) by PG.</p>
 <p>The second set of charts show the range of values of the predictors by PG. PG is ordered left to right in ascending order from PG1 to PG10. In each of the predictors we would expect increasing levels as we move up the paygrades and from left to right (or at least not dropping from previous paygrade).</p>
@@ -1023,33 +964,33 @@ Attaching package: &#39;pROC&#39;</code></pre>
 </ul>
 <p>Please note that in our case we want to use the job description to predict the payscale grade (PG), so we make the formula (PG ~ .). In other words, we’re representing the relationship between payscale grades (PG) and the remaining variables (.).</p>
 <p>###Decision Tree</p>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="19-job-classification.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;rattle&#39; package provides a graphical user interface to very many other packages that provide functionality for data mining.</span></span>
-<span id="cb664-2"><a href="19-job-classification.html#cb664-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-3"><a href="19-job-classification.html#cb664-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
-<span id="cb664-4"><a href="19-job-classification.html#cb664-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-5"><a href="19-job-classification.html#cb664-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;rpart&#39; package provides the &#39;rpart&#39; function.</span></span>
-<span id="cb664-6"><a href="19-job-classification.html#cb664-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-7"><a href="19-job-classification.html#cb664-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb664-8"><a href="19-job-classification.html#cb664-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-9"><a href="19-job-classification.html#cb664-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset the random number seed to obtain the same results each time.</span></span>
-<span id="cb664-10"><a href="19-job-classification.html#cb664-10" aria-hidden="true" tabindex="-1"></a>crv<span class="sc">$</span>seed <span class="ot">&lt;-</span> <span class="dv">42</span> </span>
-<span id="cb664-11"><a href="19-job-classification.html#cb664-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(crv<span class="sc">$</span>seed)</span>
-<span id="cb664-12"><a href="19-job-classification.html#cb664-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-13"><a href="19-job-classification.html#cb664-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the Decision Tree model.</span></span>
-<span id="cb664-14"><a href="19-job-classification.html#cb664-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-15"><a href="19-job-classification.html#cb664-15" aria-hidden="true" tabindex="-1"></a>MYrpart <span class="ot">&lt;-</span> <span class="fu">rpart</span>(PG <span class="sc">~</span> .,</span>
-<span id="cb664-16"><a href="19-job-classification.html#cb664-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>MYdataset[, <span class="fu">c</span>(MYinput, MYtarget)],</span>
-<span id="cb664-17"><a href="19-job-classification.html#cb664-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">method=</span><span class="st">&quot;class&quot;</span>,</span>
-<span id="cb664-18"><a href="19-job-classification.html#cb664-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">parms=</span><span class="fu">list</span>(<span class="at">split=</span><span class="st">&quot;information&quot;</span>),</span>
-<span id="cb664-19"><a href="19-job-classification.html#cb664-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">control=</span><span class="fu">rpart.control</span>(<span class="at">minsplit=</span><span class="dv">10</span>,</span>
-<span id="cb664-20"><a href="19-job-classification.html#cb664-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">minbucket=</span><span class="dv">2</span>,</span>
-<span id="cb664-21"><a href="19-job-classification.html#cb664-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">maxdepth=</span><span class="dv">10</span>,</span>
-<span id="cb664-22"><a href="19-job-classification.html#cb664-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">usesurrogate=</span><span class="dv">0</span>, </span>
-<span id="cb664-23"><a href="19-job-classification.html#cb664-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">maxsurrogate=</span><span class="dv">0</span>))</span>
-<span id="cb664-24"><a href="19-job-classification.html#cb664-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-25"><a href="19-job-classification.html#cb664-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the Decision Tree model.</span></span>
-<span id="cb664-26"><a href="19-job-classification.html#cb664-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb664-27"><a href="19-job-classification.html#cb664-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(MYrpart)</span></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="19-job-classification.html#cb616-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;rattle&#39; package provides a graphical user interface to very many other packages that provide functionality for data mining.</span></span>
+<span id="cb616-2"><a href="19-job-classification.html#cb616-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-3"><a href="19-job-classification.html#cb616-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rattle)</span>
+<span id="cb616-4"><a href="19-job-classification.html#cb616-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-5"><a href="19-job-classification.html#cb616-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;rpart&#39; package provides the &#39;rpart&#39; function.</span></span>
+<span id="cb616-6"><a href="19-job-classification.html#cb616-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-7"><a href="19-job-classification.html#cb616-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
+<span id="cb616-8"><a href="19-job-classification.html#cb616-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-9"><a href="19-job-classification.html#cb616-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset the random number seed to obtain the same results each time.</span></span>
+<span id="cb616-10"><a href="19-job-classification.html#cb616-10" aria-hidden="true" tabindex="-1"></a>crv<span class="sc">$</span>seed <span class="ot">&lt;-</span> <span class="dv">42</span> </span>
+<span id="cb616-11"><a href="19-job-classification.html#cb616-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(crv<span class="sc">$</span>seed)</span>
+<span id="cb616-12"><a href="19-job-classification.html#cb616-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-13"><a href="19-job-classification.html#cb616-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the Decision Tree model.</span></span>
+<span id="cb616-14"><a href="19-job-classification.html#cb616-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-15"><a href="19-job-classification.html#cb616-15" aria-hidden="true" tabindex="-1"></a>MYrpart <span class="ot">&lt;-</span> <span class="fu">rpart</span>(PG <span class="sc">~</span> .,</span>
+<span id="cb616-16"><a href="19-job-classification.html#cb616-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">data=</span>MYdataset[, <span class="fu">c</span>(MYinput, MYtarget)],</span>
+<span id="cb616-17"><a href="19-job-classification.html#cb616-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">method=</span><span class="st">&quot;class&quot;</span>,</span>
+<span id="cb616-18"><a href="19-job-classification.html#cb616-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">parms=</span><span class="fu">list</span>(<span class="at">split=</span><span class="st">&quot;information&quot;</span>),</span>
+<span id="cb616-19"><a href="19-job-classification.html#cb616-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">control=</span><span class="fu">rpart.control</span>(<span class="at">minsplit=</span><span class="dv">10</span>,</span>
+<span id="cb616-20"><a href="19-job-classification.html#cb616-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">minbucket=</span><span class="dv">2</span>,</span>
+<span id="cb616-21"><a href="19-job-classification.html#cb616-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">maxdepth=</span><span class="dv">10</span>,</span>
+<span id="cb616-22"><a href="19-job-classification.html#cb616-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">usesurrogate=</span><span class="dv">0</span>, </span>
+<span id="cb616-23"><a href="19-job-classification.html#cb616-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">maxsurrogate=</span><span class="dv">0</span>))</span>
+<span id="cb616-24"><a href="19-job-classification.html#cb616-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-25"><a href="19-job-classification.html#cb616-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the Decision Tree model.</span></span>
+<span id="cb616-26"><a href="19-job-classification.html#cb616-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-27"><a href="19-job-classification.html#cb616-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(MYrpart)</span></code></pre></div>
 <pre><code>n= 66 
 
 node), split, n, loss, yval, (yprob)
@@ -1076,7 +1017,7 @@ node), split, n, loss, yval, (yprob)
       12) ContactLevel&gt;=6.5 10  3 PG08 (0 0 0 0 0 0 0 0.7 0.3 0) *
       13) ContactLevel&lt; 6.5 3  0 PG09 (0 0 0 0 0 0 0 0 1 0) *
      7) ProblemSolving&gt;=5.5 6  0 PG10 (0 0 0 0 0 0 0 0 0 1) *</code></pre>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="19-job-classification.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(MYrpart)</span></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="19-job-classification.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="fu">printcp</span>(MYrpart)</span></code></pre></div>
 <pre><code>
 Classification tree:
 rpart(formula = PG ~ ., data = MYdataset[, c(MYinput, MYtarget)], 
@@ -1098,27 +1039,27 @@ n= 66
 5 0.04      7       0.4    0.7 0.08
 6 0.02      9       0.3    0.6 0.08
 7 0.01     10       0.3    0.6 0.08</code></pre>
-<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="19-job-classification.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="19-job-classification.html#cb620-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <p>###Random Forest</p>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="19-job-classification.html#cb669-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;randomForest&#39; package provides the &#39;randomForest&#39; function.</span></span>
-<span id="cb669-2"><a href="19-job-classification.html#cb669-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-3"><a href="19-job-classification.html#cb669-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb669-4"><a href="19-job-classification.html#cb669-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-5"><a href="19-job-classification.html#cb669-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the Random Forest model.</span></span>
-<span id="cb669-6"><a href="19-job-classification.html#cb669-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-7"><a href="19-job-classification.html#cb669-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(crv<span class="sc">$</span>seed)</span>
-<span id="cb669-8"><a href="19-job-classification.html#cb669-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-9"><a href="19-job-classification.html#cb669-9" aria-hidden="true" tabindex="-1"></a>MYrf <span class="ot">&lt;-</span> randomForest<span class="sc">::</span><span class="fu">randomForest</span>(PG <span class="sc">~</span> ., <span class="co"># PG ~ .</span></span>
-<span id="cb669-10"><a href="19-job-classification.html#cb669-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], </span>
-<span id="cb669-11"><a href="19-job-classification.html#cb669-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">ntree=</span><span class="dv">500</span>,</span>
-<span id="cb669-12"><a href="19-job-classification.html#cb669-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">mtry=</span><span class="dv">2</span>,</span>
-<span id="cb669-13"><a href="19-job-classification.html#cb669-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">importance=</span><span class="cn">TRUE</span>,</span>
-<span id="cb669-14"><a href="19-job-classification.html#cb669-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.action=</span>randomForest<span class="sc">::</span>na.roughfix,</span>
-<span id="cb669-15"><a href="19-job-classification.html#cb669-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb669-16"><a href="19-job-classification.html#cb669-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-17"><a href="19-job-classification.html#cb669-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate textual output of &#39;Random Forest&#39; model.</span></span>
-<span id="cb669-18"><a href="19-job-classification.html#cb669-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-19"><a href="19-job-classification.html#cb669-19" aria-hidden="true" tabindex="-1"></a>MYrf</span></code></pre></div>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="19-job-classification.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;randomForest&#39; package provides the &#39;randomForest&#39; function.</span></span>
+<span id="cb621-2"><a href="19-job-classification.html#cb621-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-3"><a href="19-job-classification.html#cb621-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForest, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
+<span id="cb621-4"><a href="19-job-classification.html#cb621-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-5"><a href="19-job-classification.html#cb621-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the Random Forest model.</span></span>
+<span id="cb621-6"><a href="19-job-classification.html#cb621-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-7"><a href="19-job-classification.html#cb621-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(crv<span class="sc">$</span>seed)</span>
+<span id="cb621-8"><a href="19-job-classification.html#cb621-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-9"><a href="19-job-classification.html#cb621-9" aria-hidden="true" tabindex="-1"></a>MYrf <span class="ot">&lt;-</span> randomForest<span class="sc">::</span><span class="fu">randomForest</span>(PG <span class="sc">~</span> ., <span class="co"># PG ~ .</span></span>
+<span id="cb621-10"><a href="19-job-classification.html#cb621-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], </span>
+<span id="cb621-11"><a href="19-job-classification.html#cb621-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">ntree=</span><span class="dv">500</span>,</span>
+<span id="cb621-12"><a href="19-job-classification.html#cb621-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">mtry=</span><span class="dv">2</span>,</span>
+<span id="cb621-13"><a href="19-job-classification.html#cb621-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">importance=</span><span class="cn">TRUE</span>,</span>
+<span id="cb621-14"><a href="19-job-classification.html#cb621-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">na.action=</span>randomForest<span class="sc">::</span>na.roughfix,</span>
+<span id="cb621-15"><a href="19-job-classification.html#cb621-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb621-16"><a href="19-job-classification.html#cb621-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-17"><a href="19-job-classification.html#cb621-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate textual output of &#39;Random Forest&#39; model.</span></span>
+<span id="cb621-18"><a href="19-job-classification.html#cb621-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb621-19"><a href="19-job-classification.html#cb621-19" aria-hidden="true" tabindex="-1"></a>MYrf</span></code></pre></div>
 <pre><code>
 Call:
  randomForest(formula = PG ~ ., data = MYdataset[, c(MYinput,      MYtarget)], ntree = 500, mtry = 2, importance = TRUE, replace = FALSE,      na.action = randomForest::na.roughfix) 
@@ -1139,10 +1080,10 @@ PG07    0    0    0    0    0    2    2    0    0    0       0.500
 PG08    0    0    0    0    0    0    0    4    2    1       0.429
 PG09    0    0    0    0    0    0    0    5    1    0       0.833
 PG10    0    0    0    0    0    0    0    0    0    6       0.000</code></pre>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="19-job-classification.html#cb671-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List the importance of the variables.</span></span>
-<span id="cb671-2"><a href="19-job-classification.html#cb671-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb671-3"><a href="19-job-classification.html#cb671-3" aria-hidden="true" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">round</span>(randomForest<span class="sc">::</span><span class="fu">importance</span>(MYrf), <span class="dv">2</span>)</span>
-<span id="cb671-4"><a href="19-job-classification.html#cb671-4" aria-hidden="true" tabindex="-1"></a>rn[<span class="fu">order</span>(rn[,<span class="dv">3</span>], <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span></code></pre></div>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="19-job-classification.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List the importance of the variables.</span></span>
+<span id="cb623-2"><a href="19-job-classification.html#cb623-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb623-3"><a href="19-job-classification.html#cb623-3" aria-hidden="true" tabindex="-1"></a>rn <span class="ot">&lt;-</span> <span class="fu">round</span>(randomForest<span class="sc">::</span><span class="fu">importance</span>(MYrf), <span class="dv">2</span>)</span>
+<span id="cb623-4"><a href="19-job-classification.html#cb623-4" aria-hidden="true" tabindex="-1"></a>rn[<span class="fu">order</span>(rn[,<span class="dv">3</span>], <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span></code></pre></div>
 <pre><code>                 PG01  PG02  PG03  PG04  PG05  PG06  PG07  PG08  PG09  PG10
 EducationLevel   2.85 14.92 11.36  5.05  7.93  1.73  5.19  3.56 -5.47  8.60
 ProblemSolving   3.65  5.98  8.96  1.51  8.91 13.08  7.66 12.60 10.04 19.57
@@ -1160,21 +1101,21 @@ ContactLevel                    19.1             4.97
 OrgImpact                       15.8             3.57
 FinancialBudget                 15.5             5.17</code></pre>
 <p>###Support Vector Machine</p>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="19-job-classification.html#cb673-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;kernlab&#39; package provides the &#39;ksvm&#39; function.</span></span>
-<span id="cb673-2"><a href="19-job-classification.html#cb673-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb673-3"><a href="19-job-classification.html#cb673-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb673-4"><a href="19-job-classification.html#cb673-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb673-5"><a href="19-job-classification.html#cb673-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a Support Vector Machine model.</span></span>
-<span id="cb673-6"><a href="19-job-classification.html#cb673-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb673-7"><a href="19-job-classification.html#cb673-7" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed(crv$seed)</span></span>
-<span id="cb673-8"><a href="19-job-classification.html#cb673-8" aria-hidden="true" tabindex="-1"></a>MYksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(<span class="fu">as.factor</span>(PG) <span class="sc">~</span> .,</span>
-<span id="cb673-9"><a href="19-job-classification.html#cb673-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)],</span>
-<span id="cb673-10"><a href="19-job-classification.html#cb673-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">kernel=</span><span class="st">&quot;rbfdot&quot;</span>,</span>
-<span id="cb673-11"><a href="19-job-classification.html#cb673-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob.model=</span><span class="cn">TRUE</span>)</span>
-<span id="cb673-12"><a href="19-job-classification.html#cb673-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb673-13"><a href="19-job-classification.html#cb673-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the SVM model.</span></span>
-<span id="cb673-14"><a href="19-job-classification.html#cb673-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb673-15"><a href="19-job-classification.html#cb673-15" aria-hidden="true" tabindex="-1"></a>MYksvm</span></code></pre></div>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="19-job-classification.html#cb625-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The &#39;kernlab&#39; package provides the &#39;ksvm&#39; function.</span></span>
+<span id="cb625-2"><a href="19-job-classification.html#cb625-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-3"><a href="19-job-classification.html#cb625-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kernlab, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
+<span id="cb625-4"><a href="19-job-classification.html#cb625-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-5"><a href="19-job-classification.html#cb625-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a Support Vector Machine model.</span></span>
+<span id="cb625-6"><a href="19-job-classification.html#cb625-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-7"><a href="19-job-classification.html#cb625-7" aria-hidden="true" tabindex="-1"></a><span class="co">#set.seed(crv$seed)</span></span>
+<span id="cb625-8"><a href="19-job-classification.html#cb625-8" aria-hidden="true" tabindex="-1"></a>MYksvm <span class="ot">&lt;-</span> <span class="fu">ksvm</span>(<span class="fu">as.factor</span>(PG) <span class="sc">~</span> .,</span>
+<span id="cb625-9"><a href="19-job-classification.html#cb625-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)],</span>
+<span id="cb625-10"><a href="19-job-classification.html#cb625-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">kernel=</span><span class="st">&quot;rbfdot&quot;</span>,</span>
+<span id="cb625-11"><a href="19-job-classification.html#cb625-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">prob.model=</span><span class="cn">TRUE</span>)</span>
+<span id="cb625-12"><a href="19-job-classification.html#cb625-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-13"><a href="19-job-classification.html#cb625-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the SVM model.</span></span>
+<span id="cb625-14"><a href="19-job-classification.html#cb625-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-15"><a href="19-job-classification.html#cb625-15" aria-hidden="true" tabindex="-1"></a>MYksvm</span></code></pre></div>
 <pre><code>Support Vector Machine object of class &quot;ksvm&quot; 
 
 SV type: C-svc  (classification) 
@@ -1189,22 +1130,22 @@ Objective Function Value : -3.87 -3.73 -3.11 -2.49 -1.6 -1.34 -1.33 -1.48 -1.33 
 Training error : 0.333333 
 Probability model included. </code></pre>
 <p>###Linear Regression Model</p>
-<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="19-job-classification.html#cb675-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a multinomial model using the nnet package.</span></span>
-<span id="cb675-2"><a href="19-job-classification.html#cb675-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-3"><a href="19-job-classification.html#cb675-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb675-4"><a href="19-job-classification.html#cb675-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-5"><a href="19-job-classification.html#cb675-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise multinomial model using Anova from the car package.</span></span>
-<span id="cb675-6"><a href="19-job-classification.html#cb675-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-7"><a href="19-job-classification.html#cb675-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb675-8"><a href="19-job-classification.html#cb675-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-9"><a href="19-job-classification.html#cb675-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a Regression model.</span></span>
-<span id="cb675-10"><a href="19-job-classification.html#cb675-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-11"><a href="19-job-classification.html#cb675-11" aria-hidden="true" tabindex="-1"></a>MYglm <span class="ot">&lt;-</span> <span class="fu">multinom</span>(PG <span class="sc">~</span> ., <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], <span class="at">trace=</span><span class="cn">FALSE</span>, <span class="at">maxit=</span><span class="dv">1000</span>)</span>
-<span id="cb675-12"><a href="19-job-classification.html#cb675-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-13"><a href="19-job-classification.html#cb675-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the Linear model.</span></span>
-<span id="cb675-14"><a href="19-job-classification.html#cb675-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb675-15"><a href="19-job-classification.html#cb675-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rattle.print.summary.multinom</span>(<span class="fu">summary</span>(MYglm,</span>
-<span id="cb675-16"><a href="19-job-classification.html#cb675-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">Wald.ratios=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb627"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb627-1"><a href="19-job-classification.html#cb627-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a multinomial model using the nnet package.</span></span>
+<span id="cb627-2"><a href="19-job-classification.html#cb627-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-3"><a href="19-job-classification.html#cb627-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
+<span id="cb627-4"><a href="19-job-classification.html#cb627-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-5"><a href="19-job-classification.html#cb627-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarise multinomial model using Anova from the car package.</span></span>
+<span id="cb627-6"><a href="19-job-classification.html#cb627-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-7"><a href="19-job-classification.html#cb627-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car, <span class="at">quietly=</span><span class="cn">TRUE</span>)</span>
+<span id="cb627-8"><a href="19-job-classification.html#cb627-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-9"><a href="19-job-classification.html#cb627-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a Regression model.</span></span>
+<span id="cb627-10"><a href="19-job-classification.html#cb627-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-11"><a href="19-job-classification.html#cb627-11" aria-hidden="true" tabindex="-1"></a>MYglm <span class="ot">&lt;-</span> <span class="fu">multinom</span>(PG <span class="sc">~</span> ., <span class="at">data=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], <span class="at">trace=</span><span class="cn">FALSE</span>, <span class="at">maxit=</span><span class="dv">1000</span>)</span>
+<span id="cb627-12"><a href="19-job-classification.html#cb627-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-13"><a href="19-job-classification.html#cb627-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a textual view of the Linear model.</span></span>
+<span id="cb627-14"><a href="19-job-classification.html#cb627-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb627-15"><a href="19-job-classification.html#cb627-15" aria-hidden="true" tabindex="-1"></a><span class="fu">rattle.print.summary.multinom</span>(<span class="fu">summary</span>(MYglm,</span>
+<span id="cb627-16"><a href="19-job-classification.html#cb627-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">Wald.ratios=</span><span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>Call:
 multinom(formula = PG ~ ., data = MYdataset[, c(MYinput, MYtarget)], 
     trace = FALSE, maxit = 1000)
@@ -1279,18 +1220,18 @@ PG10                 Inf        -Inf                  Inf             Inf
 
 Residual Deviance: 13.1 
 AIC: 157 </code></pre>
-<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="19-job-classification.html#cb677-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Log likelihood: %.3f (%d df)</span></span>
-<span id="cb677-2"><a href="19-job-classification.html#cb677-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>, <span class="fu">logLik</span>(MYglm)[<span class="dv">1</span>], <span class="fu">attr</span>(<span class="fu">logLik</span>(MYglm), <span class="st">&quot;df&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb629"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb629-1"><a href="19-job-classification.html#cb629-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Log likelihood: %.3f (%d df)</span></span>
+<span id="cb629-2"><a href="19-job-classification.html#cb629-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>, <span class="fu">logLik</span>(MYglm)[<span class="dv">1</span>], <span class="fu">attr</span>(<span class="fu">logLik</span>(MYglm), <span class="st">&quot;df&quot;</span>)))</span></code></pre></div>
 <pre><code>Log likelihood: -6.545 (72 df)</code></pre>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="19-job-classification.html#cb679-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(MYglm<span class="sc">$</span>na.action)) omitted <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="cf">else</span> omitted <span class="ot">&lt;-</span> <span class="sc">-</span>MYglm<span class="sc">$</span>na.action</span>
-<span id="cb679-2"><a href="19-job-classification.html#cb679-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Pseudo R-Square: %.8f</span></span>
-<span id="cb679-3"><a href="19-job-classification.html#cb679-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb679-4"><a href="19-job-classification.html#cb679-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>,<span class="fu">cor</span>(<span class="fu">apply</span>(MYglm<span class="sc">$</span>fitted.values, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">which</span>(x <span class="sc">==</span> <span class="fu">max</span>(x))),</span>
-<span id="cb679-5"><a href="19-job-classification.html#cb679-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as.integer</span>(MYdataset[omitted,]<span class="sc">$</span>PG))))</span></code></pre></div>
+<div class="sourceCode" id="cb631"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb631-1"><a href="19-job-classification.html#cb631-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.null</span>(MYglm<span class="sc">$</span>na.action)) omitted <span class="ot">&lt;-</span> <span class="cn">TRUE</span> <span class="cf">else</span> omitted <span class="ot">&lt;-</span> <span class="sc">-</span>MYglm<span class="sc">$</span>na.action</span>
+<span id="cb631-2"><a href="19-job-classification.html#cb631-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">&quot;Pseudo R-Square: %.8f</span></span>
+<span id="cb631-3"><a href="19-job-classification.html#cb631-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb631-4"><a href="19-job-classification.html#cb631-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span>,<span class="fu">cor</span>(<span class="fu">apply</span>(MYglm<span class="sc">$</span>fitted.values, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">which</span>(x <span class="sc">==</span> <span class="fu">max</span>(x))),</span>
+<span id="cb631-5"><a href="19-job-classification.html#cb631-5" aria-hidden="true" tabindex="-1"></a><span class="fu">as.integer</span>(MYdataset[omitted,]<span class="sc">$</span>PG))))</span></code></pre></div>
 <pre><code>Pseudo R-Square: 0.99516038</code></pre>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="19-job-classification.html#cb681-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&#39;==== ANOVA ====&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="19-job-classification.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&#39;==== ANOVA ====&#39;</span>)</span></code></pre></div>
 <pre><code>==== ANOVA ====</code></pre>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="19-job-classification.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Anova</span>(MYglm))</span></code></pre></div>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="19-job-classification.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">Anova</span>(MYglm))</span></code></pre></div>
 <pre><code>Analysis of Deviance Table (Type II tests)
 
 Response: PG
@@ -1306,11 +1247,11 @@ FinancialBudget     5.55  9      0.784
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Now let’s plot the Decision Tree</p>
 <p>###Decision Tree Plot</p>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="19-job-classification.html#cb685-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the resulting Decision Tree. </span></span>
-<span id="cb685-2"><a href="19-job-classification.html#cb685-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb685-3"><a href="19-job-classification.html#cb685-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We use the rpart.plot package.</span></span>
-<span id="cb685-4"><a href="19-job-classification.html#cb685-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb685-5"><a href="19-job-classification.html#cb685-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fancyRpartPlot</span>(MYrpart, <span class="at">main=</span><span class="st">&quot;Decision Tree MYdataset $ PG&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="19-job-classification.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the resulting Decision Tree. </span></span>
+<span id="cb637-2"><a href="19-job-classification.html#cb637-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-3"><a href="19-job-classification.html#cb637-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We use the rpart.plot package.</span></span>
+<span id="cb637-4"><a href="19-job-classification.html#cb637-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb637-5"><a href="19-job-classification.html#cb637-5" aria-hidden="true" tabindex="-1"></a><span class="fu">fancyRpartPlot</span>(MYrpart, <span class="at">main=</span><span class="st">&quot;Decision Tree MYdataset $ PG&quot;</span>)</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-581-1.png" width="\textwidth" style="display: block; margin: auto;" />
 A readable view of the decision tree can be found at the following pdf:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6449&amp;authkey=!ACgJAX951UZuo4s&amp;ithint=file%2cpdf" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6449&amp;authkey=!ACgJAX951UZuo4s&amp;ithint=file%2cpdf</a></p>
@@ -1318,14 +1259,14 @@ A readable view of the decision tree can be found at the following pdf:</p>
 <p>###Evaluate</p>
 <p>In the following we will evaluate the best fitting model creating a confusion matrix. A confusion matrix is a specific table layout that allows visualization of the performance of an algorithm. Each row of the matrix represents the instances in a predicted class while each column represents the instances in an actual class (or vice versa). The name stems from the fact that it makes it easy to see if the system is confusing two classes (i.e. commonly mislabeling one as another).</p>
 <p>####Decision Tree</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="19-job-classification.html#cb686-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict new job classsifications utilising the Decision Tree model.</span></span>
-<span id="cb686-2"><a href="19-job-classification.html#cb686-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb686-3"><a href="19-job-classification.html#cb686-3" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrpart, <span class="at">newdata=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], <span class="at">type=</span><span class="st">&quot;class&quot;</span>)</span>
-<span id="cb686-4"><a href="19-job-classification.html#cb686-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb686-5"><a href="19-job-classification.html#cb686-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
-<span id="cb686-6"><a href="19-job-classification.html#cb686-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb686-7"><a href="19-job-classification.html#cb686-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr,</span>
-<span id="cb686-8"><a href="19-job-classification.html#cb686-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="19-job-classification.html#cb638-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict new job classsifications utilising the Decision Tree model.</span></span>
+<span id="cb638-2"><a href="19-job-classification.html#cb638-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb638-3"><a href="19-job-classification.html#cb638-3" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrpart, <span class="at">newdata=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)], <span class="at">type=</span><span class="st">&quot;class&quot;</span>)</span>
+<span id="cb638-4"><a href="19-job-classification.html#cb638-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb638-5"><a href="19-job-classification.html#cb638-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
+<span id="cb638-6"><a href="19-job-classification.html#cb638-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb638-7"><a href="19-job-classification.html#cb638-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr,</span>
+<span id="cb638-8"><a href="19-job-classification.html#cb638-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    0    2    0    0    0    0    0    0    0    0
@@ -1338,20 +1279,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    3    3    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="19-job-classification.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions and misclassification error in the last column. Misclassification error, represents how often is the prediction wrong,</span></span>
-<span id="cb688-2"><a href="19-job-classification.html#cb688-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb688-3"><a href="19-job-classification.html#cb688-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
-<span id="cb688-4"><a href="19-job-classification.html#cb688-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb688-5"><a href="19-job-classification.html#cb688-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
-<span id="cb688-6"><a href="19-job-classification.html#cb688-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb688-7"><a href="19-job-classification.html#cb688-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
-<span id="cb688-8"><a href="19-job-classification.html#cb688-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
-<span id="cb688-9"><a href="19-job-classification.html#cb688-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
-<span id="cb688-10"><a href="19-job-classification.html#cb688-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb688-11"><a href="19-job-classification.html#cb688-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
-<span id="cb688-12"><a href="19-job-classification.html#cb688-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb688-13"><a href="19-job-classification.html#cb688-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr)</span>
-<span id="cb688-14"><a href="19-job-classification.html#cb688-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="19-job-classification.html#cb640-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions and misclassification error in the last column. Misclassification error, represents how often is the prediction wrong,</span></span>
+<span id="cb640-2"><a href="19-job-classification.html#cb640-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb640-3"><a href="19-job-classification.html#cb640-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
+<span id="cb640-4"><a href="19-job-classification.html#cb640-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb640-5"><a href="19-job-classification.html#cb640-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
+<span id="cb640-6"><a href="19-job-classification.html#cb640-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb640-7"><a href="19-job-classification.html#cb640-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
+<span id="cb640-8"><a href="19-job-classification.html#cb640-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
+<span id="cb640-9"><a href="19-job-classification.html#cb640-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
+<span id="cb640-10"><a href="19-job-classification.html#cb640-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb640-11"><a href="19-job-classification.html#cb640-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
+<span id="cb640-12"><a href="19-job-classification.html#cb640-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb640-13"><a href="19-job-classification.html#cb640-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr)</span>
+<span id="cb640-14"><a href="19-job-classification.html#cb640-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01    0 0.03 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  1.00
@@ -1364,27 +1305,27 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08    0 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09    0 0.00 0.00 0.00 0.00 0.00 0.00 0.05 0.05 0.00  0.50
   PG10    0 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="19-job-classification.html#cb690-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we calculate the overall miscalculation rate (also known as error rate or percentage error).</span></span>
-<span id="cb690-2"><a href="19-job-classification.html#cb690-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Please note that diag(per) extracts the diagonal of confusion matrix.</span></span>
-<span id="cb690-3"><a href="19-job-classification.html#cb690-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb690-4"><a href="19-job-classification.html#cb690-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>)) <span class="co"># 23%</span></span></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="19-job-classification.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First we calculate the overall miscalculation rate (also known as error rate or percentage error).</span></span>
+<span id="cb642-2"><a href="19-job-classification.html#cb642-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Please note that diag(per) extracts the diagonal of confusion matrix.</span></span>
+<span id="cb642-3"><a href="19-job-classification.html#cb642-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb642-4"><a href="19-job-classification.html#cb642-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>)) <span class="co"># 23%</span></span></code></pre></div>
 <pre><code>23</code></pre>
-<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="19-job-classification.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged miscalculation rate for each job classification. </span></span>
-<span id="cb692-2"><a href="19-job-classification.html#cb692-2" aria-hidden="true" tabindex="-1"></a><span class="co"># per[,&quot;Error&quot;] extracts the last column, which represents the miscalculation rate per.</span></span>
-<span id="cb692-3"><a href="19-job-classification.html#cb692-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb692-4"><a href="19-job-classification.html#cb692-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))  <span class="co"># 28%</span></span></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="19-job-classification.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged miscalculation rate for each job classification. </span></span>
+<span id="cb644-2"><a href="19-job-classification.html#cb644-2" aria-hidden="true" tabindex="-1"></a><span class="co"># per[,&quot;Error&quot;] extracts the last column, which represents the miscalculation rate per.</span></span>
+<span id="cb644-3"><a href="19-job-classification.html#cb644-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb644-4"><a href="19-job-classification.html#cb644-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))  <span class="co"># 28%</span></span></code></pre></div>
 <pre><code>28</code></pre>
 <p>####Random Forest</p>
-<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="19-job-classification.html#cb694-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Confusion Matrix for the Random Forest model.</span></span>
-<span id="cb694-2"><a href="19-job-classification.html#cb694-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb694-3"><a href="19-job-classification.html#cb694-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the Random Forest model.</span></span>
-<span id="cb694-4"><a href="19-job-classification.html#cb694-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb694-5"><a href="19-job-classification.html#cb694-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrf, <span class="at">newdata=</span><span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]))</span>
-<span id="cb694-6"><a href="19-job-classification.html#cb694-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb694-7"><a href="19-job-classification.html#cb694-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
-<span id="cb694-8"><a href="19-job-classification.html#cb694-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb694-9"><a href="19-job-classification.html#cb694-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr,</span>
-<span id="cb694-10"><a href="19-job-classification.html#cb694-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="19-job-classification.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Confusion Matrix for the Random Forest model.</span></span>
+<span id="cb646-2"><a href="19-job-classification.html#cb646-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb646-3"><a href="19-job-classification.html#cb646-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the Random Forest model.</span></span>
+<span id="cb646-4"><a href="19-job-classification.html#cb646-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb646-5"><a href="19-job-classification.html#cb646-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrf, <span class="at">newdata=</span><span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]))</span>
+<span id="cb646-6"><a href="19-job-classification.html#cb646-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb646-7"><a href="19-job-classification.html#cb646-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
+<span id="cb646-8"><a href="19-job-classification.html#cb646-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb646-9"><a href="19-job-classification.html#cb646-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr,</span>
+<span id="cb646-10"><a href="19-job-classification.html#cb646-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    1    1    0    0    0    0    0    0    0    0
@@ -1397,20 +1338,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    1    5    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="19-job-classification.html#cb696-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
-<span id="cb696-2"><a href="19-job-classification.html#cb696-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb696-3"><a href="19-job-classification.html#cb696-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
-<span id="cb696-4"><a href="19-job-classification.html#cb696-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb696-5"><a href="19-job-classification.html#cb696-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
-<span id="cb696-6"><a href="19-job-classification.html#cb696-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb696-7"><a href="19-job-classification.html#cb696-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
-<span id="cb696-8"><a href="19-job-classification.html#cb696-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
-<span id="cb696-9"><a href="19-job-classification.html#cb696-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
-<span id="cb696-10"><a href="19-job-classification.html#cb696-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb696-11"><a href="19-job-classification.html#cb696-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
-<span id="cb696-12"><a href="19-job-classification.html#cb696-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb696-13"><a href="19-job-classification.html#cb696-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr)</span>
-<span id="cb696-14"><a href="19-job-classification.html#cb696-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="19-job-classification.html#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
+<span id="cb648-2"><a href="19-job-classification.html#cb648-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-3"><a href="19-job-classification.html#cb648-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
+<span id="cb648-4"><a href="19-job-classification.html#cb648-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb648-5"><a href="19-job-classification.html#cb648-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
+<span id="cb648-6"><a href="19-job-classification.html#cb648-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb648-7"><a href="19-job-classification.html#cb648-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
+<span id="cb648-8"><a href="19-job-classification.html#cb648-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
+<span id="cb648-9"><a href="19-job-classification.html#cb648-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
+<span id="cb648-10"><a href="19-job-classification.html#cb648-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb648-11"><a href="19-job-classification.html#cb648-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
+<span id="cb648-12"><a href="19-job-classification.html#cb648-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb648-13"><a href="19-job-classification.html#cb648-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr)</span>
+<span id="cb648-14"><a href="19-job-classification.html#cb648-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01 0.02 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.50
@@ -1423,25 +1364,25 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.02 0.08 0.00  0.17
   PG10 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="19-job-classification.html#cb698-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
-<span id="cb698-2"><a href="19-job-classification.html#cb698-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb698-3"><a href="19-job-classification.html#cb698-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="19-job-classification.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
+<span id="cb650-2"><a href="19-job-classification.html#cb650-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb650-3"><a href="19-job-classification.html#cb650-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>5</code></pre>
-<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="19-job-classification.html#cb700-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
-<span id="cb700-2"><a href="19-job-classification.html#cb700-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb700-3"><a href="19-job-classification.html#cb700-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="19-job-classification.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
+<span id="cb652-2"><a href="19-job-classification.html#cb652-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb652-3"><a href="19-job-classification.html#cb652-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>9</code></pre>
 <p>####Support Vector Machine</p>
-<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="19-job-classification.html#cb702-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Confusion Matrix for the SVM model.</span></span>
-<span id="cb702-2"><a href="19-job-classification.html#cb702-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-3"><a href="19-job-classification.html#cb702-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the SVM model.</span></span>
-<span id="cb702-4"><a href="19-job-classification.html#cb702-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-5"><a href="19-job-classification.html#cb702-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> kernlab<span class="sc">::</span><span class="fu">predict</span>(MYksvm, <span class="at">newdata=</span><span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]))</span>
-<span id="cb702-6"><a href="19-job-classification.html#cb702-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-7"><a href="19-job-classification.html#cb702-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
-<span id="cb702-8"><a href="19-job-classification.html#cb702-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb702-9"><a href="19-job-classification.html#cb702-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr,</span>
-<span id="cb702-10"><a href="19-job-classification.html#cb702-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="19-job-classification.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the Confusion Matrix for the SVM model.</span></span>
+<span id="cb654-2"><a href="19-job-classification.html#cb654-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-3"><a href="19-job-classification.html#cb654-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the SVM model.</span></span>
+<span id="cb654-4"><a href="19-job-classification.html#cb654-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-5"><a href="19-job-classification.html#cb654-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> kernlab<span class="sc">::</span><span class="fu">predict</span>(MYksvm, <span class="at">newdata=</span><span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]))</span>
+<span id="cb654-6"><a href="19-job-classification.html#cb654-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-7"><a href="19-job-classification.html#cb654-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
+<span id="cb654-8"><a href="19-job-classification.html#cb654-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb654-9"><a href="19-job-classification.html#cb654-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr,</span>
+<span id="cb654-10"><a href="19-job-classification.html#cb654-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    0    1    1    0    0    0    0    0    0    0
@@ -1454,20 +1395,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    1    0    6    0    0
   PG09    0    0    0    0    0    0    0    4    2    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="19-job-classification.html#cb704-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
-<span id="cb704-2"><a href="19-job-classification.html#cb704-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb704-3"><a href="19-job-classification.html#cb704-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
-<span id="cb704-4"><a href="19-job-classification.html#cb704-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb704-5"><a href="19-job-classification.html#cb704-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
-<span id="cb704-6"><a href="19-job-classification.html#cb704-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb704-7"><a href="19-job-classification.html#cb704-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
-<span id="cb704-8"><a href="19-job-classification.html#cb704-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
-<span id="cb704-9"><a href="19-job-classification.html#cb704-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
-<span id="cb704-10"><a href="19-job-classification.html#cb704-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb704-11"><a href="19-job-classification.html#cb704-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
-<span id="cb704-12"><a href="19-job-classification.html#cb704-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb704-13"><a href="19-job-classification.html#cb704-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr)</span>
-<span id="cb704-14"><a href="19-job-classification.html#cb704-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="19-job-classification.html#cb656-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
+<span id="cb656-2"><a href="19-job-classification.html#cb656-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb656-3"><a href="19-job-classification.html#cb656-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
+<span id="cb656-4"><a href="19-job-classification.html#cb656-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb656-5"><a href="19-job-classification.html#cb656-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
+<span id="cb656-6"><a href="19-job-classification.html#cb656-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb656-7"><a href="19-job-classification.html#cb656-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
+<span id="cb656-8"><a href="19-job-classification.html#cb656-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
+<span id="cb656-9"><a href="19-job-classification.html#cb656-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
+<span id="cb656-10"><a href="19-job-classification.html#cb656-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb656-11"><a href="19-job-classification.html#cb656-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
+<span id="cb656-12"><a href="19-job-classification.html#cb656-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb656-13"><a href="19-job-classification.html#cb656-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(<span class="fu">na.omit</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])<span class="sc">$</span>PG, MYpr)</span>
+<span id="cb656-14"><a href="19-job-classification.html#cb656-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01    0 0.02 0.02 0.00 0.00 0.00    0 0.00 0.00 0.00  1.00
@@ -1480,25 +1421,25 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08    0 0.00 0.00 0.00 0.00 0.02    0 0.09 0.00 0.00  0.14
   PG09    0 0.00 0.00 0.00 0.00 0.00    0 0.06 0.03 0.00  0.67
   PG10    0 0.00 0.00 0.00 0.00 0.00    0 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="19-job-classification.html#cb706-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
-<span id="cb706-2"><a href="19-job-classification.html#cb706-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb706-3"><a href="19-job-classification.html#cb706-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="19-job-classification.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
+<span id="cb658-2"><a href="19-job-classification.html#cb658-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb658-3"><a href="19-job-classification.html#cb658-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>33</code></pre>
-<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="19-job-classification.html#cb708-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
-<span id="cb708-2"><a href="19-job-classification.html#cb708-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb708-3"><a href="19-job-classification.html#cb708-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="19-job-classification.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
+<span id="cb660-2"><a href="19-job-classification.html#cb660-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb660-3"><a href="19-job-classification.html#cb660-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>42</code></pre>
 <p>####Linear regression model</p>
-<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="19-job-classification.html#cb710-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix for the linear regression model.</span></span>
-<span id="cb710-2"><a href="19-job-classification.html#cb710-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb710-3"><a href="19-job-classification.html#cb710-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the Linear model.</span></span>
-<span id="cb710-4"><a href="19-job-classification.html#cb710-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb710-5"><a href="19-job-classification.html#cb710-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYglm, <span class="at">newdata=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])</span>
-<span id="cb710-6"><a href="19-job-classification.html#cb710-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb710-7"><a href="19-job-classification.html#cb710-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
-<span id="cb710-8"><a href="19-job-classification.html#cb710-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb710-9"><a href="19-job-classification.html#cb710-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr,</span>
-<span id="cb710-10"><a href="19-job-classification.html#cb710-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="19-job-classification.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix for the linear regression model.</span></span>
+<span id="cb662-2"><a href="19-job-classification.html#cb662-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-3"><a href="19-job-classification.html#cb662-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtain the response from the Linear model.</span></span>
+<span id="cb662-4"><a href="19-job-classification.html#cb662-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-5"><a href="19-job-classification.html#cb662-5" aria-hidden="true" tabindex="-1"></a>MYpr <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYglm, <span class="at">newdata=</span>MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)])</span>
+<span id="cb662-6"><a href="19-job-classification.html#cb662-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-7"><a href="19-job-classification.html#cb662-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing counts.</span></span>
+<span id="cb662-8"><a href="19-job-classification.html#cb662-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb662-9"><a href="19-job-classification.html#cb662-9" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr,</span>
+<span id="cb662-10"><a href="19-job-classification.html#cb662-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">dnn=</span><span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>))</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG01    1    1    0    0    0    0    0    0    0    0
@@ -1511,20 +1452,20 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10
   PG08    0    0    0    0    0    0    0    7    0    0
   PG09    0    0    0    0    0    0    0    0    6    0
   PG10    0    0    0    0    0    0    0    0    0    6</code></pre>
-<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="19-job-classification.html#cb712-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
-<span id="cb712-2"><a href="19-job-classification.html#cb712-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb712-3"><a href="19-job-classification.html#cb712-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
-<span id="cb712-4"><a href="19-job-classification.html#cb712-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb712-5"><a href="19-job-classification.html#cb712-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
-<span id="cb712-6"><a href="19-job-classification.html#cb712-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
-<span id="cb712-7"><a href="19-job-classification.html#cb712-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
-<span id="cb712-8"><a href="19-job-classification.html#cb712-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
-<span id="cb712-9"><a href="19-job-classification.html#cb712-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
-<span id="cb712-10"><a href="19-job-classification.html#cb712-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
-<span id="cb712-11"><a href="19-job-classification.html#cb712-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
-<span id="cb712-12"><a href="19-job-classification.html#cb712-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb712-13"><a href="19-job-classification.html#cb712-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr)</span>
-<span id="cb712-14"><a href="19-job-classification.html#cb712-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="19-job-classification.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the confusion matrix showing proportions.</span></span>
+<span id="cb664-2"><a href="19-job-classification.html#cb664-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb664-3"><a href="19-job-classification.html#cb664-3" aria-hidden="true" tabindex="-1"></a>pcme <span class="ot">&lt;-</span> <span class="cf">function</span>(actual, cl)</span>
+<span id="cb664-4"><a href="19-job-classification.html#cb664-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb664-5"><a href="19-job-classification.html#cb664-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">table</span>(actual, cl)</span>
+<span id="cb664-6"><a href="19-job-classification.html#cb664-6" aria-hidden="true" tabindex="-1"></a>  nc <span class="ot">&lt;-</span> <span class="fu">nrow</span>(x)</span>
+<span id="cb664-7"><a href="19-job-classification.html#cb664-7" aria-hidden="true" tabindex="-1"></a>  tbl <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x<span class="sc">/</span><span class="fu">length</span>(actual),</span>
+<span id="cb664-8"><a href="19-job-classification.html#cb664-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">Error=</span><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>nc,</span>
+<span id="cb664-9"><a href="19-job-classification.html#cb664-9" aria-hidden="true" tabindex="-1"></a>                 <span class="cf">function</span>(r) <span class="fu">round</span>(<span class="fu">sum</span>(x[r,<span class="sc">-</span>r])<span class="sc">/</span><span class="fu">sum</span>(x[r,]), <span class="dv">2</span>)))</span>
+<span id="cb664-10"><a href="19-job-classification.html#cb664-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(tbl, <span class="st">&quot;dimnames&quot;</span>)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Actual&quot;</span>, <span class="st">&quot;Predicted&quot;</span>)</span>
+<span id="cb664-11"><a href="19-job-classification.html#cb664-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(tbl)</span>
+<span id="cb664-12"><a href="19-job-classification.html#cb664-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb664-13"><a href="19-job-classification.html#cb664-13" aria-hidden="true" tabindex="-1"></a>per <span class="ot">&lt;-</span> <span class="fu">pcme</span>(MYdataset[,<span class="fu">c</span>(MYinput, MYtarget)]<span class="sc">$</span>PG, MYpr)</span>
+<span id="cb664-14"><a href="19-job-classification.html#cb664-14" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(per, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>      Predicted
 Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG01 0.02 0.02 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.50
@@ -1537,13 +1478,13 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
   PG08 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.11 0.00 0.00  0.00
   PG09 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09 0.00  0.00
   PG10 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.09  0.00</code></pre>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="19-job-classification.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
-<span id="cb714-2"><a href="19-job-classification.html#cb714-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb714-3"><a href="19-job-classification.html#cb714-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="19-job-classification.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the overall error percentage.</span></span>
+<span id="cb666-2"><a href="19-job-classification.html#cb666-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb666-3"><a href="19-job-classification.html#cb666-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sum</span>(<span class="fu">diag</span>(per), <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>6</code></pre>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="19-job-classification.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
-<span id="cb716-2"><a href="19-job-classification.html#cb716-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb716-3"><a href="19-job-classification.html#cb716-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="19-job-classification.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the averaged class error percentage.</span></span>
+<span id="cb668-2"><a href="19-job-classification.html#cb668-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb668-3"><a href="19-job-classification.html#cb668-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="dv">100</span><span class="sc">*</span><span class="fu">round</span>(<span class="fu">mean</span>(per[,<span class="st">&quot;Error&quot;</span>], <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="dv">2</span>))</span></code></pre></div>
 <pre><code>11</code></pre>
 <div id="final-evaluation-of-the-various-models" class="section level3" number="19.0.1">
 <h3><span class="header-section-number">19.0.1</span> Final evaluation of the various models</h3>
@@ -1569,15 +1510,15 @@ Actual PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10 Error
 <p>Here, is the unclassified dataset:</p>
 <p><a href="https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6478&amp;authkey=!ALYidIIpaCrfnf4&amp;ithint=file%2ccsv" class="uri">https://onedrive.live.com/redir?resid=4EF2CCBEDB98D0F5!6478&amp;authkey=!ALYidIIpaCrfnf4&amp;ithint=file%2ccsv</a></p>
 <p>Put the data in a separate dataset and run the following R commands:</p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="19-job-classification.html#cb718-1" aria-hidden="true" tabindex="-1"></a>DeployDataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Deploydata.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="19-job-classification.html#cb719-1" aria-hidden="true" tabindex="-1"></a>DeployDataset</span></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="19-job-classification.html#cb670-1" aria-hidden="true" tabindex="-1"></a>DeployDataset <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/Deploydata.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="19-job-classification.html#cb671-1" aria-hidden="true" tabindex="-1"></a>DeployDataset</span></code></pre></div>
 <pre><code># A tibble: 1 x 7
   EducationLevel Experience OrgImpact ProblemSolving Supervision ContactLevel
            &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
 1              2          0         3              4           1            5
 # ... with 1 more variable: FinancialBudget &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="19-job-classification.html#cb721-1" aria-hidden="true" tabindex="-1"></a>PredictedJobGrade <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrf, <span class="at">newdata=</span>DeployDataset)</span>
-<span id="cb721-2"><a href="19-job-classification.html#cb721-2" aria-hidden="true" tabindex="-1"></a>PredictedJobGrade</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="19-job-classification.html#cb673-1" aria-hidden="true" tabindex="-1"></a>PredictedJobGrade <span class="ot">&lt;-</span> <span class="fu">predict</span>(MYrf, <span class="at">newdata=</span>DeployDataset)</span>
+<span id="cb673-2"><a href="19-job-classification.html#cb673-2" aria-hidden="true" tabindex="-1"></a>PredictedJobGrade</span></code></pre></div>
 <pre><code>   1 
 PG05 
 Levels: PG01 PG02 PG03 PG04 PG05 PG06 PG07 PG08 PG09 PG10</code></pre>
@@ -1634,7 +1575,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1642,8 +1584,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/18-job-classification.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/18-job-classification.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1653,10 +1595,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

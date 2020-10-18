@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -772,9 +772,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Source: <a href="https://www.kaggle.com/hugohk/learning-ml-with-caret" class="uri">https://www.kaggle.com/hugohk/learning-ml-with-caret</a></p>
 <div id="data-reading-1" class="section level2" number="25.1">
 <h2><span class="header-section-number">25.1</span> Data reading</h2>
-<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb885-1"><a href="25-interview-attendance.html#cb885-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
-<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb886-1"><a href="25-interview-attendance.html#cb886-1" aria-hidden="true" tabindex="-1"></a>interview_attendance <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalyticslive.netlify.com/data/interview.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb887-1"><a href="25-interview-attendance.html#cb887-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(interview_attendance, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb837"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb837-1"><a href="25-interview-attendance.html#cb837-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="25-interview-attendance.html#cb838-1" aria-hidden="true" tabindex="-1"></a>interview_attendance <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalyticslive.netlify.com/data/interview.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="25-interview-attendance.html#cb839-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(interview_attendance, <span class="dv">5</span>)</span></code></pre></div>
 <pre><code># A tibble: 5 x 28
   `Date of Interv~ `Client name` Industry Location `Position to be~
   &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;           
@@ -800,96 +800,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="data-cleaning" class="section level2" number="25.2">
 <h2><span class="header-section-number">25.2</span> Data cleaning</h2>
-<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb889-1"><a href="25-interview-attendance.html#cb889-1" aria-hidden="true" tabindex="-1"></a>interview_attendance <span class="ot">&lt;-</span> interview_attendance[<span class="sc">-</span><span class="dv">1234</span>,] <span class="co">#remove the last row that contains only missing values</span></span>
-<span id="cb889-2"><a href="25-interview-attendance.html#cb889-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-3"><a href="25-interview-attendance.html#cb889-3" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X24   <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
-<span id="cb889-4"><a href="25-interview-attendance.html#cb889-4" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X25 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
-<span id="cb889-5"><a href="25-interview-attendance.html#cb889-5" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X26 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
-<span id="cb889-6"><a href="25-interview-attendance.html#cb889-6" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X27 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
-<span id="cb889-7"><a href="25-interview-attendance.html#cb889-7" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X28 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
-<span id="cb889-8"><a href="25-interview-attendance.html#cb889-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-9"><a href="25-interview-attendance.html#cb889-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we create a vector with column titles</span></span>
-<span id="cb889-10"><a href="25-interview-attendance.html#cb889-10" aria-hidden="true" tabindex="-1"></a>mycolnames <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&#39;date_of_interview&#39;</span>,<span class="st">&#39;client_name&#39;</span>,<span class="st">&#39;industry&#39;</span>,<span class="st">&#39;location&#39;</span>,<span class="st">&#39;position&#39;</span>,</span>
-<span id="cb889-11"><a href="25-interview-attendance.html#cb889-11" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;skillset&#39;</span>,<span class="st">&#39;interview_type&#39;</span>,<span class="st">&#39;name&#39;</span>, <span class="st">&#39;gender&#39;</span>,<span class="st">&#39;current_location&#39;</span>,</span>
-<span id="cb889-12"><a href="25-interview-attendance.html#cb889-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;cjob_location&#39;</span>,<span class="st">&#39;interview_venue&#39;</span>,<span class="st">&#39;cnative_location&#39;</span>,</span>
-<span id="cb889-13"><a href="25-interview-attendance.html#cb889-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;permission_obtained&#39;</span>,<span class="st">&#39;unscheduled_meetings&#39;</span>,<span class="st">&#39;call_three_hours_before&#39;</span>,</span>
-<span id="cb889-14"><a href="25-interview-attendance.html#cb889-14" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;alternative_number&#39;</span>,<span class="st">&#39;printout_resume_jd&#39;</span>,<span class="st">&#39;clear_with_venue&#39;</span>,</span>
-<span id="cb889-15"><a href="25-interview-attendance.html#cb889-15" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;letter_been_shared&#39;</span>,<span class="st">&#39;expected_attendance&#39;</span>,<span class="st">&#39;observed_attendance&#39;</span>,</span>
-<span id="cb889-16"><a href="25-interview-attendance.html#cb889-16" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;marital_status&#39;</span>)  </span>
-<span id="cb889-17"><a href="25-interview-attendance.html#cb889-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-18"><a href="25-interview-attendance.html#cb889-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Here we assign the previously defined column titles</span></span>
-<span id="cb889-19"><a href="25-interview-attendance.html#cb889-19" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(interview_attendance) <span class="ot">&lt;-</span> mycolnames </span>
-<span id="cb889-20"><a href="25-interview-attendance.html#cb889-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-21"><a href="25-interview-attendance.html#cb889-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mycolnames) <span class="co"># Here we remove the mycolnames vector, as it is not required anymore</span></span>
-<span id="cb889-22"><a href="25-interview-attendance.html#cb889-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-23"><a href="25-interview-attendance.html#cb889-23" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="ot">&lt;-</span> <span class="fu">mutate_all</span>(interview_attendance, <span class="fu">funs</span>(tolower)) <span class="co"># Sets all words to lower case</span></span>
-<span id="cb889-24"><a href="25-interview-attendance.html#cb889-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-25"><a href="25-interview-attendance.html#cb889-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the observed attendance column</span></span>
-<span id="cb889-26"><a href="25-interview-attendance.html#cb889-26" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>observed_attendance <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>observed_attendance)</span>
-<span id="cb889-27"><a href="25-interview-attendance.html#cb889-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-28"><a href="25-interview-attendance.html#cb889-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the location column</span></span>
-<span id="cb889-29"><a href="25-interview-attendance.html#cb889-29" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>location <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>location) </span>
-<span id="cb889-30"><a href="25-interview-attendance.html#cb889-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-31"><a href="25-interview-attendance.html#cb889-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the interview type column</span></span>
-<span id="cb889-32"><a href="25-interview-attendance.html#cb889-32" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>interview_type <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>interview_type)</span>
-<span id="cb889-33"><a href="25-interview-attendance.html#cb889-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-34"><a href="25-interview-attendance.html#cb889-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Corrects a typo in the interview type column</span></span>
-<span id="cb889-35"><a href="25-interview-attendance.html#cb889-35" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>interview_type <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;sceduledwalkin&quot;</span>, <span class="st">&quot;scheduledwalkin&quot;</span>, interview_attendance<span class="sc">$</span>interview_type)</span>
-<span id="cb889-36"><a href="25-interview-attendance.html#cb889-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-37"><a href="25-interview-attendance.html#cb889-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the candidate current location column</span></span>
-<span id="cb889-38"><a href="25-interview-attendance.html#cb889-38" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>current_location <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>current_location)</span>
-<span id="cb889-39"><a href="25-interview-attendance.html#cb889-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-40"><a href="25-interview-attendance.html#cb889-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb889-41"><a href="25-interview-attendance.html#cb889-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Converts values from character to numbers for Yes/no answers, just to keep things simple.</span></span>
-<span id="cb889-42"><a href="25-interview-attendance.html#cb889-42" aria-hidden="true" tabindex="-1"></a>  colstoyesno <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">14</span><span class="sc">:</span><span class="dv">22</span>) <span class="co"># Here we define which column numbers to look at.</span></span>
-<span id="cb889-43"><a href="25-interview-attendance.html#cb889-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(colstoyesno)){   <span class="co"># Here we tell R to examine all variables in the previously defined columns</span></span>
-<span id="cb889-44"><a href="25-interview-attendance.html#cb889-44" aria-hidden="true" tabindex="-1"></a>  j <span class="ot">&lt;-</span> colstoyesno[i]</span>
-<span id="cb889-45"><a href="25-interview-attendance.html#cb889-45" aria-hidden="true" tabindex="-1"></a>  interview_attendance[,j][interview_attendance[,j] <span class="sc">!=</span><span class="st">&quot;yes&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;no&quot;</span>   </span>
-<span id="cb889-46"><a href="25-interview-attendance.html#cb889-46" aria-hidden="true" tabindex="-1"></a>  interview_attendance[,j][<span class="fu">is.na</span>(interview_attendance[,j]) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">&quot;no&quot;</span></span>
-<span id="cb889-47"><a href="25-interview-attendance.html#cb889-47" aria-hidden="true" tabindex="-1"></a>  <span class="co">#With the previous two lines all values different to yes, become a no, i.e. &quot;uncertain&quot; and &quot;NA&quot; are set to a &quot;no&quot;.</span></span>
-<span id="cb889-48"><a href="25-interview-attendance.html#cb889-48" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb889-49"><a href="25-interview-attendance.html#cb889-49" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(colstoyesno, i, j) <span class="co">#Here we remove the three just created vectors as a claen up.</span></span></code></pre></div>
+<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="25-interview-attendance.html#cb841-1" aria-hidden="true" tabindex="-1"></a>interview_attendance <span class="ot">&lt;-</span> interview_attendance[<span class="sc">-</span><span class="dv">1234</span>,] <span class="co">#remove the last row that contains only missing values</span></span>
+<span id="cb841-2"><a href="25-interview-attendance.html#cb841-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-3"><a href="25-interview-attendance.html#cb841-3" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X24   <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
+<span id="cb841-4"><a href="25-interview-attendance.html#cb841-4" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X25 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
+<span id="cb841-5"><a href="25-interview-attendance.html#cb841-5" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X26 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
+<span id="cb841-6"><a href="25-interview-attendance.html#cb841-6" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X27 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
+<span id="cb841-7"><a href="25-interview-attendance.html#cb841-7" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>X28 <span class="ot">&lt;-</span> <span class="cn">NULL</span> <span class="co">#get rid of unnecesary columns on the right side</span></span>
+<span id="cb841-8"><a href="25-interview-attendance.html#cb841-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-9"><a href="25-interview-attendance.html#cb841-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Here we create a vector with column titles</span></span>
+<span id="cb841-10"><a href="25-interview-attendance.html#cb841-10" aria-hidden="true" tabindex="-1"></a>mycolnames <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&#39;date_of_interview&#39;</span>,<span class="st">&#39;client_name&#39;</span>,<span class="st">&#39;industry&#39;</span>,<span class="st">&#39;location&#39;</span>,<span class="st">&#39;position&#39;</span>,</span>
+<span id="cb841-11"><a href="25-interview-attendance.html#cb841-11" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;skillset&#39;</span>,<span class="st">&#39;interview_type&#39;</span>,<span class="st">&#39;name&#39;</span>, <span class="st">&#39;gender&#39;</span>,<span class="st">&#39;current_location&#39;</span>,</span>
+<span id="cb841-12"><a href="25-interview-attendance.html#cb841-12" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;cjob_location&#39;</span>,<span class="st">&#39;interview_venue&#39;</span>,<span class="st">&#39;cnative_location&#39;</span>,</span>
+<span id="cb841-13"><a href="25-interview-attendance.html#cb841-13" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;permission_obtained&#39;</span>,<span class="st">&#39;unscheduled_meetings&#39;</span>,<span class="st">&#39;call_three_hours_before&#39;</span>,</span>
+<span id="cb841-14"><a href="25-interview-attendance.html#cb841-14" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;alternative_number&#39;</span>,<span class="st">&#39;printout_resume_jd&#39;</span>,<span class="st">&#39;clear_with_venue&#39;</span>,</span>
+<span id="cb841-15"><a href="25-interview-attendance.html#cb841-15" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;letter_been_shared&#39;</span>,<span class="st">&#39;expected_attendance&#39;</span>,<span class="st">&#39;observed_attendance&#39;</span>,</span>
+<span id="cb841-16"><a href="25-interview-attendance.html#cb841-16" aria-hidden="true" tabindex="-1"></a>               <span class="st">&#39;marital_status&#39;</span>)  </span>
+<span id="cb841-17"><a href="25-interview-attendance.html#cb841-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-18"><a href="25-interview-attendance.html#cb841-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Here we assign the previously defined column titles</span></span>
+<span id="cb841-19"><a href="25-interview-attendance.html#cb841-19" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(interview_attendance) <span class="ot">&lt;-</span> mycolnames </span>
+<span id="cb841-20"><a href="25-interview-attendance.html#cb841-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-21"><a href="25-interview-attendance.html#cb841-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(mycolnames) <span class="co"># Here we remove the mycolnames vector, as it is not required anymore</span></span>
+<span id="cb841-22"><a href="25-interview-attendance.html#cb841-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-23"><a href="25-interview-attendance.html#cb841-23" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="ot">&lt;-</span> <span class="fu">mutate_all</span>(interview_attendance, <span class="fu">funs</span>(tolower)) <span class="co"># Sets all words to lower case</span></span>
+<span id="cb841-24"><a href="25-interview-attendance.html#cb841-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-25"><a href="25-interview-attendance.html#cb841-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the observed attendance column</span></span>
+<span id="cb841-26"><a href="25-interview-attendance.html#cb841-26" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>observed_attendance <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>observed_attendance)</span>
+<span id="cb841-27"><a href="25-interview-attendance.html#cb841-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-28"><a href="25-interview-attendance.html#cb841-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the location column</span></span>
+<span id="cb841-29"><a href="25-interview-attendance.html#cb841-29" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>location <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>location) </span>
+<span id="cb841-30"><a href="25-interview-attendance.html#cb841-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-31"><a href="25-interview-attendance.html#cb841-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the interview type column</span></span>
+<span id="cb841-32"><a href="25-interview-attendance.html#cb841-32" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>interview_type <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>interview_type)</span>
+<span id="cb841-33"><a href="25-interview-attendance.html#cb841-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-34"><a href="25-interview-attendance.html#cb841-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Corrects a typo in the interview type column</span></span>
+<span id="cb841-35"><a href="25-interview-attendance.html#cb841-35" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>interview_type <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;sceduledwalkin&quot;</span>, <span class="st">&quot;scheduledwalkin&quot;</span>, interview_attendance<span class="sc">$</span>interview_type)</span>
+<span id="cb841-36"><a href="25-interview-attendance.html#cb841-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-37"><a href="25-interview-attendance.html#cb841-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Cancels all empty spaces in the candidate current location column</span></span>
+<span id="cb841-38"><a href="25-interview-attendance.html#cb841-38" aria-hidden="true" tabindex="-1"></a>interview_attendance<span class="sc">$</span>current_location <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;&quot;</span>, interview_attendance<span class="sc">$</span>current_location)</span>
+<span id="cb841-39"><a href="25-interview-attendance.html#cb841-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-40"><a href="25-interview-attendance.html#cb841-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb841-41"><a href="25-interview-attendance.html#cb841-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Converts values from character to numbers for Yes/no answers, just to keep things simple.</span></span>
+<span id="cb841-42"><a href="25-interview-attendance.html#cb841-42" aria-hidden="true" tabindex="-1"></a>  colstoyesno <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">14</span><span class="sc">:</span><span class="dv">22</span>) <span class="co"># Here we define which column numbers to look at.</span></span>
+<span id="cb841-43"><a href="25-interview-attendance.html#cb841-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(colstoyesno)){   <span class="co"># Here we tell R to examine all variables in the previously defined columns</span></span>
+<span id="cb841-44"><a href="25-interview-attendance.html#cb841-44" aria-hidden="true" tabindex="-1"></a>  j <span class="ot">&lt;-</span> colstoyesno[i]</span>
+<span id="cb841-45"><a href="25-interview-attendance.html#cb841-45" aria-hidden="true" tabindex="-1"></a>  interview_attendance[,j][interview_attendance[,j] <span class="sc">!=</span><span class="st">&quot;yes&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;no&quot;</span>   </span>
+<span id="cb841-46"><a href="25-interview-attendance.html#cb841-46" aria-hidden="true" tabindex="-1"></a>  interview_attendance[,j][<span class="fu">is.na</span>(interview_attendance[,j]) <span class="sc">==</span> <span class="cn">TRUE</span>] <span class="ot">&lt;-</span> <span class="st">&quot;no&quot;</span></span>
+<span id="cb841-47"><a href="25-interview-attendance.html#cb841-47" aria-hidden="true" tabindex="-1"></a>  <span class="co">#With the previous two lines all values different to yes, become a no, i.e. &quot;uncertain&quot; and &quot;NA&quot; are set to a &quot;no&quot;.</span></span>
+<span id="cb841-48"><a href="25-interview-attendance.html#cb841-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb841-49"><a href="25-interview-attendance.html#cb841-49" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(colstoyesno, i, j) <span class="co">#Here we remove the three just created vectors as a claen up.</span></span></code></pre></div>
 <p>In the following step we figure out what is the content of each relevant column and identify its unique values. Once we have done that a number is assigned for a later step.</p>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb890-1"><a href="25-interview-attendance.html#cb890-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;codefiles_interview_attendance&quot;</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb890-2"><a href="25-interview-attendance.html#cb890-2" aria-hidden="true" tabindex="-1"></a><span class="co">#detach(&quot;package:plyr&quot;, unload = TRUE)</span></span>
-<span id="cb890-3"><a href="25-interview-attendance.html#cb890-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">colnames</span>(interview_attendance))){</span>
-<span id="cb890-4"><a href="25-interview-attendance.html#cb890-4" aria-hidden="true" tabindex="-1"></a>  vvar <span class="ot">&lt;-</span> <span class="fu">colnames</span>(interview_attendance)[i]</span>
-<span id="cb890-5"><a href="25-interview-attendance.html#cb890-5" aria-hidden="true" tabindex="-1"></a>  outdata <span class="ot">&lt;-</span> interview_attendance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(<span class="at">.dots =</span> vvar) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(<span class="at">.dots =</span> vvar)</span>
-<span id="cb890-6"><a href="25-interview-attendance.html#cb890-6" aria-hidden="true" tabindex="-1"></a>  outdata<span class="sc">$</span>idt <span class="ot">&lt;-</span> LETTERS[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="fu">nrow</span>(outdata))]</span>
-<span id="cb890-7"><a href="25-interview-attendance.html#cb890-7" aria-hidden="true" tabindex="-1"></a>  outdata<span class="sc">$</span>id  <span class="ot">&lt;-</span> <span class="fu">row.names</span>(outdata)</span>
-<span id="cb890-8"><a href="25-interview-attendance.html#cb890-8" aria-hidden="true" tabindex="-1"></a>  outfile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, vvar, <span class="st">&quot;.csv&quot;</span>)</span>
-<span id="cb890-9"><a href="25-interview-attendance.html#cb890-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(outdata, <span class="at">file=</span>outfile, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb890-10"><a href="25-interview-attendance.html#cb890-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb890-11"><a href="25-interview-attendance.html#cb890-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(outdata, i, outfile, vvar)</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="25-interview-attendance.html#cb842-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;codefiles_interview_attendance&quot;</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb842-2"><a href="25-interview-attendance.html#cb842-2" aria-hidden="true" tabindex="-1"></a><span class="co">#detach(&quot;package:plyr&quot;, unload = TRUE)</span></span>
+<span id="cb842-3"><a href="25-interview-attendance.html#cb842-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">colnames</span>(interview_attendance))){</span>
+<span id="cb842-4"><a href="25-interview-attendance.html#cb842-4" aria-hidden="true" tabindex="-1"></a>  vvar <span class="ot">&lt;-</span> <span class="fu">colnames</span>(interview_attendance)[i]</span>
+<span id="cb842-5"><a href="25-interview-attendance.html#cb842-5" aria-hidden="true" tabindex="-1"></a>  outdata <span class="ot">&lt;-</span> interview_attendance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">group_by</span>(<span class="at">.dots =</span> vvar) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(<span class="at">.dots =</span> vvar)</span>
+<span id="cb842-6"><a href="25-interview-attendance.html#cb842-6" aria-hidden="true" tabindex="-1"></a>  outdata<span class="sc">$</span>idt <span class="ot">&lt;-</span> LETTERS[<span class="fu">seq</span>(<span class="at">from=</span><span class="dv">1</span>, <span class="at">to=</span><span class="fu">nrow</span>(outdata))]</span>
+<span id="cb842-7"><a href="25-interview-attendance.html#cb842-7" aria-hidden="true" tabindex="-1"></a>  outdata<span class="sc">$</span>id  <span class="ot">&lt;-</span> <span class="fu">row.names</span>(outdata)</span>
+<span id="cb842-8"><a href="25-interview-attendance.html#cb842-8" aria-hidden="true" tabindex="-1"></a>  outfile <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, vvar, <span class="st">&quot;.csv&quot;</span>)</span>
+<span id="cb842-9"><a href="25-interview-attendance.html#cb842-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.csv</span>(outdata, <span class="at">file=</span>outfile, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb842-10"><a href="25-interview-attendance.html#cb842-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb842-11"><a href="25-interview-attendance.html#cb842-11" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(outdata, i, outfile, vvar)</span></code></pre></div>
 <p>This step uses the csv files created in the previous step and replaces the words with a number (except for the variable that we would like to predict) in order to prepare the data for machine learning.</p>
-<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb891-1"><a href="25-interview-attendance.html#cb891-1" aria-hidden="true" tabindex="-1"></a>colstomap <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">21</span>, <span class="dv">23</span>)</span>
-<span id="cb891-2"><a href="25-interview-attendance.html#cb891-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
-<span id="cb891-3"><a href="25-interview-attendance.html#cb891-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(colstomap)){</span>
-<span id="cb891-4"><a href="25-interview-attendance.html#cb891-4" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> colstomap[i]</span>
-<span id="cb891-5"><a href="25-interview-attendance.html#cb891-5" aria-hidden="true" tabindex="-1"></a>    vfilename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, <span class="fu">colnames</span>(interview_attendance)[j], <span class="st">&quot;.csv&quot;</span>)</span>
-<span id="cb891-6"><a href="25-interview-attendance.html#cb891-6" aria-hidden="true" tabindex="-1"></a>    dfcodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(vfilename, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)</span>
-<span id="cb891-7"><a href="25-interview-attendance.html#cb891-7" aria-hidden="true" tabindex="-1"></a>    vfrom <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dfcodes[,<span class="dv">1</span>])</span>
-<span id="cb891-8"><a href="25-interview-attendance.html#cb891-8" aria-hidden="true" tabindex="-1"></a>    vto <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dfcodes[,<span class="dv">4</span>])</span>
-<span id="cb891-9"><a href="25-interview-attendance.html#cb891-9" aria-hidden="true" tabindex="-1"></a>    interview_attendance[,j] <span class="ot">&lt;-</span> <span class="fu">mapvalues</span>(interview_attendance[,j], <span class="at">from=</span>vfrom, <span class="at">to=</span>vto)</span>
-<span id="cb891-10"><a href="25-interview-attendance.html#cb891-10" aria-hidden="true" tabindex="-1"></a>    interview_attendance[,j] <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(interview_attendance[,j])</span>
-<span id="cb891-11"><a href="25-interview-attendance.html#cb891-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb891-12"><a href="25-interview-attendance.html#cb891-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(colstomap, i, j, vfilename, vfrom, vto, dfcodes)</span></code></pre></div>
+<div class="sourceCode" id="cb843"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb843-1"><a href="25-interview-attendance.html#cb843-1" aria-hidden="true" tabindex="-1"></a>colstomap <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">21</span>, <span class="dv">23</span>)</span>
+<span id="cb843-2"><a href="25-interview-attendance.html#cb843-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb843-3"><a href="25-interview-attendance.html#cb843-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(colstomap)){</span>
+<span id="cb843-4"><a href="25-interview-attendance.html#cb843-4" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> colstomap[i]</span>
+<span id="cb843-5"><a href="25-interview-attendance.html#cb843-5" aria-hidden="true" tabindex="-1"></a>    vfilename <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;codefiles_interview_attendance/&quot;</span>, <span class="fu">colnames</span>(interview_attendance)[j], <span class="st">&quot;.csv&quot;</span>)</span>
+<span id="cb843-6"><a href="25-interview-attendance.html#cb843-6" aria-hidden="true" tabindex="-1"></a>    dfcodes <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(vfilename, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)</span>
+<span id="cb843-7"><a href="25-interview-attendance.html#cb843-7" aria-hidden="true" tabindex="-1"></a>    vfrom <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dfcodes[,<span class="dv">1</span>])</span>
+<span id="cb843-8"><a href="25-interview-attendance.html#cb843-8" aria-hidden="true" tabindex="-1"></a>    vto <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(dfcodes[,<span class="dv">4</span>])</span>
+<span id="cb843-9"><a href="25-interview-attendance.html#cb843-9" aria-hidden="true" tabindex="-1"></a>    interview_attendance[,j] <span class="ot">&lt;-</span> <span class="fu">mapvalues</span>(interview_attendance[,j], <span class="at">from=</span>vfrom, <span class="at">to=</span>vto)</span>
+<span id="cb843-10"><a href="25-interview-attendance.html#cb843-10" aria-hidden="true" tabindex="-1"></a>    interview_attendance[,j] <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(interview_attendance[,j])</span>
+<span id="cb843-11"><a href="25-interview-attendance.html#cb843-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb843-12"><a href="25-interview-attendance.html#cb843-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(colstomap, i, j, vfilename, vfrom, vto, dfcodes)</span></code></pre></div>
 <p>Here we pick the data that are needed for the predictor.</p>
-<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb892-1"><a href="25-interview-attendance.html#cb892-1" aria-hidden="true" tabindex="-1"></a>interview_attendanceml <span class="ot">&lt;-</span> interview_attendance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>date_of_interview, <span class="sc">-</span>name)</span>
-<span id="cb892-2"><a href="25-interview-attendance.html#cb892-2" aria-hidden="true" tabindex="-1"></a>interview_attendanceml <span class="ot">&lt;-</span> interview_attendanceml <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(client_name<span class="sc">:</span>expected_attendance, </span>
-<span id="cb892-3"><a href="25-interview-attendance.html#cb892-3" aria-hidden="true" tabindex="-1"></a>                                observed_attendance)</span>
-<span id="cb892-4"><a href="25-interview-attendance.html#cb892-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(interview_attendanceml, <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="25-interview-attendance.html#cb844-1" aria-hidden="true" tabindex="-1"></a>interview_attendanceml <span class="ot">&lt;-</span> interview_attendance <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>date_of_interview, <span class="sc">-</span>name)</span>
+<span id="cb844-2"><a href="25-interview-attendance.html#cb844-2" aria-hidden="true" tabindex="-1"></a>interview_attendanceml <span class="ot">&lt;-</span> interview_attendanceml <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(client_name<span class="sc">:</span>expected_attendance, </span>
+<span id="cb844-3"><a href="25-interview-attendance.html#cb844-3" aria-hidden="true" tabindex="-1"></a>                                observed_attendance)</span>
+<span id="cb844-4"><a href="25-interview-attendance.html#cb844-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(interview_attendanceml, <span class="dv">5</span>)</span></code></pre></div>
 <p>Here we start the real machine learning part. The training dataset is created containing 75% of the observations [interview_attendanceml_train] and the remaining observations are assigned to the test dataset [interview_attendanceml_test].</p>
-<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb893-1"><a href="25-interview-attendance.html#cb893-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret) <span class="co"># Calls the caret library</span></span>
-<span id="cb893-2"><a href="25-interview-attendance.html#cb893-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb893-3"><a href="25-interview-attendance.html#cb893-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">144</span>) <span class="co"># Sets a seed for reproducability</span></span>
-<span id="cb893-4"><a href="25-interview-attendance.html#cb893-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb893-5"><a href="25-interview-attendance.html#cb893-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(interview_attendanceml<span class="sc">$</span>observed_attendance, <span class="at">p=</span><span class="fl">0.75</span>, <span class="at">list=</span><span class="cn">FALSE</span>) <span class="co">#Creates an index vector of the length of all the observations</span></span>
-<span id="cb893-6"><a href="25-interview-attendance.html#cb893-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb893-7"><a href="25-interview-attendance.html#cb893-7" aria-hidden="true" tabindex="-1"></a>interview_attendanceml_train <span class="ot">&lt;-</span> interview_attendanceml[index,] <span class="co"># Creates a subset of 75% of data for training dataset</span></span>
-<span id="cb893-8"><a href="25-interview-attendance.html#cb893-8" aria-hidden="true" tabindex="-1"></a>interview_attendanceml_test  <span class="ot">&lt;-</span> interview_attendanceml[<span class="sc">-</span>index,] <span class="co"># Creates a subset of the remaining 25% of data for test dataset</span></span>
-<span id="cb893-9"><a href="25-interview-attendance.html#cb893-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb893-10"><a href="25-interview-attendance.html#cb893-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(index,interview_attendanceml)</span></code></pre></div>
+<div class="sourceCode" id="cb845"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb845-1"><a href="25-interview-attendance.html#cb845-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(caret) <span class="co"># Calls the caret library</span></span>
+<span id="cb845-2"><a href="25-interview-attendance.html#cb845-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-3"><a href="25-interview-attendance.html#cb845-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">144</span>) <span class="co"># Sets a seed for reproducability</span></span>
+<span id="cb845-4"><a href="25-interview-attendance.html#cb845-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-5"><a href="25-interview-attendance.html#cb845-5" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(interview_attendanceml<span class="sc">$</span>observed_attendance, <span class="at">p=</span><span class="fl">0.75</span>, <span class="at">list=</span><span class="cn">FALSE</span>) <span class="co">#Creates an index vector of the length of all the observations</span></span>
+<span id="cb845-6"><a href="25-interview-attendance.html#cb845-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-7"><a href="25-interview-attendance.html#cb845-7" aria-hidden="true" tabindex="-1"></a>interview_attendanceml_train <span class="ot">&lt;-</span> interview_attendanceml[index,] <span class="co"># Creates a subset of 75% of data for training dataset</span></span>
+<span id="cb845-8"><a href="25-interview-attendance.html#cb845-8" aria-hidden="true" tabindex="-1"></a>interview_attendanceml_test  <span class="ot">&lt;-</span> interview_attendanceml[<span class="sc">-</span>index,] <span class="co"># Creates a subset of the remaining 25% of data for test dataset</span></span>
+<span id="cb845-9"><a href="25-interview-attendance.html#cb845-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb845-10"><a href="25-interview-attendance.html#cb845-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(index,interview_attendanceml)</span></code></pre></div>
 </div>
 <div id="choosing-a-model" class="section level2" number="25.3">
 <h2><span class="header-section-number">25.3</span> Choosing a model</h2>
@@ -898,16 +898,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="training" class="section level2" number="25.4">
 <h2><span class="header-section-number">25.4</span> Training</h2>
 <p>We use the train function of the caret library to train the training data set determined in the previous step.</p>
-<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb894-1"><a href="25-interview-attendance.html#cb894-1" aria-hidden="true" tabindex="-1"></a>myml_model <span class="ot">&lt;-</span> <span class="fu">train</span>(interview_attendanceml_train[,<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>], interview_attendanceml_train[,<span class="dv">20</span>], <span class="at">method=</span><span class="st">&#39;gbm&#39;</span>)</span>
-<span id="cb894-2"><a href="25-interview-attendance.html#cb894-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb894-3"><a href="25-interview-attendance.html#cb894-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myml_model)</span>
-<span id="cb894-4"><a href="25-interview-attendance.html#cb894-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb894-5"><a href="25-interview-attendance.html#cb894-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> myml_model, interview_attendanceml_test,</span>
-<span id="cb894-6"><a href="25-interview-attendance.html#cb894-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">&#39;raw&#39;</span>)</span>
-<span id="cb894-7"><a href="25-interview-attendance.html#cb894-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb894-8"><a href="25-interview-attendance.html#cb894-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predictions)</span>
-<span id="cb894-9"><a href="25-interview-attendance.html#cb894-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb894-10"><a href="25-interview-attendance.html#cb894-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">postResample</span>(<span class="at">pred=</span>predictions, <span class="at">obs=</span><span class="fu">as.factor</span>(interview_attendanceml_test[,<span class="dv">20</span>])))</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="25-interview-attendance.html#cb846-1" aria-hidden="true" tabindex="-1"></a>myml_model <span class="ot">&lt;-</span> <span class="fu">train</span>(interview_attendanceml_train[,<span class="dv">1</span><span class="sc">:</span><span class="dv">19</span>], interview_attendanceml_train[,<span class="dv">20</span>], <span class="at">method=</span><span class="st">&#39;gbm&#39;</span>)</span>
+<span id="cb846-2"><a href="25-interview-attendance.html#cb846-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb846-3"><a href="25-interview-attendance.html#cb846-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(myml_model)</span>
+<span id="cb846-4"><a href="25-interview-attendance.html#cb846-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb846-5"><a href="25-interview-attendance.html#cb846-5" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> myml_model, interview_attendanceml_test,</span>
+<span id="cb846-6"><a href="25-interview-attendance.html#cb846-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">&#39;raw&#39;</span>)</span>
+<span id="cb846-7"><a href="25-interview-attendance.html#cb846-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb846-8"><a href="25-interview-attendance.html#cb846-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predictions)</span>
+<span id="cb846-9"><a href="25-interview-attendance.html#cb846-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb846-10"><a href="25-interview-attendance.html#cb846-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">postResample</span>(<span class="at">pred=</span>predictions, <span class="at">obs=</span><span class="fu">as.factor</span>(interview_attendanceml_test[,<span class="dv">20</span>])))</span></code></pre></div>
 
 </div>
 </div>
@@ -960,7 +960,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -968,8 +969,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/24-interview-attendance.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/24-interview-attendance.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -979,10 +980,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

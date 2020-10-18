@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -905,9 +905,9 @@ male
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="7-multiple-regression.html#cb189-1" aria-hidden="true" tabindex="-1"></a>evals_ch6 <span class="sc">%&gt;%</span> </span>
 <span id="cb189-2"><a href="7-multiple-regression.html#cb189-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> score <span class="sc">~</span> age)</span></code></pre></div>
 <pre><code># A tibble: 1 x 1
-     cor
-   &lt;dbl&gt;
-1 -0.107</code></pre>
+        cor
+      &lt;dbl&gt;
+1 -0.107032</code></pre>
 <p>Let’s now perform the last of the three common steps in an exploratory data analysis: creating data visualizations. Given that the outcome variable <code>score</code> and explanatory variable <code>age</code> are both numerical, we’ll use a scatterplot to display their relationship. How can we incorporate the categorical variable <code>gender</code>, however? By <code>mapping</code> the variable <code>gender</code> to the <code>color</code> aesthetic, thereby creating a <em>colored</em> scatterplot. The following code is similar to the code that created the scatterplot of teaching score over “beauty” score in Figure <a href="6-regression.html#fig:numxplot1">6.2</a>, but with <code>color = gender</code> added to the <code>aes()</code>thetic mapping.</p>
 <div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="7-multiple-regression.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evals_ch6, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> score, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
 <span id="cb191-2"><a href="7-multiple-regression.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -3060,7 +3060,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -3068,8 +3069,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/06-multiple-regression.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/06-multiple-regression.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -3079,10 +3080,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

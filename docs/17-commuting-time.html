@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -737,7 +737,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </html>
 <div id="commuting-time" class="section level1" number="17">
 <h1><span class="header-section-number">Chapter 17</span> Commuting time</h1>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="17-commuting-time.html#cb565-1" aria-hidden="true" tabindex="-1"></a>do_eval<span class="ot">=</span><span class="fu">file.exists</span>(<span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="17-commuting-time.html#cb555-1" aria-hidden="true" tabindex="-1"></a>do_eval<span class="ot">=</span><span class="fu">file.exists</span>(<span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
 <p>Commuting time is often mentioned as a valid reason for leaving one employer for another.</p>
 <p>You are asked to calculate the commuting time for the employee working at your company. You decide that hyphotetically they must all arrive in the office at 8.30 am. In the Google you identified that there is google api for doing this, called <a href="https://developers.google.com/maps/documentation/distance-matrix/start?csw=1">Distance Matrix API</a>, which works for a matrix of origins and destinations.</p>
 <p>The information returned is based on the recommended route between start and end points and consists of rows containing duration and distance values for each pair." To use the Distance Matrix API, you must first activate the API in the Google Cloud Platform Console and obtain the proper authentication credentials. You need to provide your own API key in each request.</p>
@@ -745,98 +745,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A file with 200 fake names and addresses has been put together for you. The task is to add the commuting time next to each staff member. Normally google will charge us one dollar for checking 200 commuting times.</p>
 <p>Please note that the departure_time specifies the desired time of departure must be in POSIXct. format and must be in the future (i.e.greater than sys.time()). If no value is specified it defaults to Sys.time().</p>
 <p>Please note you can only specify one of arrival_time or departure_time, not both. If both are supplied, departure_time will be used.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="17-commuting-time.html#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googleway)</span></code></pre></div>
-<pre><code>
-Attaching package: &#39;googleway&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:HRAnalytics&#39;:
-
-    google_distance</code></pre>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="17-commuting-time.html#cb569-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb569-2"><a href="17-commuting-time.html#cb569-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb569-3"><a href="17-commuting-time.html#cb569-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-4"><a href="17-commuting-time.html#cb569-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up here your api key key=</span></span>
-<span id="cb569-5"><a href="17-commuting-time.html#cb569-5" aria-hidden="true" tabindex="-1"></a>key <span class="ot">=</span> <span class="st">&#39;AIzaSyCOly69PDrlPlM42I378p2lmvNs8I2w&#39;</span></span>
-<span id="cb569-6"><a href="17-commuting-time.html#cb569-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-7"><a href="17-commuting-time.html#cb569-7" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dmy_hms</span>(<span class="st">&quot;10/09/2018 08:30&quot;</span>)</span>
-<span id="cb569-8"><a href="17-commuting-time.html#cb569-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-9"><a href="17-commuting-time.html#cb569-9" aria-hidden="true" tabindex="-1"></a>arrival <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(d)</span>
-<span id="cb569-10"><a href="17-commuting-time.html#cb569-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-11"><a href="17-commuting-time.html#cb569-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-12"><a href="17-commuting-time.html#cb569-12" aria-hidden="true" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SE3+8UQ,UK&quot;</span>)</span>
-<span id="cb569-13"><a href="17-commuting-time.html#cb569-13" aria-hidden="true" tabindex="-1"></a>to <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;E14+5EU,UK&quot;</span>)</span>
-<span id="cb569-14"><a href="17-commuting-time.html#cb569-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-15"><a href="17-commuting-time.html#cb569-15" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">google_distance</span>(<span class="at">origins =</span> from,</span>
-<span id="cb569-16"><a href="17-commuting-time.html#cb569-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">destinations =</span> to,</span>
-<span id="cb569-17"><a href="17-commuting-time.html#cb569-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">mode =</span> <span class="st">&quot;walking&quot;</span>,</span>
-<span id="cb569-18"><a href="17-commuting-time.html#cb569-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> <span class="fu">as.POSIXct</span>(arrival, <span class="at">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>),</span>
-<span id="cb569-19"><a href="17-commuting-time.html#cb569-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
-<span id="cb569-20"><a href="17-commuting-time.html#cb569-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb569-21"><a href="17-commuting-time.html#cb569-21" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>rows<span class="sc">$</span>elements[[<span class="dv">1</span>]]<span class="sc">$</span>distance</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="17-commuting-time.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(googleway)</span>
+<span id="cb556-2"><a href="17-commuting-time.html#cb556-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb556-3"><a href="17-commuting-time.html#cb556-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb556-4"><a href="17-commuting-time.html#cb556-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-5"><a href="17-commuting-time.html#cb556-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up here your api key key=</span></span>
+<span id="cb556-6"><a href="17-commuting-time.html#cb556-6" aria-hidden="true" tabindex="-1"></a>key <span class="ot">=</span> <span class="st">&#39;AIzaSyCOly69PDrlPlM42I378p2lmvNs8I2w&#39;</span></span>
+<span id="cb556-7"><a href="17-commuting-time.html#cb556-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-8"><a href="17-commuting-time.html#cb556-8" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dmy_hms</span>(<span class="st">&quot;10/09/2018 08:30&quot;</span>)</span>
+<span id="cb556-9"><a href="17-commuting-time.html#cb556-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-10"><a href="17-commuting-time.html#cb556-10" aria-hidden="true" tabindex="-1"></a>arrival <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(d)</span>
+<span id="cb556-11"><a href="17-commuting-time.html#cb556-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-12"><a href="17-commuting-time.html#cb556-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-13"><a href="17-commuting-time.html#cb556-13" aria-hidden="true" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;SE3+8UQ,UK&quot;</span>)</span>
+<span id="cb556-14"><a href="17-commuting-time.html#cb556-14" aria-hidden="true" tabindex="-1"></a>to <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;E14+5EU,UK&quot;</span>)</span>
+<span id="cb556-15"><a href="17-commuting-time.html#cb556-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-16"><a href="17-commuting-time.html#cb556-16" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">google_distance</span>(<span class="at">origins =</span> from,</span>
+<span id="cb556-17"><a href="17-commuting-time.html#cb556-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">destinations =</span> to,</span>
+<span id="cb556-18"><a href="17-commuting-time.html#cb556-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">mode =</span> <span class="st">&quot;walking&quot;</span>,</span>
+<span id="cb556-19"><a href="17-commuting-time.html#cb556-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> <span class="fu">as.POSIXct</span>(arrival, <span class="at">origin =</span> <span class="st">&quot;1970-01-01&quot;</span>, <span class="at">tz =</span> <span class="st">&quot;UTC&quot;</span>),</span>
+<span id="cb556-20"><a href="17-commuting-time.html#cb556-20" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
+<span id="cb556-21"><a href="17-commuting-time.html#cb556-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb556-22"><a href="17-commuting-time.html#cb556-22" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>rows<span class="sc">$</span>elements[[<span class="dv">1</span>]]<span class="sc">$</span>distance</span></code></pre></div>
 <pre><code>NULL</code></pre>
 <p>To make all this simpler, we put together an R function which can be used to analyse many results. Note this calls all modes of transport for every employee making it more costly than just running one mode per employee.</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="17-commuting-time.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Get distance data between two points based on all the travel mode options. Works for many origin points.</span></span>
-<span id="cb571-2"><a href="17-commuting-time.html#cb571-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb571-3"><a href="17-commuting-time.html#cb571-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x A vector of origins in address or postcode format</span></span>
-<span id="cb571-4"><a href="17-commuting-time.html#cb571-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dest A single destinationin address or postocde format</span></span>
-<span id="cb571-5"><a href="17-commuting-time.html#cb571-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param arrival_time A POSIXct datetime that folks need to arrive by</span></span>
-<span id="cb571-6"><a href="17-commuting-time.html#cb571-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param key A google distance API key</span></span>
-<span id="cb571-7"><a href="17-commuting-time.html#cb571-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... Additional options to pass to `google_distance()`</span></span>
-<span id="cb571-8"><a href="17-commuting-time.html#cb571-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
-<span id="cb571-9"><a href="17-commuting-time.html#cb571-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return Data.frame containing (typically) 4 rows per input element</span></span>
-<span id="cb571-10"><a href="17-commuting-time.html#cb571-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb571-11"><a href="17-commuting-time.html#cb571-11" aria-hidden="true" tabindex="-1"></a>google_distance_all <span class="ot">=</span>  <span class="cf">function</span>(x, dest, arrival_time, key, ...){</span>
-<span id="cb571-12"><a href="17-commuting-time.html#cb571-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb571-13"><a href="17-commuting-time.html#cb571-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># simple hygeine stuff</span></span>
-<span id="cb571-14"><a href="17-commuting-time.html#cb571-14" aria-hidden="true" tabindex="-1"></a>  gd <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">possibly</span>(</span>
-<span id="cb571-15"><a href="17-commuting-time.html#cb571-15" aria-hidden="true" tabindex="-1"></a>    memoise<span class="sc">::</span><span class="fu">memoise</span>(</span>
-<span id="cb571-16"><a href="17-commuting-time.html#cb571-16" aria-hidden="true" tabindex="-1"></a>      google_distance)</span>
-<span id="cb571-17"><a href="17-commuting-time.html#cb571-17" aria-hidden="true" tabindex="-1"></a>    , <span class="st">&quot;Fail&quot;</span></span>
-<span id="cb571-18"><a href="17-commuting-time.html#cb571-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb571-19"><a href="17-commuting-time.html#cb571-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb571-20"><a href="17-commuting-time.html#cb571-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prep dataset</span></span>
-<span id="cb571-21"><a href="17-commuting-time.html#cb571-21" aria-hidden="true" tabindex="-1"></a>   interested_in <span class="ot">=</span> <span class="fu">expand.grid</span>(<span class="at">from=</span>x, </span>
-<span id="cb571-22"><a href="17-commuting-time.html#cb571-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">mode=</span><span class="fu">c</span>(<span class="st">&quot;driving&quot;</span>, <span class="st">&quot;walking&quot;</span>, <span class="st">&quot;bicycling&quot;</span>, <span class="st">&quot;transit&quot;</span>), </span>
-<span id="cb571-23"><a href="17-commuting-time.html#cb571-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb571-24"><a href="17-commuting-time.html#cb571-24" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Perform google_distance calls for all combos</span></span>
-<span id="cb571-25"><a href="17-commuting-time.html#cb571-25" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map2</span>(interested_in<span class="sc">$</span>from,interested_in<span class="sc">$</span>mode, </span>
-<span id="cb571-26"><a href="17-commuting-time.html#cb571-26" aria-hidden="true" tabindex="-1"></a>     <span class="sc">~</span><span class="fu">gd</span>(.x, dest, <span class="at">mode=</span>.y,</span>
-<span id="cb571-27"><a href="17-commuting-time.html#cb571-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> arrival_time,</span>
-<span id="cb571-28"><a href="17-commuting-time.html#cb571-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
-<span id="cb571-29"><a href="17-commuting-time.html#cb571-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-30"><a href="17-commuting-time.html#cb571-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract relevant section</span></span>
-<span id="cb571-31"><a href="17-commuting-time.html#cb571-31" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;rows&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-32"><a href="17-commuting-time.html#cb571-32" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;elements&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-33"><a href="17-commuting-time.html#cb571-33" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">flatten</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb571-34"><a href="17-commuting-time.html#cb571-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplify the data.frames</span></span>
-<span id="cb571-35"><a href="17-commuting-time.html#cb571-35" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(unclass) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-36"><a href="17-commuting-time.html#cb571-36" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(purrr<span class="sc">::</span>flatten) <span class="sc">%&gt;%</span> </span>
-<span id="cb571-37"><a href="17-commuting-time.html#cb571-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add original lookup values</span></span>
-<span id="cb571-38"><a href="17-commuting-time.html#cb571-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(interested_in)</span>
-<span id="cb571-39"><a href="17-commuting-time.html#cb571-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="17-commuting-time.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; Get distance data between two points based on all the travel mode options. Works for many origin points.</span></span>
+<span id="cb558-2"><a href="17-commuting-time.html#cb558-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb558-3"><a href="17-commuting-time.html#cb558-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param x A vector of origins in address or postcode format</span></span>
+<span id="cb558-4"><a href="17-commuting-time.html#cb558-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dest A single destinationin address or postocde format</span></span>
+<span id="cb558-5"><a href="17-commuting-time.html#cb558-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param arrival_time A POSIXct datetime that folks need to arrive by</span></span>
+<span id="cb558-6"><a href="17-commuting-time.html#cb558-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param key A google distance API key</span></span>
+<span id="cb558-7"><a href="17-commuting-time.html#cb558-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param ... Additional options to pass to `google_distance()`</span></span>
+<span id="cb558-8"><a href="17-commuting-time.html#cb558-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;</span></span>
+<span id="cb558-9"><a href="17-commuting-time.html#cb558-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return Data.frame containing (typically) 4 rows per input element</span></span>
+<span id="cb558-10"><a href="17-commuting-time.html#cb558-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb558-11"><a href="17-commuting-time.html#cb558-11" aria-hidden="true" tabindex="-1"></a>google_distance_all <span class="ot">=</span>  <span class="cf">function</span>(x, dest, arrival_time, key, ...){</span>
+<span id="cb558-12"><a href="17-commuting-time.html#cb558-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb558-13"><a href="17-commuting-time.html#cb558-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># simple hygeine stuff</span></span>
+<span id="cb558-14"><a href="17-commuting-time.html#cb558-14" aria-hidden="true" tabindex="-1"></a>  gd <span class="ot">=</span> purrr<span class="sc">::</span><span class="fu">possibly</span>(</span>
+<span id="cb558-15"><a href="17-commuting-time.html#cb558-15" aria-hidden="true" tabindex="-1"></a>    memoise<span class="sc">::</span><span class="fu">memoise</span>(</span>
+<span id="cb558-16"><a href="17-commuting-time.html#cb558-16" aria-hidden="true" tabindex="-1"></a>      google_distance)</span>
+<span id="cb558-17"><a href="17-commuting-time.html#cb558-17" aria-hidden="true" tabindex="-1"></a>    , <span class="st">&quot;Fail&quot;</span></span>
+<span id="cb558-18"><a href="17-commuting-time.html#cb558-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb558-19"><a href="17-commuting-time.html#cb558-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb558-20"><a href="17-commuting-time.html#cb558-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prep dataset</span></span>
+<span id="cb558-21"><a href="17-commuting-time.html#cb558-21" aria-hidden="true" tabindex="-1"></a>   interested_in <span class="ot">=</span> <span class="fu">expand.grid</span>(<span class="at">from=</span>x, </span>
+<span id="cb558-22"><a href="17-commuting-time.html#cb558-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">mode=</span><span class="fu">c</span>(<span class="st">&quot;driving&quot;</span>, <span class="st">&quot;walking&quot;</span>, <span class="st">&quot;bicycling&quot;</span>, <span class="st">&quot;transit&quot;</span>), </span>
+<span id="cb558-23"><a href="17-commuting-time.html#cb558-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb558-24"><a href="17-commuting-time.html#cb558-24" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Perform google_distance calls for all combos</span></span>
+<span id="cb558-25"><a href="17-commuting-time.html#cb558-25" aria-hidden="true" tabindex="-1"></a>  purrr<span class="sc">::</span><span class="fu">map2</span>(interested_in<span class="sc">$</span>from,interested_in<span class="sc">$</span>mode, </span>
+<span id="cb558-26"><a href="17-commuting-time.html#cb558-26" aria-hidden="true" tabindex="-1"></a>     <span class="sc">~</span><span class="fu">gd</span>(.x, dest, <span class="at">mode=</span>.y,</span>
+<span id="cb558-27"><a href="17-commuting-time.html#cb558-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">arrival_time =</span> arrival_time,</span>
+<span id="cb558-28"><a href="17-commuting-time.html#cb558-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">key=</span>key)</span>
+<span id="cb558-29"><a href="17-commuting-time.html#cb558-29" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb558-30"><a href="17-commuting-time.html#cb558-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract relevant section</span></span>
+<span id="cb558-31"><a href="17-commuting-time.html#cb558-31" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;rows&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb558-32"><a href="17-commuting-time.html#cb558-32" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(<span class="st">&quot;elements&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb558-33"><a href="17-commuting-time.html#cb558-33" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">flatten</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb558-34"><a href="17-commuting-time.html#cb558-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simplify the data.frames</span></span>
+<span id="cb558-35"><a href="17-commuting-time.html#cb558-35" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map</span>(unclass) <span class="sc">%&gt;%</span> </span>
+<span id="cb558-36"><a href="17-commuting-time.html#cb558-36" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_df</span>(purrr<span class="sc">::</span>flatten) <span class="sc">%&gt;%</span> </span>
+<span id="cb558-37"><a href="17-commuting-time.html#cb558-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add original lookup values</span></span>
+<span id="cb558-38"><a href="17-commuting-time.html#cb558-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(interested_in)</span>
+<span id="cb558-39"><a href="17-commuting-time.html#cb558-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>This needs some packages installed to work</p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="17-commuting-time.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(purrr)) <span class="fu">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</span>
-<span id="cb572-2"><a href="17-commuting-time.html#cb572-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(memoise)) <span class="fu">install.packages</span>(<span class="st">&quot;memoise&quot;</span>)</span></code></pre></div>
-<pre><code>Loading required package: memoise</code></pre>
-<pre><code>
-Attaching package: &#39;memoise&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:httr&#39;:
-
-    timeout</code></pre>
-<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="17-commuting-time.html#cb576-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(googleway)) <span class="fu">install.packages</span>(<span class="st">&quot;googleway&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="17-commuting-time.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(purrr)) <span class="fu">install.packages</span>(<span class="st">&quot;purrr&quot;</span>)</span>
+<span id="cb559-2"><a href="17-commuting-time.html#cb559-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(memoise)) <span class="fu">install.packages</span>(<span class="st">&quot;memoise&quot;</span>)</span>
+<span id="cb559-3"><a href="17-commuting-time.html#cb559-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(googleway)) <span class="fu">install.packages</span>(<span class="st">&quot;googleway&quot;</span>)</span></code></pre></div>
 <p>We need some information about our google API account, where our office is, and when we’re testing commute times for.</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="17-commuting-time.html#cb577-1" aria-hidden="true" tabindex="-1"></a>office <span class="ot">=</span> <span class="st">&quot;E14 5EU&quot;</span></span>
-<span id="cb577-2"><a href="17-commuting-time.html#cb577-2" aria-hidden="true" tabindex="-1"></a>monday_9am <span class="ot">=</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;2018-12-03 09:00&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="17-commuting-time.html#cb560-1" aria-hidden="true" tabindex="-1"></a>office <span class="ot">=</span> <span class="st">&quot;E14 5EU&quot;</span></span>
+<span id="cb560-2"><a href="17-commuting-time.html#cb560-2" aria-hidden="true" tabindex="-1"></a>monday_9am <span class="ot">=</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;2018-12-03 09:00&quot;</span>)</span></code></pre></div>
 <p>Then we can use this function to get data for our 200 employees</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="17-commuting-time.html#cb578-1" aria-hidden="true" tabindex="-1"></a>the_200 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/200_staff_members.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="17-commuting-time.html#cb579-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">google_distance_all</span>(</span>
-<span id="cb579-2"><a href="17-commuting-time.html#cb579-2" aria-hidden="true" tabindex="-1"></a>  the_200<span class="sc">$</span>Postcode,</span>
-<span id="cb579-3"><a href="17-commuting-time.html#cb579-3" aria-hidden="true" tabindex="-1"></a>  office,</span>
-<span id="cb579-4"><a href="17-commuting-time.html#cb579-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">arrival_time =</span> monday_9am,</span>
-<span id="cb579-5"><a href="17-commuting-time.html#cb579-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> key</span>
-<span id="cb579-6"><a href="17-commuting-time.html#cb579-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb579-7"><a href="17-commuting-time.html#cb579-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb579-8"><a href="17-commuting-time.html#cb579-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(results, <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>), <span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="17-commuting-time.html#cb580-1" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="17-commuting-time.html#cb561-1" aria-hidden="true" tabindex="-1"></a>the_200 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://hranalytics.netlify.com/data/200_staff_members.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="17-commuting-time.html#cb562-1" aria-hidden="true" tabindex="-1"></a>results <span class="ot">=</span> <span class="fu">google_distance_all</span>(</span>
+<span id="cb562-2"><a href="17-commuting-time.html#cb562-2" aria-hidden="true" tabindex="-1"></a>  the_200<span class="sc">$</span>Postcode,</span>
+<span id="cb562-3"><a href="17-commuting-time.html#cb562-3" aria-hidden="true" tabindex="-1"></a>  office,</span>
+<span id="cb562-4"><a href="17-commuting-time.html#cb562-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">arrival_time =</span> monday_9am,</span>
+<span id="cb562-5"><a href="17-commuting-time.html#cb562-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">key =</span> key</span>
+<span id="cb562-6"><a href="17-commuting-time.html#cb562-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb562-7"><a href="17-commuting-time.html#cb562-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb562-8"><a href="17-commuting-time.html#cb562-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(results, <span class="fu">file.path</span>(<span class="st">&quot;data&quot;</span>), <span class="st">&quot;commute_times.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="17-commuting-time.html#cb563-1" aria-hidden="true" tabindex="-1"></a>results</span></code></pre></div>
 <pre><code># A tibble: 800 x 5
    text    value status from     mode   
    &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  
@@ -853,11 +842,11 @@ Attaching package: &#39;memoise&#39;</code></pre>
 # ... with 790 more rows</code></pre>
 <p>Now that we have this data we can answer questions about our employee’s commute times.</p>
 <p>Who has the longest commutes by car?</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="17-commuting-time.html#cb582-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
-<span id="cb582-2"><a href="17-commuting-time.html#cb582-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mode <span class="sc">==</span> <span class="st">&quot;driving&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb582-3"><a href="17-commuting-time.html#cb582-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb582-4"><a href="17-commuting-time.html#cb582-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, hours) <span class="sc">%&gt;%</span> </span>
-<span id="cb582-5"><a href="17-commuting-time.html#cb582-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hours))</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="17-commuting-time.html#cb565-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb565-2"><a href="17-commuting-time.html#cb565-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(mode <span class="sc">==</span> <span class="st">&quot;driving&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb565-3"><a href="17-commuting-time.html#cb565-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb565-4"><a href="17-commuting-time.html#cb565-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, hours) <span class="sc">%&gt;%</span> </span>
+<span id="cb565-5"><a href="17-commuting-time.html#cb565-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hours))</span></code></pre></div>
 <pre><code># A tibble: 10 x 6
    text             value status from     mode       hours
    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
@@ -872,14 +861,14 @@ Attaching package: &#39;memoise&#39;</code></pre>
  9 3 hours 26 mins  12341 OK     LS24 9QW driving  3.42806
 10 3 hours 18 mins  11882 OK     S10 3TR  driving  3.30056</code></pre>
 <p>We can look at the distributions overall too.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="17-commuting-time.html#cb584-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
-<span id="cb584-2"><a href="17-commuting-time.html#cb584-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb584-3"><a href="17-commuting-time.html#cb584-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb584-4"><a href="17-commuting-time.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>hours) <span class="sc">+</span></span>
-<span id="cb584-5"><a href="17-commuting-time.html#cb584-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb584-6"><a href="17-commuting-time.html#cb584-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb584-7"><a href="17-commuting-time.html#cb584-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mode) <span class="sc">+</span></span>
-<span id="cb584-8"><a href="17-commuting-time.html#cb584-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="17-commuting-time.html#cb567-1" aria-hidden="true" tabindex="-1"></a>results <span class="sc">%&gt;%</span> </span>
+<span id="cb567-2"><a href="17-commuting-time.html#cb567-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hours=</span>value<span class="sc">/</span><span class="dv">60</span><span class="sc">^</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb567-3"><a href="17-commuting-time.html#cb567-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb567-4"><a href="17-commuting-time.html#cb567-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>hours) <span class="sc">+</span></span>
+<span id="cb567-5"><a href="17-commuting-time.html#cb567-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb567-6"><a href="17-commuting-time.html#cb567-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb567-7"><a href="17-commuting-time.html#cb567-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mode) <span class="sc">+</span></span>
+<span id="cb567-8"><a href="17-commuting-time.html#cb567-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="HR_Analytics.live_files/figure-html/unnamed-chunk-554-1.png" width="\textwidth" style="display: block; margin: auto;" /></p>
 
 </div>
@@ -932,7 +921,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -940,8 +930,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/16-commuting-time.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/16-commuting-time.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -951,10 +941,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

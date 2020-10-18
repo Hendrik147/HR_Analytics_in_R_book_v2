@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -740,7 +740,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <div class="learncheck">
 <p>
-<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.” However, since work is still in progress subject to change about twice a year.</strong>
+<strong>Please note that you are currently looking at the latest version of “HR Analytics in R.”</strong>
 </p>
 </div>
 <p>The intention of this book is to encourage more ‘data driven’ decisions in HR. HR Analytics is not anymore a nice-to-have addon but rather the way HR practitioners should conduct HR decision making in the future. Where applicable, human judgement is ‘added’ onto a rigorous analysis of the data done in the first place.</p>
@@ -954,7 +954,7 @@ Additionally, this book will focus on computational thinking, data thinking, and
 </ul>
 <p>If you would like to contribute to “HR Analytics in R,” there are many ways! Let’s all work together to make this book as great as possible for as many students as possible!</p>
 <ul>
-<li>Please let me know if you find any errors, typos, or areas from improvement on my <a href="https://github.com/Hendrik147/HR_Analytics_in_R_book/issues">GitHub issue page</a> page. I will fix it as soon as possible.</li>
+<li>Please let me know if you find any errors, typos, or areas from improvement on my <a href="https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/issues">GitHub issue page</a> page. I will fix it as soon as possible.</li>
 <li>If you are familiar with GitHub and would like to contribute even more, please see Section <a href="1-intro.html#sec:about-book">1.4</a> below.</li>
 </ul>
 <p>I would like to thank <a href="https://github.com/moderndive/moderndive_book">Moderndive</a> for their inspirational presentation at a recent R user conference and for their generous example on how to set up a bookdown book and for their introductory pages on how to start using R.</p>
@@ -1044,7 +1044,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1052,8 +1053,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/index.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/index.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1063,10 +1064,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -764,7 +764,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We’ll cover two methods for importing <code>.csv</code> and <code>.xlsx</code> spreadsheet data in R: one using the console and the other using RStudio’s graphical user interface, abbreviated as “GUI.”</p>
 <div id="using-the-console" class="section level3" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> Using the console</h3>
-<p>First, let’s import a Comma Separated Values <code>.csv</code> file that exists on the internet. The <code>.csv</code> file <code>dem_score.csv</code> contains ratings of the level of democracy in different countries spanning 1952 to 1992 and is accessible at <a href="https://moderndive.com/data/dem_score.csv" class="uri">https://moderndive.com/data/dem_score.csv</a>. Let’s use the <code>read_csv()</code> function from the <code>readr</code>  <span class="citation"><a href="references.html#ref-R-readr" role="doc-biblioref">[16]</a></span> package to read it off the web, import it into R, and save it in a data frame called <code>dem_score</code>.</p>
+<p>First, let’s import a Comma Separated Values <code>.csv</code> file that exists on the internet. The <code>.csv</code> file <code>dem_score.csv</code> contains ratings of the level of democracy in different countries spanning 1952 to 1992 and is accessible at <a href="https://moderndive.com/data/dem_score.csv" class="uri">https://moderndive.com/data/dem_score.csv</a>. Let’s use the <code>read_csv()</code> function from the <code>readr</code>  <span class="citation"><a href="references.html#ref-R-readr" role="doc-biblioref">[18]</a></span> package to read it off the web, import it into R, and save it in a data frame called <code>dem_score</code>.</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="5-tidy.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb119-2"><a href="5-tidy.html#cb119-2" aria-hidden="true" tabindex="-1"></a>dem_score <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://moderndive.com/data/dem_score.csv&quot;</span>)</span>
 <span id="cb119-3"><a href="5-tidy.html#cb119-3" aria-hidden="true" tabindex="-1"></a>dem_score</span></code></pre></div>
@@ -806,7 +806,7 @@ FIGURE 5.1: Importing an Excel file to R.
 </div>
 <div id="tidy-data-ex" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> “Tidy” data</h2>
-<p>Let’s now switch gears and learn about the concept of “tidy” data format with a motivating example from the <code>fivethirtyeight</code> package. The <code>fivethirtyeight</code> package <span class="citation"><a href="references.html#ref-R-fivethirtyeight" role="doc-biblioref">[11]</a></span> provides access to the datasets used in many articles published by the data journalism website, <a href="https://fivethirtyeight.com/">FiveThirtyEight.com</a>. For a complete list of all 129 datasets included in the <code>fivethirtyeight</code> package, check out the package webpage by going to: <a href="https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html" class="uri">https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html</a>.</p>
+<p>Let’s now switch gears and learn about the concept of “tidy” data format with a motivating example from the <code>fivethirtyeight</code> package. The <code>fivethirtyeight</code> package <span class="citation"><a href="references.html#ref-R-fivethirtyeight" role="doc-biblioref">[12]</a></span> provides access to the datasets used in many articles published by the data journalism website, <a href="https://fivethirtyeight.com/">FiveThirtyEight.com</a>. For a complete list of all 129 datasets included in the <code>fivethirtyeight</code> package, check out the package webpage by going to: <a href="https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html" class="uri">https://fivethirtyeight-r.netlify.app/articles/fivethirtyeight.html</a>.</p>
 <p>Let’s focus our attention on the <code>drinks</code> data frame and look at its first 5 rows:</p>
 <pre><code># A tibble: 5 x 5
   country    beer_servings spirit_servings wine_servings total_litres_of_pure_a~
@@ -877,7 +877,7 @@ FIGURE 5.2: Comparing alcohol consumption in 4 countries.
 <li>Marie Kondo’s best-selling book, <a href="https://www.powells.com/book/-9781607747307"><em>The Life-Changing Magic of Tidying Up: The Japanese Art of Decluttering and Organizing</em></a>, and Netflix TV series <a href="https://www.netflix.com/title/80209379"><em>Tidying Up with Marie Kondo</em></a>.</li>
 <li>“I am not by any stretch of the imagination a tidy person, and the piles of unread books on the coffee table and by my bed have a plaintive, pleading quality to me - ‘Read me, please!’” - Linda Grant</li>
 </ul>
-<p>What does it mean for your data to be “tidy?” While “tidy” has a clear English meaning of “organized,” the word “tidy” in data science using R means that your data follows a standardized format. We will follow Hadley Wickham’s  definition of <em>“tidy” data</em>  <span class="citation"><a href="references.html#ref-tidy" role="doc-biblioref">[19]</a></span> shown also in Figure <a href="5-tidy.html#fig:tidyfig">5.3</a>:</p>
+<p>What does it mean for your data to be “tidy?” While “tidy” has a clear English meaning of “organized,” the word “tidy” in data science using R means that your data follows a standardized format. We will follow Hadley Wickham’s  definition of <em>“tidy” data</em>  <span class="citation"><a href="references.html#ref-tidy" role="doc-biblioref">[22]</a></span> shown also in Figure <a href="5-tidy.html#fig:tidyfig">5.3</a>:</p>
 <blockquote>
 <p>A <em>dataset</em> is a collection of values, usually either numbers (if quantitative) or strings AKA text data (if qualitative/categorical). Values are organised in two ways. Every value belongs to a variable and an observation. A variable contains all values that measure the same underlying attribute (like height, temperature, duration) across units. An observation contains all values measured on the same unit (like a person, or a day, or a city) across attributes.</p>
 <p>“Tidy” data is a standard way of mapping the meaning of a dataset to its structure. A dataset is messy or tidy depending on how rows, columns and tables are matched up with observations, variables and types. In <em>tidy data</em>:</p>
@@ -1090,7 +1090,7 @@ Overcast
 </div>
 <div id="converting-to-tidy-data" class="section level3" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> Converting to “tidy” data</h3>
-<p>In this book so far, you’ve only seen data frames that were already in “tidy” format. Furthermore, for the rest of this book, you’ll mostly only see data frames that are already in “tidy” format as well. This is not always the case however with all datasets in the world. If your original data frame is in wide (non-“tidy”) format and you would like to use the <code>ggplot2</code> or <code>dplyr</code> packages, you will first have to convert it to “tidy” format. To do so, we recommend using the  <code>pivot_longer()</code> function in the <code>tidyr</code>  package <span class="citation"><a href="references.html#ref-R-tidyr" role="doc-biblioref">[18]</a></span>.</p>
+<p>In this book so far, you’ve only seen data frames that were already in “tidy” format. Furthermore, for the rest of this book, you’ll mostly only see data frames that are already in “tidy” format as well. This is not always the case however with all datasets in the world. If your original data frame is in wide (non-“tidy”) format and you would like to use the <code>ggplot2</code> or <code>dplyr</code> packages, you will first have to convert it to “tidy” format. To do so, we recommend using the  <code>pivot_longer()</code> function in the <code>tidyr</code>  package <span class="citation"><a href="references.html#ref-R-tidyr" role="doc-biblioref">[20]</a></span>.</p>
 <p>Going back to our <code>drinks_smaller</code> data frame from earlier:</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="5-tidy.html#cb126-1" aria-hidden="true" tabindex="-1"></a>drinks_smaller</span></code></pre></div>
 <pre><code># A tibble: 4 x 4
@@ -1183,7 +1183,7 @@ FIGURE 5.4: Comparing alcohol consumption in 4 countries using geom_col().
 <div id="nycflights13-package-1" class="section level3" number="5.2.3">
 <h3><span class="header-section-number">5.2.3</span> <code>nycflights13</code> package</h3>
 <p>Recall the <code>nycflights13</code> package we introduced in Section <a href="2-getting-started.html#nycflights13">2.4</a> with data about all domestic flights departing from New York City in 2013. Let’s revisit the <code>flights</code> data frame by running <code>View(flights)</code>. We saw that <code>flights</code> has a rectangular shape, with each of its 336,776 rows corresponding to a flight and each of its 22 columns corresponding to different characteristics/measurements of each flight. This satisfied the first two criteria of the definition of “tidy” data from Subsection <a href="5-tidy.html#tidy-definition">5.2.1</a>: that “Each variable forms a column” and “Each observation forms a row.” But what about the third property of “tidy” data that “Each type of observational unit forms a table?”</p>
-<p>Recall that we saw in Subsection <a href="2-getting-started.html#exploredataframes">2.4.3</a> that the observational unit for the <code>flights</code> data frame is an individual flight. In other words, the rows of the <code>flights</code> data frame refer to characteristics/measurements of individual flights. Also included in the <code>nycflights13</code> package are other data frames with their rows representing different observational units <span class="citation"><a href="references.html#ref-R-nycflights13" role="doc-biblioref">[15]</a></span>:</p>
+<p>Recall that we saw in Subsection <a href="2-getting-started.html#exploredataframes">2.4.3</a> that the observational unit for the <code>flights</code> data frame is an individual flight. In other words, the rows of the <code>flights</code> data frame refer to characteristics/measurements of individual flights. Also included in the <code>nycflights13</code> package are other data frames with their rows representing different observational units <span class="citation"><a href="references.html#ref-R-nycflights13" role="doc-biblioref">[17]</a></span>:</p>
 <ul>
 <li><code>airlines</code>: translation between two letter IATA carrier codes and airline company names (16 in total). The observational unit is an airline company.</li>
 <li><code>planes</code>: aircraft information about each of 3,322 planes used, i.e., the observational unit is an aircraft.</li>
@@ -1374,7 +1374,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1382,8 +1383,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/04-tidy.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/04-tidy.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1393,10 +1394,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });

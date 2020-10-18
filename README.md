@@ -2,9 +2,9 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/93377851-6e4f-4e7a-b2f4-6466315ff557/deploy-status)](https://app.netlify.com/sites/suspicious-sinoussi-dab6a9/deploys)
 
-[![Build Status](https://travis-ci.org//Hendrik147/HR_Analytics_in_R_book.svg?branch=master)](https://travis-ci.org//Hendrik147/HR_Analytics_in_R_book) Note: travis-ci currently deploys the developmental version of the book into the `gh-pages` branch of this repo, which is hosted via Netlify at [hranalyticslive.netlify.com](https://hranalyticslive.netlify.com).
+[![Build Status](https://travis-ci.org//Hendrik147/HR_Analytics_in_R_book_v2.svg?branch=master)](https://travis-ci.org//Hendrik147/HR_Analytics_in_R_book_v2) Note: travis-ci currently deploys the developmental version of the book into the `gh-pages` branch of this repo, which is hosted via Netlify at [hranalyticslive.netlify.com](https://hranalyticslive.netlify.com).
 
-Welcome to the GitHub repository page for **HR Analytics in R: Common HR business tasks done with the power of R** available at [HRAnalaytics.live](https://github.com/Hendrik147/HR_Analytics_in_R_book/). 
+Welcome to the GitHub repository page for **HR Analytics in R: Common HR business tasks done with the power of R** available at [HRAnalaytics.live](https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/). 
 
 
 ## Why such a title for this book?

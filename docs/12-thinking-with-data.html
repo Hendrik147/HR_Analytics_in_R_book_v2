@@ -24,7 +24,7 @@
 <meta name="author" content="Chester Ismay, Albert Y. Kim and Hendrik Feddersen" />
 
 
-<meta name="date" content="2020-10-17" />
+<meta name="date" content="2020-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -796,7 +796,7 @@ FIGURE 12.2: Data/science pipeline.
 <div id="seattle-house-prices" class="section level2" number="12.2">
 <h2><span class="header-section-number">12.2</span> Case study: Seattle house prices</h2>
 <p><a href="https://www.kaggle.com/">Kaggle.com</a> is a machine learning and predictive modeling competition website that hosts datasets uploaded by companies, governmental organizations, and other individuals. One of their datasets is the <a href="https://www.kaggle.com/harlfoxem/housesalesprediction">“House Sales in King County, USA”</a>. It consists of sale prices of homes sold between May 2014 and May 2015 in King County, Washington, USA, which includes the greater Seattle metropolitan area. This dataset is in the <code>house_prices</code> data frame included in the <code>moderndive</code> package.</p>
-<p>The dataset consists of 21,613 houses and 21 variables describing these houses (for a full list and description of these variables, see the help file by running <code>?house_prices</code> in the console). In this case study, we’ll create a multiple regression model where:</p>
+<p>The dataset consists of 21,613 houses and 23 variables describing these houses (for a full list and description of these variables, see the help file by running <code>?house_prices</code> in the console). In this case study, we’ll create a multiple regression model where:</p>
 <ul>
 <li>The outcome variable <span class="math inline">\(y\)</span> is the sale <code>price</code> of houses.</li>
 <li>Two explanatory variables:
@@ -818,7 +818,7 @@ FIGURE 12.2: Data/science pipeline.
 <div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="12-thinking-with-data.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(house_prices)</span>
 <span id="cb448-2"><a href="12-thinking-with-data.html#cb448-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(house_prices)</span></code></pre></div>
 <pre><code>Rows: 21,613
-Columns: 21
+Columns: 23
 $ id            &lt;chr&gt; &quot;7129300520&quot;, &quot;6414100192&quot;, &quot;5631500400&quot;, &quot;2487200875...
 $ date          &lt;date&gt; 2014-10-13, 2014-12-09, 2015-02-25, 2014-12-09, 2015...
 $ price         &lt;dbl&gt; 221900, 538000, 180000, 604000, 510000, 1225000, 2575...
@@ -839,7 +839,9 @@ $ zipcode       &lt;fct&gt; 98178, 98125, 98028, 98136, 98074, 98053, 98003, 981
 $ lat           &lt;dbl&gt; 47.5, 47.7, 47.7, 47.5, 47.6, 47.7, 47.3, 47.4, 47.5,...
 $ long          &lt;dbl&gt; -122, -122, -122, -122, -122, -122, -122, -122, -122,...
 $ sqft_living15 &lt;int&gt; 1340, 1690, 2720, 1360, 1800, 4760, 2238, 1650, 1780,...
-$ sqft_lot15    &lt;int&gt; 5650, 7639, 8062, 5000, 7503, 101930, 6819, 9711, 811...</code></pre>
+$ sqft_lot15    &lt;int&gt; 5650, 7639, 8062, 5000, 7503, 101930, 6819, 9711, 811...
+$ log10_price   &lt;dbl&gt; 5.35, 5.73, 5.26, 5.78, 5.71, 6.09, 5.41, 5.47, 5.36,...
+$ log10_size    &lt;dbl&gt; 3.07, 3.41, 2.89, 3.29, 3.23, 3.73, 3.23, 3.03, 3.25,...</code></pre>
 <p>Here are some questions you can ask yourself at this stage of an EDA: Which variables are numerical? Which are categorical? For the categorical variables, what are their levels? Besides the variables we’ll be using in our regression model, what other variables do you think would be useful to use in a model for house price?</p>
 <p>Observe, for example, that while the <code>condition</code> variable has values <code>1</code> through <code>5</code>, these are saved in R as <code>fct</code> standing for “factors.” This is one of R’s ways of saving categorical variables. So you should think of these as the “labels” <code>1</code> through <code>5</code> and not the numerical values <code>1</code> through <code>5</code>.</p>
 <p>Let’s now perform the second step in an EDA: computing summary statistics. Recall from Section <a href="4-wrangling.html#summarize">4.3</a> that <em>summary statistics</em> are single numerical values that summarize a large number of values. Examples of summary statistics include the mean, the median, the standard deviation, and various percentiles.</p>
@@ -1628,7 +1630,8 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin"],
+"google": false
 },
 "fontsettings": {
 "theme": "white",
@@ -1636,8 +1639,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/master/11-tell-your-story-with-data.Rmd",
-"text": "Edit"
+"link": "https://github.com/Hendrik147/HR_Analytics_in_R_book_v2/edit/main/11-tell-your-story-with-data.Rmd",
+"text": "Editing"
 },
 "history": {
 "link": null,
@@ -1647,10 +1650,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": null,
+"download": ["HR_Analytics.live.pdf"],
 "toc": {
 "collapse": "section",
 "scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed",
+"download": "docs/_HR_Analytics.live.pdf",
+"search": true
 }
 });
 });
